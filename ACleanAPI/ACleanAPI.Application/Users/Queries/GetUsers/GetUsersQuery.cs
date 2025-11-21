@@ -4,4 +4,4 @@ using MediatR;
 
 namespace ACleanAPI.Application.Users.Queries.GetUsers;
 
-public record GetUsersQuery : IRequest<Result<IEnumerable<UserDto>>>;
+public record GetUsersQuery : IAcEntitiesRequest<UserDto>; //, IRequest<Result<IEnumerable<UserDto>>>; // IRequest<Result<IEnumerable<UserDto>>>;

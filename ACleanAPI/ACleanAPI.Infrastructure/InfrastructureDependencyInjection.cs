@@ -16,6 +16,7 @@ public static class InfrastructureDependencyInjection
 
 
         services.AddScoped<IUserRepository, UserRepository>();
+        services.AddScoped<IUserDetailRepository, UserDetailRepository>();
         services.AddScoped<IUserModelMapper, UserModelMapper>();
 
         return services;

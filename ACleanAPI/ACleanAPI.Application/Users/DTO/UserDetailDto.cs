@@ -1,6 +1,6 @@
 ﻿namespace ACleanAPI.Application.Users.DTO;
 
-public class UserDetailDto
+public class UserDetailDto : AcEntityDtoBase
 {
     public int Id { get; set; }
     public string Email { get; set; } = string.Empty;

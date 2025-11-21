@@ -3,10 +3,7 @@ using ACleanAPI.Infrastructure.Models;
 
 namespace ACleanAPI.Infrastructure.Users.Mappers;
 
-public interface IUserModelMapper
-{
-    User MapToEntity(UserModel model);
-}
+public interface IUserModelMapper : IAcModelMapper<UserModel, User>;
 
 public class UserModelMapper : IUserModelMapper
 {

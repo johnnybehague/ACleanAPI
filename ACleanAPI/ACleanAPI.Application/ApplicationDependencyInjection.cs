@@ -9,7 +9,7 @@ public static class ApplicationDependencyInjection
     {
         // Users
         services.AddScoped<IUserMapper, UserMapper>();
-
+        services.AddScoped<IUserDetailMapper, UserDetailMapper>();
         return services;
     }
 }

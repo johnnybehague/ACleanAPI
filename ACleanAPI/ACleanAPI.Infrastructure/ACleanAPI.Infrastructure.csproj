@@ -13,6 +13,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ACleanAPI.Domain\ACleanAPI.Domain.csproj" />
+    <ProjectReference Include="..\ACleanAPI\ACleanAPI.csproj" />
   </ItemGroup>
 
 </Project>

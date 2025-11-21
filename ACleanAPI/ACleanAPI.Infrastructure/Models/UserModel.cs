@@ -1,9 +1,10 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using ACleanAPI.Domain;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ACleanAPI.Infrastructure.Models;
 
 [Table("Users")]
-public class UserModel
+public class UserModel : AcModelBase
 {
     public int Id { get; set; }
 
