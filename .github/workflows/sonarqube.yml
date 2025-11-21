@@ -71,6 +71,7 @@ jobs:
       - name: Build and analyze
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        working-directory: ./ACleanAPI
         shell: powershell
         run: |
           ${{ runner.temp }}\scanner\dotnet-sonarscanner begin /k:"johnnybehague_ACleanAPI" /o:"johnnybehague" /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
