@@ -16,7 +16,7 @@ public class AcGetControllerBase<Dto, DetailDto> : ControllerBase
         _mediator = mediator;
     }
 
-    public async Task<ActionResult<IEnumerable<Dto>>> GetEntitiesAsync(IAcEntitiesRequest<Dto> request, CancellationToken cancellationToken = default)
+    public async Task<ActionResult<IEnumerable<Dto>>> GetEntitiesAsync(IAcGetEntitiesRequest<Dto> request, CancellationToken cancellationToken = default)
     {
         var result = await _mediator.Send(request, cancellationToken);
 

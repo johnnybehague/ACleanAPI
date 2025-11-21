@@ -7,7 +7,7 @@ using MediatR;
 
 namespace ACleanAPI.Application.Users.Queries.GetUserById;
 
-public class GetUserByIdQueryHandler : AcGetEntityQueryHandlerBase<User, UserDetailDto>, 
+public class GetUserByIdQueryHandler : AcGetEntityByIdQueryHandlerBase<User, UserDetailDto>, 
     IRequestHandler<GetUserByIdQuery, Result<UserDetailDto>>
 {
     public GetUserByIdQueryHandler(IUserDetailRepository userRepository, IUserDetailMapper userMapper)

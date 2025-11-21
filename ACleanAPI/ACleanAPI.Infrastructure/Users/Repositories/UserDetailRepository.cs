@@ -6,7 +6,7 @@ using ACleanAPI.Infrastructure.Users.Mappers;
 
 namespace ACleanAPI.Infrastructure.Users.Repositories;
 
-public class UserDetailRepository : AcGetRepositoryBase<UserModel, User>,
+public class UserDetailRepository : AcGetEntityByIdRepositoryBase<UserModel, User>,
     IUserDetailRepository
 {
     public UserDetailRepository(AppDbContext context, IUserModelMapper mapper)
@@ -15,5 +15,5 @@ public class UserDetailRepository : AcGetRepositoryBase<UserModel, User>,
     }
 
     public async Task<User> GetByIdAsync(int id, CancellationToken cancellationToken)
-        => await GetEntityByConditionAsync(x => x.Id == id, cancellationToken);
+        => await GetByIdAsync(id, cancellationToken);
 }

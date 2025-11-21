@@ -6,7 +6,7 @@ using ACleanAPI.Infrastructure.Users.Mappers;
 
 namespace ACleanAPI.Infrastructure.Users.Repositories;
 
-public class UserRepository : AcGetRepositoryBase<UserModel, User>,
+public class UserRepository : AcGetEntitiesRepositoryBase<UserModel, User>,
     IUserRepository
 {
     public UserRepository(AppDbContext context, IUserModelMapper mapper)

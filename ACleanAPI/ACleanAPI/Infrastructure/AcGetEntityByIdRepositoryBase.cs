@@ -1,10 +1,9 @@
 ﻿using ACleanAPI.Domain;
 using Microsoft.EntityFrameworkCore;
-using System.Linq.Expressions;
 
 namespace ACleanAPI.Infrastructure;
 
-public class AcGetRepositoryBase<TModel, TEntity> : IAcRepository
+public class AcGetEntityByIdRepositoryBase<TModel, TEntity> : IAcGetEntityByIdRepository<TEntity>
     where TModel : AcModelBase
     where TEntity : AcEntityBase
 {
@@ -12,21 +11,15 @@ public class AcGetRepositoryBase<TModel, TEntity> : IAcRepository
 
     private IAcModelMapper<TModel, TEntity> _mapper { get; }
 
-    public AcGetRepositoryBase(DbContext context, IAcModelMapper<TModel, TEntity> mapper)
+    public AcGetEntityByIdRepositoryBase(DbContext context, IAcModelMapper<TModel, TEntity> mapper)
     {
         _context = context;
         _mapper = mapper;
     }
 
-    public async Task<IEnumerable<TEntity>> GetEntitiesAsync(CancellationToken cancellationToken)
+    public async Task<TEntity> GetEntityByIdAsync(int id, CancellationToken cancellationToken)
     {
-        var data = await GetDbSet().ToListAsync(cancellationToken);
-        return data.Select(_mapper.MapToEntity).ToList();
-    }
-
-    public async Task<TEntity> GetEntityByConditionAsync(Expression<Func<TModel, bool>> condition, CancellationToken cancellationToken)
-    {
-        var data = await GetDbSet().FirstOrDefaultAsync(condition, cancellationToken);
+        var data = await GetDbSet().FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
         return _mapper.MapToEntity(data);
     }
 
