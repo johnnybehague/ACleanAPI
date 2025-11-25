@@ -46,7 +46,7 @@ jobs:
         run: |
           # --- Start SonarCloud Analysis ---
           ${{ runner.temp }}\scanner\dotnet-sonarscanner begin `
-            /k:"ACleanAPI" `
+            /k:"johnnybehague_ACleanAPI" `
             /o:"johnnybehague" `
             /d:sonar.token="${{ secrets.SONAR_TOKEN }}" `
             /d:sonar.cs.vstest.reportsPaths="**/TestResults/*.trx" `
