@@ -41,6 +41,7 @@ jobs:
       - name: Build, Test and Analyze with SonarCloud
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        working-directory: ./ACleanAPI
         shell: powershell
         run: |
           # --- Start SonarCloud Analysis ---
@@ -57,6 +58,9 @@ jobs:
           # --- Run tests + coverage ---
           dotnet test --collect:"XPlat Code Coverage" --logger "trx"
 
+          # Debug : voir si la couverture existe
+          Get-ChildItem -Recurse -Filter "*.cobertura.xml"
+          
           # --- End SonarCloud Analysis ---
           ${{ runner.temp }}\scanner\dotnet-sonarscanner end `
             /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
