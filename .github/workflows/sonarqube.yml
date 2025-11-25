@@ -41,7 +41,6 @@ jobs:
       - name: Build, Test and Analyze with SonarCloud
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        working-directory: ./ACleanAPI
         shell: powershell
         run: |
           # --- Start SonarCloud Analysis ---
