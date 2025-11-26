@@ -50,7 +50,7 @@ jobs:
             /o:"johnnybehague" `
             /d:sonar.token="${{ secrets.SONAR_TOKEN }}" `
             /d:sonar.cs.vstest.reportsPaths="**/TestResults/*.trx" `
-            /d:sonar.coverageReportPaths="ACleanAPI/ACleanAPI.Tests/**/coverage.cobertura.xml"
+            /d:sonar.coverageReportPaths="**/TestResults/**/coverage.cobertura.xml"
 
           # --- Build solution ---
           dotnet build
