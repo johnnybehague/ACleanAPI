@@ -8,12 +8,12 @@ on:
   workflow_dispatch:
 
 permissions:
-  pull-requests: read # allows SonarQube to decorate PRs with analysis results
+  pull-requests: read
 
 jobs:
   build:
     runs-on: windows-latest
-    
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -23,7 +23,6 @@ jobs:
         with:
           dotnet-version: "8.0.x"
 
-      # Cache SonarCloud scanner
       - name: Cache SonarCloud Scanner
         id: cache-sonar-scanner
         uses: actions/cache@v4
@@ -38,29 +37,33 @@ jobs:
           New-Item -Path ${{ runner.temp }}\scanner -ItemType Directory
           dotnet tool update dotnet-sonarscanner --tool-path ${{ runner.temp }}\scanner
 
-      - name: Build, Test and Analyze with SonarCloud
+      - name: Build, Test & Analyze
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         working-directory: ./ACleanAPI
         shell: powershell
         run: |
-          # --- Start SonarCloud Analysis ---
+          # --- SonarCloud START ---
           ${{ runner.temp }}\scanner\dotnet-sonarscanner begin `
             /k:"johnnybehague_ACleanAPI" `
             /o:"johnnybehague" `
             /d:sonar.token="${{ secrets.SONAR_TOKEN }}" `
             /d:sonar.cs.vstest.reportsPaths="**/TestResults/*.trx" `
-            /d:sonar.coverageReportPaths="ACleanAPI.Tests/**/coverage.cobertura.xml"
+            /d:sonar.coverageReportPaths="ACleanAPI.Tests/TestResults/coverage.opencover.xml"
 
-          # --- Build solution ---
-          dotnet build
+          # --- Build ---
+          dotnet build --configuration Release
 
-          # --- Run tests + coverage ---
-          dotnet test --collect:"XPlat Code Coverage" --logger "trx"
+          # --- Tests + couverture (Coverlet intégré à dotnet test) ---
+          dotnet test ACleanAPI.Tests `
+            --logger "trx" `
+            /p:CollectCoverage=true `
+            /p:CoverletOutput=TestResults/coverage.opencover.xml `
+            /p:CoverletOutputFormat=opencover
 
-          # Debug : voir si la couverture existe
+          # Debug: afficher le fichier généré
           Get-ChildItem -Recurse -Filter "*.cobertura.xml"
-          
-          # --- End SonarCloud Analysis ---
+
+          # --- SonarCloud END ---
           ${{ runner.temp }}\scanner\dotnet-sonarscanner end `
             /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
