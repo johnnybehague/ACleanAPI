@@ -1,5 +1,5 @@
 ﻿using ACleanAPI.Example.Domain.Users.Entities;
-using ACleanAPI.Infrastructure;
+using ACleanAPI.Infrastructure.Interfaces;
 
 namespace ACleanAPI.Example.Domain.Users.Interfaces;
 

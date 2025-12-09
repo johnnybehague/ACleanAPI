@@ -1,9 +1,10 @@
-﻿using ACleanAPI.Domain;
-using ACleanAPI.Infrastructure;
+﻿using ACleanAPI.Application.Interfaces;
+using ACleanAPI.Domain.Interfaces;
+using ACleanAPI.Infrastructure.Interfaces;
 using FluentResults;
 using MediatR;
 
-namespace ACleanAPI.Application;
+namespace ACleanAPI.Application.QueryHandlers;
 
 public abstract class AcGetEntitiesQueryHandlerBase<TEntity, TDto>
     where TEntity : IAcEntity

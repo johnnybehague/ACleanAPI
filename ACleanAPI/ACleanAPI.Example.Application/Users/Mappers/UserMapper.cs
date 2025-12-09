@@ -1,4 +1,4 @@
-﻿using ACleanAPI.Application;
+﻿using ACleanAPI.Application.Interfaces;
 using ACleanAPI.Example.Application.Users.DTO;
 using ACleanAPI.Example.Domain.Users.Entities;
 

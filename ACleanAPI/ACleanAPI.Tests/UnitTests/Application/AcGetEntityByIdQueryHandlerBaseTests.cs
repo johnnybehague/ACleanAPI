@@ -1,0 +1,78 @@
+﻿using ACleanAPI.Application.Interfaces;
+using ACleanAPI.Infrastructure.Interfaces;
+using ACleanAPI.Tests.App.Application;
+using ACleanAPI.Tests.Common;
+using Moq;
+namespace ACleanAPI.Tests.UnitTests.Application;
+
+[TestClass]
+public sealed class AcGetEntityByIdQueryHandlerBaseTests
+{
+    private Mock<IAcGetEntityByIdRepository<UserTestEntity>> _repositoryMock;
+    private Mock<IAcEntityMapper<UserTestEntity, UserTestDto>> _mapperMock;
+    private GetUserByIdTestQueryHandler _handler;
+
+    [TestInitialize]
+    public void Setup()
+    {
+        _repositoryMock = new Mock<IAcGetEntityByIdRepository<UserTestEntity>>();
+        _mapperMock = new Mock<IAcEntityMapper<UserTestEntity, UserTestDto>>();
+        _handler = new GetUserByIdTestQueryHandler(
+            _repositoryMock.Object,
+            _mapperMock.Object);
+    }
+
+    [TestMethod]
+    public async Task Handle_ShouldCallRepository()
+    {
+        // Arrange
+        var requestMock = new Mock<IAcGetEntityByIdRequest<UserTestDto>>();
+        var cancellationToken = CancellationToken.None;
+
+        // Act
+        var result = await _handler.Handle(requestMock.Object, cancellationToken);
+
+        // Assert
+        _repositoryMock.Verify(r => r.GetEntityByIdAsync(It.IsAny<int>(), cancellationToken), Times.Once);
+    }
+
+    [TestMethod]
+    public async Task Handle_ShouldMapEntityToDto()
+    {
+        // Arrange
+        var requestMock = new Mock<IAcGetEntityByIdRequest<UserTestDto>>();
+        var cancellationToken = CancellationToken.None;
+        var mockedTestEntity = new UserTestEntity { Id = 1 };
+
+        _repositoryMock.Setup(r => r.GetEntityByIdAsync(It.IsAny<int>(), cancellationToken))
+            .ReturnsAsync(mockedTestEntity);
+        _mapperMock.Setup(m => m.MapToDto(It.IsAny<UserTestEntity>()))
+            .Returns(new UserTestDto { Id = 1 }); // Revoir le code
+        // Act
+        var result = await _handler.Handle(requestMock.Object, cancellationToken);
+
+        // Assert
+        _mapperMock.Verify(r => r.MapToDto(It.IsAny<UserTestEntity>()), Times.Once);
+    }
+
+    [TestMethod]
+    public async Task Handle_ShouldReturnsOkWithDto()
+    {
+        // Arrange
+        var requestMock = new Mock<IAcGetEntityByIdRequest<UserTestDto>>();
+        var cancellationToken = CancellationToken.None;
+        var mockedTestEntity = new UserTestEntity { Id = 1 };
+
+        _repositoryMock.Setup(r => r.GetEntityByIdAsync(It.IsAny<int>(), cancellationToken))
+            .ReturnsAsync(mockedTestEntity);
+        _mapperMock.Setup(m => m.MapToDto(It.IsAny<UserTestEntity>()))
+            .Returns(new UserTestDto { Id = 1 }); // Revoir le code
+
+        // Act
+        var result = await _handler.Handle(requestMock.Object, cancellationToken);
+
+        // Assert
+        Assert.IsTrue(result.IsSuccess);
+        Assert.AreEqual(mockedTestEntity.Id, result.Value.Id);
+    }
+}

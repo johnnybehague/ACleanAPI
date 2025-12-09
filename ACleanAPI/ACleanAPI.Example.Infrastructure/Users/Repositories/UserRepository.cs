@@ -3,7 +3,7 @@ using ACleanAPI.Example.Domain.Users.Interfaces;
 using ACleanAPI.Example.Infrastructure.Models;
 using ACleanAPI.Example.Infrastructure.Persistence;
 using ACleanAPI.Example.Infrastructure.Users.Mappers;
-using ACleanAPI.Infrastructure;
+using ACleanAPI.Infrastructure.Repositories;
 
 namespace ACleanAPI.Example.Infrastructure.Users.Repositories;
 

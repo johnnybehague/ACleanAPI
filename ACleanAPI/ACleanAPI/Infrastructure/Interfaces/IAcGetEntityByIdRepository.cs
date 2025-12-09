@@ -1,6 +1,6 @@
-﻿using ACleanAPI.Domain;
+﻿using ACleanAPI.Domain.Interfaces;
 
-namespace ACleanAPI.Infrastructure;
+namespace ACleanAPI.Infrastructure.Interfaces;
 
 public interface IAcGetEntityByIdRepository<TEntity>
     where TEntity : IAcEntity

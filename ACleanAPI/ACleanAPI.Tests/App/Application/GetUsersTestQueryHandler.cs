@@ -1,9 +1,10 @@
-﻿using ACleanAPI.Application;
-using ACleanAPI.Infrastructure;
+﻿using ACleanAPI.Application.Interfaces;
+using ACleanAPI.Application.QueryHandlers;
+using ACleanAPI.Infrastructure.Interfaces;
+using ACleanAPI.Tests.Common;
 using FluentResults;
-using MediatR;
 
-namespace ACleanAPI.Tests.Common;
+namespace ACleanAPI.Tests.App.Application;
 
 public class GetUsersTestQueryHandler : AcGetEntitiesQueryHandlerBase<UserTestEntity, UserTestDto>
 {
@@ -13,5 +14,5 @@ public class GetUsersTestQueryHandler : AcGetEntitiesQueryHandlerBase<UserTestEn
     }
 
     public async Task<Result<IEnumerable<UserTestDto>>> Handle(IAcGetEntitiesRequest<UserTestDto> request, CancellationToken cancellationToken)
-        => await this.HandleRequest(request, cancellationToken);
+        => await HandleRequest(request, cancellationToken);
 }

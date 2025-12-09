@@ -1,6 +1,6 @@
 ﻿using ACleanAPI.Example.Domain.Users.Entities;
 using ACleanAPI.Example.Infrastructure.Models;
-using ACleanAPI.Infrastructure;
+using ACleanAPI.Infrastructure.Interfaces;
 
 namespace ACleanAPI.Example.Infrastructure.Users.Mappers;
 

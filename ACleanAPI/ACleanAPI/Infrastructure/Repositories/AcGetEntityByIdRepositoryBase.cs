@@ -1,7 +1,8 @@
 ﻿using ACleanAPI.Domain;
+using ACleanAPI.Infrastructure.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
-namespace ACleanAPI.Infrastructure;
+namespace ACleanAPI.Infrastructure.Repositories;
 
 public class AcGetEntityByIdRepositoryBase<TModel, TEntity> : IAcGetEntityByIdRepository<TEntity>
     where TModel : AcModelBase

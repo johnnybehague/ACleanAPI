@@ -1,6 +1,6 @@
-﻿using ACleanAPI.Domain;
+﻿using ACleanAPI.Domain.Interfaces;
 
-namespace ACleanAPI.Application;
+namespace ACleanAPI.Application.Interfaces;
 
 public interface IAcEntityMapper<TEntity, TDto>
     where TEntity : IAcEntity

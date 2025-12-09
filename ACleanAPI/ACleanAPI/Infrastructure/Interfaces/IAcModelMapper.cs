@@ -1,6 +1,6 @@
-﻿using ACleanAPI.Domain;
+﻿using ACleanAPI.Domain.Interfaces;
 
-namespace ACleanAPI.Infrastructure;
+namespace ACleanAPI.Infrastructure.Interfaces;
 
 public interface IAcModelMapper<TModel, TEntity>
     where TModel : IAcModel

@@ -1,9 +1,10 @@
-﻿using ACleanAPI.Application;
-using ACleanAPI.Infrastructure;
+﻿using ACleanAPI.Application.Interfaces;
+using ACleanAPI.Infrastructure.Interfaces;
+using ACleanAPI.Tests.App.Application;
 using ACleanAPI.Tests.Common;
 using Moq;
 
-namespace ACleanAPI.Tests.Application;
+namespace ACleanAPI.Tests.UnitTests.Application;
 
 [TestClass]
 public sealed class AcGetEntitiesQueryHandlerBaseTests

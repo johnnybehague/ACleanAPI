@@ -1,8 +1,9 @@
-﻿using ACleanAPI.Domain;
-using ACleanAPI.Infrastructure;
+﻿using ACleanAPI.Application.Interfaces;
+using ACleanAPI.Domain.Interfaces;
+using ACleanAPI.Infrastructure.Interfaces;
 using FluentResults;
 
-namespace ACleanAPI.Application;
+namespace ACleanAPI.Application.QueryHandlers;
 
 public class AcGetEntityByIdQueryHandlerBase<TEntity, TDto> // : IRequestHandler<IAcEntitiesRequest<TDto>, Result<IEnumerable<TDto>>>
     where TEntity : IAcEntity
