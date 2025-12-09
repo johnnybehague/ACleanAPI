@@ -58,8 +58,8 @@ jobs:
           dotnet test ACleanAPI.Tests `
             --logger "trx" `
             /p:CollectCoverage=true `
-            /p:CoverletOutput=TestResults/coverage.opencover.xml `
-            /p:CoverletOutputFormat=opencover
+            /p:CoverletOutput=TestResults/coverage.cobertura.xml `
+            /p:CoverletOutputFormat=cobertura
 
           # Debug: afficher le fichier généré
           Get-ChildItem -Recurse -Filter "*.opencover.xml"
