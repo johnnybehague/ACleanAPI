@@ -61,6 +61,11 @@ jobs:
           # --- Run tests (trx) ---
           dotnet test --logger "trx" --results-directory TestResults
 
+          - name: Debug files
+            run: |
+              echo "Listing TestResults..."
+              dir -Recurse -Force TestResults || echo "No TestResults folder found"
+    
           # --- Convert coverage to Cobertura ---
           coverlet .\bin\Debug\net8.0 `
             --target "dotnet" `
