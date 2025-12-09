@@ -50,15 +50,19 @@ jobs:
             /o:"johnnybehague" `
             /d:sonar.token="${{ secrets.SONAR_TOKEN }}" `
             /d:sonar.cs.vstest.reportsPaths="**/TestResults/*.trx" `
-            /d:sonar.coverageReportPaths="**/TestResults/**/coverage.cobertura.xml"
+            /d:sonar.coverageReportPaths="**/TestResults/coverage.cobertura.xml"
 
-          # --- Build solution ---
-          dotnet build
+          # --- Run tests (trx) ---
+          dotnet test --logger "trx" --results-directory TestResults
 
-          # --- Run tests + coverage ---
-          dotnet test --collect:"XPlat Code Coverage" --logger "trx"
+          # --- Convert coverage to Cobertura ---
+          coverlet .\bin\Debug\net8.0 `
+            --target "dotnet" `
+            --targetargs "test --no-build" `
+            --format cobertura `
+            --output "TestResults/coverage"
 
-          # Debug : voir si la couverture existe
+          # Debug
           Get-ChildItem -Recurse -Filter "*.cobertura.xml"
           
           # --- End SonarCloud Analysis ---
