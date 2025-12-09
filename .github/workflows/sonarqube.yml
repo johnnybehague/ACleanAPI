@@ -62,7 +62,7 @@ jobs:
             /p:CoverletOutputFormat=opencover
 
           # Debug: afficher le fichier généré
-          Get-ChildItem -Recurse -Filter "*.cobertura.xml"
+          Get-ChildItem -Recurse -Filter "*.opencover.xml"
 
           # --- SonarCloud END ---
           ${{ runner.temp }}\scanner\dotnet-sonarscanner end `
