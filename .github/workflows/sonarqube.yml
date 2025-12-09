@@ -49,7 +49,7 @@ jobs:
             /o:"johnnybehague" `
             /d:sonar.token="${{ secrets.SONAR_TOKEN }}" `
             /d:sonar.cs.vstest.reportsPaths="**/TestResults/*.trx" `
-            /d:sonar.cs.cobertura.reportsPaths="**/coverage.cobertura.xml"
+            /d:sonar.cs.opencover.reportsPaths="**/coverage.cobertura.xml"
 
           # --- Build ---
           dotnet build --configuration Release
