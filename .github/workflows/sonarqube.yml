@@ -49,7 +49,7 @@ jobs:
             /o:"johnnybehague" `
             /d:sonar.token="${{ secrets.SONAR_TOKEN }}" `
             /d:sonar.cs.vstest.reportsPaths="**/TestResults/*.trx" `
-            /d:sonar.coverageReportPaths="ACleanAPI.Tests/TestResults/coverage.opencover.xml"
+            /d:sonar.cs.cobertura.reportsPaths="**/coverage.cobertura.xml"
 
           # --- Build ---
           dotnet build --configuration Release
@@ -62,7 +62,7 @@ jobs:
             /p:CoverletOutputFormat=cobertura
 
           # Debug: afficher le fichier généré
-          Get-ChildItem -Recurse -Filter "*.opencover.xml"
+          Get-ChildItem -Recurse -Filter "*.cobertura.xml"
 
           # --- SonarCloud END ---
           ${{ runner.temp }}\scanner\dotnet-sonarscanner end `
