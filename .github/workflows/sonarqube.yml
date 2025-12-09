@@ -57,25 +57,16 @@ jobs:
             /d:sonar.token="${{ secrets.SONAR_TOKEN }}" `
             /d:sonar.cs.vstest.reportsPaths="**/TestResults/*.trx" `
             /d:sonar.coverageReportPaths="**/TestResults/coverage.cobertura.xml"
-
-          # --- Run tests (trx) ---
-          dotnet test --logger "trx" --results-directory TestResults
-
-          - name: Debug files
-            run: |
-              echo "Listing TestResults..."
-              dir -Recurse -Force TestResults || echo "No TestResults folder found"
-    
-          # --- Convert coverage to Cobertura ---
-          coverlet .\bin\Debug\net8.0 `
-            --target "dotnet" `
-            --targetargs "test --no-build" `
-            --format cobertura `
-            --output "TestResults/coverage"
-
-          # Debug
+      
+          # --- Run tests with coverage ---
+          dotnet test --logger "trx" `
+            /p:CollectCoverage=true `
+            /p:CoverletOutput=TestResults/coverage `
+            /p:CoverletOutputFormat=cobertura
+      
+          # Debug : check files
           Get-ChildItem -Recurse -Filter "*.cobertura.xml"
-          
+      
           # --- End SonarCloud Analysis ---
           ${{ runner.temp }}\scanner\dotnet-sonarscanner end `
             /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
