@@ -5,7 +5,7 @@ using MediatR;
 
 namespace ACleanAPI.Application;
 
-public abstract class AcGetEntitiesQueryHandlerBase<TEntity, TDto> // : IRequestHandler<IAcEntitiesRequest<TDto>, Result<IEnumerable<TDto>>>
+public abstract class AcGetEntitiesQueryHandlerBase<TEntity, TDto>
     where TEntity : IAcEntity
     where TDto : IAcEntityDto
 {

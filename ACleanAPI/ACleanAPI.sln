@@ -5,13 +5,13 @@ VisualStudioVersion = 17.14.36623.8
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ACleanAPI", "ACleanAPI\ACleanAPI.csproj", "{F64C6D9E-68A2-4716-B06D-10D9D59CE0D8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ACleanAPI.API", "ACleanAPI.API\ACleanAPI.API.csproj", "{9410D32C-A66B-4C77-A513-031BBB5AEA53}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ACleanAPI.Example.API", "ACleanAPI.Example.API\ACleanAPI.Example.API.csproj", "{9410D32C-A66B-4C77-A513-031BBB5AEA53}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ACleanAPI.Application", "ACleanAPI.Application\ACleanAPI.Application.csproj", "{5BAF9F21-0F19-4C67-8838-A64C830977B0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ACleanAPI.Example.Application", "ACleanAPI.Example.Application\ACleanAPI.Example.Application.csproj", "{5BAF9F21-0F19-4C67-8838-A64C830977B0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ACleanAPI.Domain", "ACleanAPI.Domain\ACleanAPI.Domain.csproj", "{178AF063-38EA-49D4-BD9E-A01AAEECC89E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ACleanAPI.Example.Domain", "ACleanAPI.Example.Domain\ACleanAPI.Example.Domain.csproj", "{178AF063-38EA-49D4-BD9E-A01AAEECC89E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ACleanAPI.Infrastructure", "ACleanAPI.Infrastructure\ACleanAPI.Infrastructure.csproj", "{3C44079E-7B6C-443F-BC2A-1968FEFD20EB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ACleanAPI.Example.Infrastructure", "ACleanAPI.Example.Infrastructure\ACleanAPI.Example.Infrastructure.csproj", "{3C44079E-7B6C-443F-BC2A-1968FEFD20EB}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Example", "Example", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
 EndProject
