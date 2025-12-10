@@ -4,9 +4,11 @@ using ACleanAPI.Example.Infrastructure.Users.Mappers;
 using ACleanAPI.Example.Infrastructure.Users.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using System.Diagnostics.CodeAnalysis;
 
 namespace ACleanAPI.Example.Infrastructure;
 
+[ExcludeFromCodeCoverage]
 public static class InfrastructureDependencyInjection
 {
     public static IServiceCollection AddInfrastructure(this IServiceCollection services)
