@@ -1,4 +1,4 @@
-﻿using ACleanAPI.Application;
+﻿using ACleanAPI.Application.Core;
 using ACleanAPI.Application.Interfaces;
 using FluentResults;
 using MediatR;

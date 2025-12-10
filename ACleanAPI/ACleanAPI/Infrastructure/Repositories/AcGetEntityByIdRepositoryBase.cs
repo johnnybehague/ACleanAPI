@@ -1,4 +1,5 @@
-﻿using ACleanAPI.Domain;
+﻿using ACleanAPI.Domain.Core;
+using ACleanAPI.Infrastructure.Core;
 using ACleanAPI.Infrastructure.Interfaces;
 using Microsoft.EntityFrameworkCore;
 

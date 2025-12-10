@@ -31,7 +31,7 @@ public sealed class AcGetEntitiesQueryHandlerBaseTests
         var cancellationToken = CancellationToken.None;
 
         // Act
-        var result = await _handler.Handle(requestMock.Object, cancellationToken);
+        await _handler.Handle(requestMock.Object, cancellationToken);
 
         // Assert
         _repositoryMock.Verify(r => r.GetEntitiesAsync(cancellationToken), Times.Once);
@@ -45,14 +45,14 @@ public sealed class AcGetEntitiesQueryHandlerBaseTests
         var cancellationToken = CancellationToken.None;
         var entities = new List<UserTestEntity>
         {
-            new UserTestEntity { Id = 1 },
-            new UserTestEntity { Id = 2 }
+            new UserTestEntity { Id = 1, FirstName = "John", LastName = "Doe", Email = "john@doe.com" },
+            new UserTestEntity { Id = 2, FirstName = "Jane", LastName = "Doe", Email = "jane@doe.com" }
         };
         _repositoryMock.Setup(r => r.GetEntitiesAsync(cancellationToken))
             .ReturnsAsync(entities);
 
         // Act
-        var result = await _handler.Handle(requestMock.Object, cancellationToken);
+        await _handler.Handle(requestMock.Object, cancellationToken);
 
         // Assert
         _mapperMock.Verify(r => r.MapToDto(It.IsAny<UserTestEntity>()), Times.Exactly(entities.Count));
@@ -66,8 +66,8 @@ public sealed class AcGetEntitiesQueryHandlerBaseTests
         var cancellationToken = CancellationToken.None;
         var entities = new List<UserTestEntity>
         {
-            new UserTestEntity { Id = 1 },
-            new UserTestEntity { Id = 2 }
+            new UserTestEntity { Id = 1, FirstName = "John", LastName = "Doe", Email = "john@doe.com" },
+            new UserTestEntity { Id = 2, FirstName = "Jane", LastName = "Doe", Email = "jane@doe.com" }
         };
         _repositoryMock.Setup(r => r.GetEntitiesAsync(cancellationToken))
             .ReturnsAsync(entities);

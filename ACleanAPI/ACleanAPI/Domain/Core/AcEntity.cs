@@ -1,6 +1,6 @@
 ﻿using ACleanAPI.Domain.Interfaces;
 
-namespace ACleanAPI.Domain;
+namespace ACleanAPI.Domain.Core;
 
 public class AcEntityBase : IAcEntity
 {

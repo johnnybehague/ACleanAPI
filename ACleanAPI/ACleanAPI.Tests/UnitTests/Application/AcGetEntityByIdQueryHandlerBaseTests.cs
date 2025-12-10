@@ -30,7 +30,7 @@ public sealed class AcGetEntityByIdQueryHandlerBaseTests
         var cancellationToken = CancellationToken.None;
 
         // Act
-        var result = await _handler.Handle(requestMock.Object, cancellationToken);
+        await _handler.Handle(requestMock.Object, cancellationToken);
 
         // Assert
         _repositoryMock.Verify(r => r.GetEntityByIdAsync(It.IsAny<int>(), cancellationToken), Times.Once);
@@ -49,7 +49,7 @@ public sealed class AcGetEntityByIdQueryHandlerBaseTests
         _mapperMock.Setup(m => m.MapToDto(It.IsAny<UserTestEntity>()))
             .Returns(new UserTestDto { Id = 1 }); // Revoir le code
         // Act
-        var result = await _handler.Handle(requestMock.Object, cancellationToken);
+        await _handler.Handle(requestMock.Object, cancellationToken);
 
         // Assert
         _mapperMock.Verify(r => r.MapToDto(It.IsAny<UserTestEntity>()), Times.Once);
@@ -61,12 +61,12 @@ public sealed class AcGetEntityByIdQueryHandlerBaseTests
         // Arrange
         var requestMock = new Mock<IAcGetEntityByIdRequest<UserTestDto>>();
         var cancellationToken = CancellationToken.None;
-        var mockedTestEntity = new UserTestEntity { Id = 1 };
+        var mockedTestEntity = new UserTestEntity { Id = 1, FirstName = "John", LastName = "Doe" };
 
         _repositoryMock.Setup(r => r.GetEntityByIdAsync(It.IsAny<int>(), cancellationToken))
             .ReturnsAsync(mockedTestEntity);
         _mapperMock.Setup(m => m.MapToDto(It.IsAny<UserTestEntity>()))
-            .Returns(new UserTestDto { Id = 1 }); // Revoir le code
+            .Returns(new UserTestDto { Id = 1, FirstName = "John", LastName = "Doe" });
 
         // Act
         var result = await _handler.Handle(requestMock.Object, cancellationToken);
@@ -74,5 +74,7 @@ public sealed class AcGetEntityByIdQueryHandlerBaseTests
         // Assert
         Assert.IsTrue(result.IsSuccess);
         Assert.AreEqual(mockedTestEntity.Id, result.Value.Id);
+        Assert.AreEqual(mockedTestEntity.FirstName, result.Value.FirstName);
+        Assert.AreEqual(mockedTestEntity.LastName, result.Value.LastName);
     }
 }

@@ -1,4 +1,4 @@
-﻿using ACleanAPI.Domain;
+﻿using ACleanAPI.Domain.Core;
 using ACleanAPI.Domain.Interfaces;
 
 namespace ACleanAPI.Tests.Common;
