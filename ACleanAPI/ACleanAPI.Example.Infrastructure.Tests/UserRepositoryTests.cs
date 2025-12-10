@@ -27,6 +27,12 @@ public sealed class UserRepositoryTests
         _repository = new UserRepository(_context, _mapperMock.Object);
     }
 
+    [TestCleanup]
+    public void Cleanup()
+    {
+        _context?.Dispose();
+    }
+
     [TestMethod]
     public async Task GetAllAsync_ReturnsMappedUsers()
     {

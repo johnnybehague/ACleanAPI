@@ -86,7 +86,7 @@ jobs:
       # --- Tests: ACleanAPI.Example.Infrastructure.Tests ---
       - name: Run tests for ACleanAPI.Example.Infrastructure.Tests
         working-directory: ./ACleanAPI
-        run: dotnet test ACleanAPI.Example.Infrastructure.Tests `
+        run: dotnet test --settings test.runsettings ACleanAPI.Example.Infrastructure.Tests `
               --logger "trx" `
               /p:CollectCoverage=true `
               /p:CoverletOutputFormat=opencover `
