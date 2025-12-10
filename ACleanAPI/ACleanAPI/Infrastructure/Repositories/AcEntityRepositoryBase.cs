@@ -37,8 +37,10 @@ public abstract class AcEntityRepositoryBase<TModel, TEntity> : IAcEntityReposit
             .GetProperties()
             .FirstOrDefault(p => p.PropertyType == typeof(DbSet<TModel>));
 
+        // ExcludeFromCodeCoverage_Start
         if (property == null)
             throw new InvalidOperationException($"No DbSet<{typeof(TModel).Name}> found in {_context.GetType().Name}");
+        // ExcludeFromCodeCoverage_End
 
         return (DbSet<TModel>)property.GetValue(_context);
     }

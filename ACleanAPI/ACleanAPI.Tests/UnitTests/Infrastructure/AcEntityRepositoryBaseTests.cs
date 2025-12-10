@@ -1,10 +1,8 @@
-﻿using ACleanAPI.Application.Interfaces;
-using ACleanAPI.Infrastructure.Interfaces;
+﻿using ACleanAPI.Infrastructure.Interfaces;
 using ACleanAPI.Tests.App;
 using ACleanAPI.Tests.App.Infrastructure;
 using ACleanAPI.Tests.Common;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 
 namespace ACleanAPI.Tests.UnitTests.Infrastructure;
