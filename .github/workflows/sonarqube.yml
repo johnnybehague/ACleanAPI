@@ -60,7 +60,7 @@ jobs:
       - name: Run tests for ACleanAPI.Example.API.Tests
         working-directory: ./ACleanAPI
         run: dotnet test ACleanAPI.Example.API.Tests `
-              --logger "trx" `
+              --logger "trx;LogFileName=ACleanAPI.Example.API.trx" `
               /p:CollectCoverage=true `
               /p:CoverletOutputFormat=opencover `
               /p:CoverletOutput=TestResults/coverage.opencover.xml
@@ -69,7 +69,7 @@ jobs:
       - name: Run tests for ACleanAPI.Example.Application.Tests
         working-directory: ./ACleanAPI
         run: dotnet test ACleanAPI.Example.Application.Tests `
-              --logger "trx" `
+              --logger "trx;LogFileName=ACleanAPI.Example.Application.trx" `
               /p:CollectCoverage=true `
               /p:CoverletOutputFormat=opencover `
               /p:CoverletOutput=TestResults/coverage.opencover.xml
@@ -78,7 +78,7 @@ jobs:
       - name: Run tests for ACleanAPI.Example.Domain.Tests
         working-directory: ./ACleanAPI
         run: dotnet test ACleanAPI.Example.Domain.Tests `
-              --logger "trx" `
+              --logger "trx;LogFileName=ACleanAPI.Example.Domain.trx" `
               /p:CollectCoverage=true `
               /p:CoverletOutputFormat=opencover `
               /p:CoverletOutput=TestResults/coverage.opencover.xml
@@ -87,7 +87,7 @@ jobs:
       - name: Run tests for ACleanAPI.Example.Infrastructure.Tests
         working-directory: ./ACleanAPI
         run: dotnet test --settings test.runsettings ACleanAPI.Example.Infrastructure.Tests `
-              --logger "trx" `
+              --logger "trx;LogFileName=ACleanAPI.Example.Infrastructure.trx" `
               /p:CollectCoverage=true `
               /p:CoverletOutputFormat=opencover `
               /p:CoverletOutput=TestResults/coverage.opencover.xml
@@ -96,7 +96,7 @@ jobs:
       - name: Run tests for ACleanAPI.Tests
         working-directory: ./ACleanAPI
         run: dotnet test ACleanAPI.Tests `
-              --logger "trx" `
+              --logger "trx;LogFileName=ACleanAPI.trx" `
               /p:CollectCoverage=true `
               /p:CoverletOutputFormat=opencover `
               /p:CoverletOutput=TestResults/coverage.opencover.xml
