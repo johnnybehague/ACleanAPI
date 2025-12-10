@@ -8,7 +8,7 @@ namespace ACleanAPI.Tests.App.Application;
 
 public class GetUserByIdTestQueryHandler : AcGetEntityByIdQueryHandlerBase<UserTestEntity, UserTestDto>
 {
-    public GetUserByIdTestQueryHandler(IAcGetEntityByIdRepository<UserTestEntity> repository, IAcEntityMapper<UserTestEntity, UserTestDto> mapper)
+    public GetUserByIdTestQueryHandler(IAcEntityRepository<UserTestEntity> repository, IAcEntityMapper<UserTestEntity, UserTestDto> mapper)
     : base(repository, mapper)
     {
     }

@@ -2,8 +2,10 @@
 
 namespace ACleanAPI.Infrastructure.Interfaces;
 
-public interface IAcGetEntitiesRepository<TEntity>
+public interface IAcEntityRepository<TEntity>
     where TEntity : IAcEntity
 {
     Task<IEnumerable<TEntity>> GetEntitiesAsync(CancellationToken cancellationToken);
+
+    Task<TEntity> GetEntityByIdAsync(int id, CancellationToken cancellationToken);
 }

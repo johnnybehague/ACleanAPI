@@ -9,10 +9,10 @@ public class AcGetEntityByIdQueryHandlerBase<TEntity, TDto> // : IRequestHandler
     where TEntity : IAcEntity
     where TDto : IAcEntityDto
 {
-    private readonly IAcGetEntityByIdRepository<TEntity> _repository;
+    private readonly IAcEntityRepository<TEntity> _repository;
     private readonly IAcEntityMapper<TEntity, TDto> _mapper;
 
-    protected AcGetEntityByIdQueryHandlerBase(IAcGetEntityByIdRepository<TEntity> repository, IAcEntityMapper<TEntity, TDto> mapper)
+    protected AcGetEntityByIdQueryHandlerBase(IAcEntityRepository<TEntity> repository, IAcEntityMapper<TEntity, TDto> mapper)
     {
         _repository = repository;
         _mapper = mapper;

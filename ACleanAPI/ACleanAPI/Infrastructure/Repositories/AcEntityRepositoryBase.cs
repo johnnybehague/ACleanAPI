@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ACleanAPI.Infrastructure.Repositories;
 
-public class AcGetEntityByIdRepositoryBase<TModel, TEntity> : IAcGetEntityByIdRepository<TEntity>
+public abstract class AcEntityRepositoryBase<TModel, TEntity> : IAcEntityRepository<TEntity>
     where TModel : AcModelBase
     where TEntity : AcEntityBase
 {
@@ -13,10 +13,16 @@ public class AcGetEntityByIdRepositoryBase<TModel, TEntity> : IAcGetEntityByIdRe
 
     private IAcModelMapper<TModel, TEntity> _mapper { get; }
 
-    public AcGetEntityByIdRepositoryBase(DbContext context, IAcModelMapper<TModel, TEntity> mapper)
+    public AcEntityRepositoryBase(DbContext context, IAcModelMapper<TModel, TEntity> mapper)
     {
         _context = context;
         _mapper = mapper;
+    }
+
+    public async Task<IEnumerable<TEntity>> GetEntitiesAsync(CancellationToken cancellationToken)
+    {
+        var data = await GetDbSet().ToListAsync(cancellationToken);
+        return data.Select(_mapper.MapToEntity).ToList();
     }
 
     public async Task<TEntity> GetEntityByIdAsync(int id, CancellationToken cancellationToken)
@@ -37,4 +43,3 @@ public class AcGetEntityByIdRepositoryBase<TModel, TEntity> : IAcGetEntityByIdRe
         return (DbSet<TModel>)property.GetValue(_context);
     }
 }
-

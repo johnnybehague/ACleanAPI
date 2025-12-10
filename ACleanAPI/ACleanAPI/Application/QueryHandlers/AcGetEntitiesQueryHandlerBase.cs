@@ -10,10 +10,10 @@ public abstract class AcGetEntitiesQueryHandlerBase<TEntity, TDto>
     where TEntity : IAcEntity
     where TDto : IAcEntityDto
 {
-    private readonly IAcGetEntitiesRepository<TEntity> _repository;
+    private readonly IAcEntityRepository<TEntity> _repository;
     private readonly IAcEntityMapper<TEntity, TDto> _mapper;
 
-    protected AcGetEntitiesQueryHandlerBase(IAcGetEntitiesRepository<TEntity> repository, IAcEntityMapper<TEntity, TDto> mapper)
+    protected AcGetEntitiesQueryHandlerBase(IAcEntityRepository<TEntity> repository, IAcEntityMapper<TEntity, TDto> mapper)
     {
         _repository = repository;
         _mapper = mapper;

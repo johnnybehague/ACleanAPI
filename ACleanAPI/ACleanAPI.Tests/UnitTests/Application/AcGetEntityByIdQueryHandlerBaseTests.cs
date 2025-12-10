@@ -8,14 +8,14 @@ namespace ACleanAPI.Tests.UnitTests.Application;
 [TestClass]
 public sealed class AcGetEntityByIdQueryHandlerBaseTests
 {
-    private Mock<IAcGetEntityByIdRepository<UserTestEntity>> _repositoryMock;
+    private Mock<IAcEntityRepository<UserTestEntity>> _repositoryMock;
     private Mock<IAcEntityMapper<UserTestEntity, UserTestDto>> _mapperMock;
     private GetUserByIdTestQueryHandler _handler;
 
     [TestInitialize]
     public void Setup()
     {
-        _repositoryMock = new Mock<IAcGetEntityByIdRepository<UserTestEntity>>();
+        _repositoryMock = new Mock<IAcEntityRepository<UserTestEntity>>();
         _mapperMock = new Mock<IAcEntityMapper<UserTestEntity, UserTestDto>>();
         _handler = new GetUserByIdTestQueryHandler(
             _repositoryMock.Object,

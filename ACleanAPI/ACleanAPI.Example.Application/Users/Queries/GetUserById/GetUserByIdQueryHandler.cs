@@ -11,7 +11,7 @@ namespace ACleanAPI.Example.Application.Users.Queries.GetUserById;
 public class GetUserByIdQueryHandler : AcGetEntityByIdQueryHandlerBase<User, UserDetailDto>, 
     IRequestHandler<GetUserByIdQuery, Result<UserDetailDto>>
 {
-    public GetUserByIdQueryHandler(IUserDetailRepository userRepository, IUserDetailMapper userMapper)
+    public GetUserByIdQueryHandler(IUserRepository userRepository, IUserDetailMapper userMapper)
         : base(userRepository, userMapper)
     {
     }

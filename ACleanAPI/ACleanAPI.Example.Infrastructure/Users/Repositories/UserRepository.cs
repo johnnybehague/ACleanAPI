@@ -7,7 +7,7 @@ using ACleanAPI.Infrastructure.Repositories;
 
 namespace ACleanAPI.Example.Infrastructure.Users.Repositories;
 
-public class UserRepository : AcGetEntitiesRepositoryBase<UserModel, User>,
+public class UserRepository : AcEntityRepositoryBase<UserModel, User>,
     IUserRepository
 {
     public UserRepository(AppDbContext context, IUserModelMapper mapper)
@@ -17,4 +17,7 @@ public class UserRepository : AcGetEntitiesRepositoryBase<UserModel, User>,
 
     public async Task<IEnumerable<User>> GetAllAsync(CancellationToken cancellationToken)
         => await GetEntitiesAsync(cancellationToken);
+
+    public async Task<User> GetByIdAsync(int id, CancellationToken cancellationToken)
+        => await GetByIdAsync(id, cancellationToken);
 }
