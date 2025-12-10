@@ -2,6 +2,8 @@
 using ACleanAPI.Infrastructure.Core;
 using ACleanAPI.Infrastructure.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using System.Diagnostics.CodeAnalysis;
+using System.Reflection;
 
 namespace ACleanAPI.Infrastructure.Repositories;
 
@@ -37,11 +39,15 @@ public abstract class AcEntityRepositoryBase<TModel, TEntity> : IAcEntityReposit
             .GetProperties()
             .FirstOrDefault(p => p.PropertyType == typeof(DbSet<TModel>));
 
-        // ExcludeFromCodeCoverage_Start
-        if (property == null)
-            throw new InvalidOperationException($"No DbSet<{typeof(TModel).Name}> found in {_context.GetType().Name}");
-        // ExcludeFromCodeCoverage_End
+        CheckPropertyValidity(property);
 
         return (DbSet<TModel>)property.GetValue(_context);
+    }
+
+    [ExcludeFromCodeCoverage]
+    private void CheckPropertyValidity(PropertyInfo property)
+    {
+        if (property == null)
+            throw new InvalidOperationException($"No DbSet<{typeof(TModel).Name}> found in {_context.GetType().Name}");
     }
 }
