@@ -53,10 +53,12 @@ jobs:
 
       # --- Build ---
       - name: Build solution
+        working-directory: ./ACleanAPI
         run: dotnet build --configuration Release
 
       # --- Tests: ACleanAPI.Example.API.Tests ---
       - name: Run tests for ACleanAPI.Example.API.Tests
+        working-directory: ./ACleanAPI
         run: dotnet test ACleanAPI.Example.API.Tests `
               --logger "trx" `
               /p:CollectCoverage=true `
@@ -65,6 +67,7 @@ jobs:
 
       # --- Tests: ACleanAPI.Example.Application.Tests ---
       - name: Run tests for ACleanAPI.Example.Application.Tests
+        working-directory: ./ACleanAPI
         run: dotnet test ACleanAPI.Example.Application.Tests `
               --logger "trx" `
               /p:CollectCoverage=true `
@@ -73,6 +76,7 @@ jobs:
 
       # --- Tests: ACleanAPI.Example.Domain.Tests ---
       - name: Run tests for ACleanAPI.Example.Domain.Tests
+        working-directory: ./ACleanAPI
         run: dotnet test ACleanAPI.Example.Domain.Tests `
               --logger "trx" `
               /p:CollectCoverage=true `
@@ -81,6 +85,7 @@ jobs:
 
       # --- Tests: ACleanAPI.Example.Infrastructure.Tests ---
       - name: Run tests for ACleanAPI.Example.Infrastructure.Tests
+        working-directory: ./ACleanAPI
         run: dotnet test ACleanAPI.Example.Infrastructure.Tests `
               --logger "trx" `
               /p:CollectCoverage=true `
@@ -89,6 +94,7 @@ jobs:
 
       # --- Tests: ACleanAPI.Tests ---
       - name: Run tests for ACleanAPI.Tests
+        working-directory: ./ACleanAPI
         run: dotnet test ACleanAPI.Tests `
               --logger "trx" `
               /p:CollectCoverage=true `
@@ -97,6 +103,7 @@ jobs:
 
       # --- SonarCloud END ---
       - name: End SonarCloud analysis
+        working-directory: ./ACleanAPI
         run: |
           ${{ runner.temp }}\scanner\dotnet-sonarscanner end `
             /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
