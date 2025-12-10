@@ -1,8 +1,5 @@
 ﻿<RunSettings>
 	<MSTest>
-		<Parallelize>
-			<Workers>0</Workers>
-			<Scope>None</Scope>
-		</Parallelize>
+		<Parallelize Enabled="false" />
 	</MSTest>
 </RunSettings>
