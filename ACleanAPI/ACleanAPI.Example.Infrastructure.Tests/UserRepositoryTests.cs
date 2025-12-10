@@ -19,19 +19,12 @@ public sealed class UserRepositoryTests
     public void Setup()
     {
         var options = new DbContextOptionsBuilder<AppDbContext>()
-            .UseInMemoryDatabase(databaseName: "UserRepositoryTestDb")
+            .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
             .Options;
         _context = new AppDbContext(options);
 
         _mapperMock = new Mock<IUserModelMapper>();
         _repository = new UserRepository(_context, _mapperMock.Object);
-    }
-
-    [TestCleanup]
-    public void Cleanup()
-    {
-        _context.Database.EnsureDeleted();
-        _context.Dispose();
     }
 
     [TestMethod]
@@ -44,7 +37,7 @@ public sealed class UserRepositoryTests
                 new UserModel { Id = 2, FirstName = "Bob", LastName = "Martin", Email = "bob@martin.com" }
             };
         _context.Users.AddRange(userModels);
-        await _context.SaveChangesAsync();
+        _context.SaveChanges();
 
         var users = new List<User>
             {
@@ -72,7 +65,7 @@ public sealed class UserRepositoryTests
         // Arrange
         var userModel = new UserModel { Id = 10, FirstName = "Jean", LastName = "Martin", Email = "jean@martin.com" };
         _context.Users.Add(userModel);
-        await _context.SaveChangesAsync();
+        _context.SaveChanges();
 
         var user = new User { Id = 10, FirstName = "Jean", LastName = "Martin", Email = "jean@martin.com" };
         _mapperMock.Setup(m => m.MapToEntity(userModel)).Returns(user);
