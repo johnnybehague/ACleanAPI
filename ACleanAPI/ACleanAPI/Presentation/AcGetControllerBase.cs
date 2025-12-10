@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ACleanAPI.Presentation;
 
-public class AcGetControllerBase<Dto, DetailDto> : ControllerBase
+public abstract class AcGetControllerBase<Dto, DetailDto> : ControllerBase
     where Dto : AcEntityDtoBase
     where DetailDto : AcEntityDtoBase
 {
