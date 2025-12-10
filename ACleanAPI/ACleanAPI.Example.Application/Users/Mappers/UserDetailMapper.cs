@@ -4,22 +4,23 @@ using ACleanAPI.Example.Domain.Users.Entities;
 
 namespace ACleanAPI.Example.Application.Users.Mappers;
 
-public interface IUserMapper : IAcEntityMapper<User, UserDto>
+public interface IUserDetailMapper : IAcEntityMapper<User, UserDetailDto>
 {
 }
 
-public class UserMapper : IUserMapper
+public class UserDetailMapper : IUserDetailMapper
 {
-    public UserDto MapToDto(User user)
+    public UserDetailDto MapToDto(User user)
     {
         if (user == null)
             throw new ArgumentNullException(nameof(user));
 
-        return new UserDto
+        return new UserDetailDto
         {
             Id = user.Id,
             FirstName = user.FirstName,
-            LastName = user.LastName
+            LastName = user.LastName,
+            Email = user.Email
         };
     }
 }
