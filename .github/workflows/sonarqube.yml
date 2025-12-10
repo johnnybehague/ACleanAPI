@@ -37,13 +37,13 @@ jobs:
           New-Item -Path ${{ runner.temp }}\scanner -ItemType Directory
           dotnet tool update dotnet-sonarscanner --tool-path ${{ runner.temp }}\scanner
 
-      - name: Build, Test & Analyze
+      # --- SonarCloud BEGIN ---
+      - name: Begin SonarCloud analysis
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         working-directory: ./ACleanAPI
         shell: powershell
         run: |
-          # --- SonarCloud START ---
           ${{ runner.temp }}\scanner\dotnet-sonarscanner begin `
             /k:"johnnybehague_ACleanAPI" `
             /o:"johnnybehague" `
@@ -51,19 +51,59 @@ jobs:
             /d:sonar.cs.vstest.reportsPaths="**/TestResults/*.trx" `
             /d:sonar.cs.opencover.reportsPaths="**/coverage.opencover.xml"
 
-          # --- Build ---
-          dotnet build --configuration Release
+      # --- Build ---
+      - name: Build solution
+        working-directory: ./ACleanAPI
+        run: dotnet build --configuration Release
 
-          # --- Tests + couverture (Coverlet intégré à dotnet test) ---
-          dotnet test ACleanAPI.Tests `
-            --logger "trx" `
-            /p:CollectCoverage=true `
-            /p:CoverletOutput=TestResults/coverage.opencover.xml `
-            /p:CoverletOutputFormat=opencover 
+      # --- Tests: ACleanAPI.Example.API.Tests ---
+      - name: Run tests for ACleanAPI.Example.API.Tests
+        working-directory: ./ACleanAPI
+        run: dotnet test ACleanAPI.Example.API.Tests `
+              --logger "trx" `
+              /p:CollectCoverage=true `
+              /p:CoverletOutputFormat=opencover `
+              /p:CoverletOutput=TestResults/coverage.opencover.xml
 
-          # Debug: afficher le fichier généré
-          Get-ChildItem -Recurse -Filter "*.cobertura.xml"
+      # --- Tests: ACleanAPI.Example.Application.Tests ---
+      - name: Run tests for ACleanAPI.Example.Application.Tests
+        working-directory: ./ACleanAPI
+        run: dotnet test ACleanAPI.Example.Application.Tests `
+              --logger "trx" `
+              /p:CollectCoverage=true `
+              /p:CoverletOutputFormat=opencover `
+              /p:CoverletOutput=TestResults/coverage.opencover.xml
 
-          # --- SonarCloud END ---
+      # --- Tests: ACleanAPI.Example.Domain.Tests ---
+      - name: Run tests for ACleanAPI.Example.Domain.Tests
+        working-directory: ./ACleanAPI
+        run: dotnet test ACleanAPI.Example.Domain.Tests `
+              --logger "trx" `
+              /p:CollectCoverage=true `
+              /p:CoverletOutputFormat=opencover `
+              /p:CoverletOutput=TestResults/coverage.opencover.xml
+
+      # --- Tests: ACleanAPI.Example.Infrastructure.Tests ---
+      - name: Run tests for ACleanAPI.Example.Infrastructure.Tests
+        working-directory: ./ACleanAPI
+        run: dotnet test ACleanAPI.Example.Infrastructure.Tests `
+              --logger "trx" `
+              /p:CollectCoverage=true `
+              /p:CoverletOutputFormat=opencover `
+              /p:CoverletOutput=TestResults/coverage.opencover.xml
+
+      # --- Tests: ACleanAPI.Tests ---
+      - name: Run tests for ACleanAPI.Tests
+        working-directory: ./ACleanAPI
+        run: dotnet test ACleanAPI.Tests `
+              --logger "trx" `
+              /p:CollectCoverage=true `
+              /p:CoverletOutputFormat=opencover `
+              /p:CoverletOutput=TestResults/coverage.opencover.xml
+
+      # --- SonarCloud END ---
+      - name: End SonarCloud analysis
+        working-directory: ./ACleanAPI
+        run: |
           ${{ runner.temp }}\scanner\dotnet-sonarscanner end `
             /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
