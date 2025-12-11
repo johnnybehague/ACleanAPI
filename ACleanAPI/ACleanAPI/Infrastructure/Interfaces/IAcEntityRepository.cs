@@ -7,5 +7,5 @@ public interface IAcEntityRepository<TEntity>
 {
     Task<IEnumerable<TEntity>> GetEntitiesAsync(CancellationToken cancellationToken);
 
-    Task<TEntity> GetEntityByIdAsync(int id, CancellationToken cancellationToken);
+    Task<TEntity?> GetEntityByIdAsync(int id, CancellationToken cancellationToken);
 }

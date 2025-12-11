@@ -15,7 +15,7 @@ public abstract class AcEntityRepositoryBase<TModel, TEntity> : IAcEntityReposit
 
     private IAcModelMapper<TModel, TEntity> _mapper { get; }
 
-    public AcEntityRepositoryBase(DbContext context, IAcModelMapper<TModel, TEntity> mapper)
+    protected AcEntityRepositoryBase(DbContext context, IAcModelMapper<TModel, TEntity> mapper)
     {
         _context = context;
         _mapper = mapper;
@@ -23,25 +23,39 @@ public abstract class AcEntityRepositoryBase<TModel, TEntity> : IAcEntityReposit
 
     public async Task<IEnumerable<TEntity>> GetEntitiesAsync(CancellationToken cancellationToken)
     {
-        var data = await GetDbSet().ToListAsync(cancellationToken);
+        var data = await GetModelsAsync(cancellationToken);
         return data.Select(_mapper.MapToEntity).ToList();
     }
 
-    public async Task<TEntity> GetEntityByIdAsync(int id, CancellationToken cancellationToken)
+    public async Task<TEntity?> GetEntityByIdAsync(int id, CancellationToken cancellationToken)
     {
-        var data = await GetDbSet().FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
-        return _mapper.MapToEntity(data);
+        var data = await GetModelByIdAsync(id, cancellationToken);
+        return  data != null ? _mapper.MapToEntity(data) : null;
     }
 
-    private DbSet<TModel> GetDbSet()
+    private async Task<IEnumerable<TModel>> GetModelsAsync(CancellationToken cancellationToken)
+    {
+        var dbSet = GetDbSet();
+
+        return dbSet != null ? await dbSet.ToListAsync(cancellationToken) : Enumerable.Empty<TModel>();
+    }
+
+    private async Task<TModel?> GetModelByIdAsync(int id, CancellationToken cancellationToken)
+    {
+        var dbSet = GetDbSet();
+        return dbSet != null ? await dbSet.FirstOrDefaultAsync(x => x.Id == id, cancellationToken) : null;
+    }
+
+    private DbSet<TModel>? GetDbSet()
     {
         var property = _context.GetType()
             .GetProperties()
-            .FirstOrDefault(p => p.PropertyType == typeof(DbSet<TModel>));
+            .First(p => p.PropertyType == typeof(DbSet<TModel>));
 
         CheckPropertyValidity(property);
 
-        return (DbSet<TModel>)property.GetValue(_context);
+        var propertyInfo = property.GetValue(_context);
+        return propertyInfo != null ? (DbSet<TModel>)propertyInfo : null;
     }
 
     [ExcludeFromCodeCoverage]
