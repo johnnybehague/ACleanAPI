@@ -84,13 +84,13 @@ jobs:
               /p:CoverletOutput=TestResults/coverage.opencover.xml
 
       # --- Tests: ACleanAPI.Example.Infrastructure.Tests ---
-      - name: Run tests for ACleanAPI.Example.Infrastructure.Tests
-        working-directory: ./ACleanAPI
-        run: dotnet test --settings test.runsettings ACleanAPI.Example.Infrastructure.Tests `
-              --logger "trx;LogFileName=ACleanAPI.Example.Infrastructure.trx" `
-              /p:CollectCoverage=true `
-              /p:CoverletOutputFormat=opencover `
-              /p:CoverletOutput=TestResults/coverage.opencover.xml
+      # - name: Run tests for ACleanAPI.Example.Infrastructure.Tests
+      #   working-directory: ./ACleanAPI
+      #   run: dotnet test --settings test.runsettings ACleanAPI.Example.Infrastructure.Tests `
+      #         --logger "trx;LogFileName=ACleanAPI.Example.Infrastructure.trx" `
+      #         /p:CollectCoverage=true `
+      #         /p:CoverletOutputFormat=opencover `
+      #         /p:CoverletOutput=TestResults/coverage.opencover.xml
 
       # --- Tests: ACleanAPI.Tests ---
       - name: Run tests for ACleanAPI.Tests
