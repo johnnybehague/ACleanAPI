@@ -88,7 +88,6 @@ jobs:
         working-directory: ./ACleanAPI
         run: dotnet test --settings test.runsettings ACleanAPI.Example.Infrastructure.Tests `
               --logger "trx;LogFileName=ACleanAPI.Example.Infrastructure.trx" `
-              --no-build `
               /p:CollectCoverage=true `
               /p:CoverletOutputFormat=opencover `
               /p:CoverletOutput=TestResults/coverage.opencover.xml

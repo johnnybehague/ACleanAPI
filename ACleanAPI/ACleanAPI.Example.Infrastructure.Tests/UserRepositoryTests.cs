@@ -25,7 +25,17 @@ public sealed class UserRepositoryTests
 
         _mapperMock = new Mock<IUserModelMapper>();
         _repository = new UserRepository(_context, _mapperMock.Object);
+    }
 
+    [TestCleanup]
+    public void Cleanup()
+    {
+        _context?.Dispose();
+    }
+
+    [TestMethod]
+    public async Task GetAllAsync_ReturnsMappedUsers()
+    {
         // Arrange
         var userModels = new List<UserModel>
             {
@@ -43,18 +53,6 @@ public sealed class UserRepositoryTests
 
         _mapperMock.Setup(m => m.MapToEntity(userModels[0])).Returns(users[0]);
         _mapperMock.Setup(m => m.MapToEntity(userModels[1])).Returns(users[1]);
-    }
-
-    [TestCleanup]
-    public void Cleanup()
-    {
-        _context?.Dispose();
-    }
-
-    [TestMethod]
-    public async Task GetAllAsync_ReturnsMappedUsers()
-    {
-        // Arrange
 
         // Act
         var result = await _repository.GetAllAsync(CancellationToken.None);
@@ -71,16 +69,22 @@ public sealed class UserRepositoryTests
     public async Task GetByIdAsync_ReturnsMappedUser_WhenUserExists()
     {
         // Arrange
+        var userModel = new UserModel { Id = 10, FirstName = "Jean", LastName = "Martin", Email = "jean@martin.com" };
+        _context.Users.Add(userModel);
+        _context.SaveChanges();
+
+        var user = new User { Id = 10, FirstName = "Jean", LastName = "Martin", Email = "jean@martin.com" };
+        _mapperMock.Setup(m => m.MapToEntity(userModel)).Returns(user);
 
         // Act
-        var result = await _repository.GetByIdAsync(1, CancellationToken.None);
+        var result = await _repository.GetByIdAsync(10, CancellationToken.None);
 
         // Assert
         Assert.IsNotNull(result);
-        Assert.AreEqual(1, result.Id);
-        Assert.AreEqual("Alice", result.FirstName);
-        Assert.AreEqual("Dupont", result.LastName);
-        Assert.AreEqual("alice@dupont.com", result.Email);
+        Assert.AreEqual(user.Id, result.Id);
+        Assert.AreEqual(user.FirstName, result.FirstName);
+        Assert.AreEqual(user.LastName, result.LastName);
+        Assert.AreEqual(user.Email, result.Email);
     }
 
     [TestMethod]
