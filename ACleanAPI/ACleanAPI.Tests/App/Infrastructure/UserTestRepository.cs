@@ -14,6 +14,6 @@ public class UserTestRepository : AcEntityRepositoryBase<UserTestModel, UserTest
     public Task<IEnumerable<UserTestEntity>> GetUsersAsync(CancellationToken cancellationToken)
         => GetEntitiesAsync(cancellationToken);
 
-    public Task<UserTestEntity> GetUserByIdAsync(int id, CancellationToken cancellationToken)
+    public Task<UserTestEntity?> GetUserByIdAsync(int id, CancellationToken cancellationToken)
         => GetEntityByIdAsync(id, cancellationToken);
 }

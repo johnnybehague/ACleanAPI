@@ -56,7 +56,7 @@ public sealed class GetUserByIdQueryHandlerTests
         var query = new GetUserByIdQuery { Id = 99 };
         _userRepositoryMock
             .Setup(r => r.GetEntityByIdAsync(99, It.IsAny<CancellationToken>()))
-            .ReturnsAsync((User)null);
+            .ReturnsAsync((User?)null);
 
         // Act
         var result = await _handler.Handle(query, CancellationToken.None);

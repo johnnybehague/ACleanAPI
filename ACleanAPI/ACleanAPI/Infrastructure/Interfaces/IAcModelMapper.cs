@@ -2,7 +2,7 @@
 
 namespace ACleanAPI.Infrastructure.Interfaces;
 
-public interface IAcModelMapper<TModel, TEntity>
+public interface IAcModelMapper<in TModel, out TEntity>
     where TModel : IAcModel
     where TEntity : IAcEntity
 {

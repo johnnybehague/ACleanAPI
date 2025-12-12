@@ -2,7 +2,7 @@
 
 namespace ACleanAPI.Application.Interfaces;
 
-public interface IAcEntityMapper<TEntity, TDto>
+public interface IAcEntityMapper<in TEntity, out TDto>
     where TEntity : IAcEntity
     where TDto : IAcEntityDto
 {

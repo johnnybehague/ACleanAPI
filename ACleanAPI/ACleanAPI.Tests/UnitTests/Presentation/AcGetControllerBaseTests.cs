@@ -12,11 +12,10 @@ namespace ACleanAPI.Tests.UnitTests.Presentation;
 [TestClass]
 public sealed class AcGetControllerBaseTests
 {
-    private Mock<IMediator> _mediatorMock;
-    private UserTestController _controller;
+    private readonly Mock<IMediator> _mediatorMock;
+    private readonly UserTestController _controller;
 
-    [TestInitialize]
-    public void Setup()
+    public AcGetControllerBaseTests()
     {
         _mediatorMock = new Mock<IMediator>();
         _controller = new UserTestController(_mediatorMock.Object);

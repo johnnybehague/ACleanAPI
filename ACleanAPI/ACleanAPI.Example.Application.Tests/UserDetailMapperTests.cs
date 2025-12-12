@@ -8,17 +8,9 @@ public sealed class UserDetailMapperTests
 {
     private UserDetailMapper _mapper;
 
-    [TestInitialize]
-    public void Setup()
+    public UserDetailMapperTests()
     {
         _mapper = new UserDetailMapper();
-    }
-
-    [TestMethod]
-    public void MapToDto_ThrowsArgumentNullException_WhenUserIsNull()
-    {
-        // Act & Assert
-        Assert.ThrowsException<ArgumentNullException>(() => _mapper.MapToDto(null));
     }
 
     [TestMethod]

@@ -6,6 +6,8 @@ using ACleanAPI.Example.Infrastructure.Persistence;
 using Asp.Versioning;
 using System.Diagnostics.CodeAnalysis;
 
+namespace ACleanAPI.Example.API;
+
 [ExcludeFromCodeCoverage]
 internal class Program
 {

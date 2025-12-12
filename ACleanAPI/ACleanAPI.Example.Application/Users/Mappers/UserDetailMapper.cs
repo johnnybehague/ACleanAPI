@@ -12,9 +12,6 @@ public class UserDetailMapper : IUserDetailMapper
 {
     public UserDetailDto MapToDto(User user)
     {
-        if (user == null)
-            throw new ArgumentNullException(nameof(user));
-
         return new UserDetailDto
         {
             Id = user.Id,

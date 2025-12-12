@@ -8,12 +8,11 @@ namespace ACleanAPI.Tests.UnitTests.Application;
 [TestClass]
 public sealed class AcGetEntityByIdQueryHandlerBaseTests
 {
-    private Mock<IAcEntityRepository<UserTestEntity>> _repositoryMock;
-    private Mock<IAcEntityMapper<UserTestEntity, UserTestDto>> _mapperMock;
-    private GetUserByIdTestQueryHandler _handler;
+    private readonly Mock<IAcEntityRepository<UserTestEntity>> _repositoryMock;
+    private readonly Mock<IAcEntityMapper<UserTestEntity, UserTestDto>> _mapperMock;
+    private readonly GetUserByIdTestQueryHandler _handler;
 
-    [TestInitialize]
-    public void Setup()
+    public AcGetEntityByIdQueryHandlerBaseTests()
     {
         _repositoryMock = new Mock<IAcEntityRepository<UserTestEntity>>();
         _mapperMock = new Mock<IAcEntityMapper<UserTestEntity, UserTestDto>>();
