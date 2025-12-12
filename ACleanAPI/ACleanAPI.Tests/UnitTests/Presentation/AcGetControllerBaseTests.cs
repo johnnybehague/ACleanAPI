@@ -32,7 +32,7 @@ public sealed class AcGetControllerBaseTests
         var action = await _controller.GetEntitiesAsync(request);
 
         // Assert
-        Assert.IsInstanceOfType(action.Result, typeof(BadRequestResult));
+        Assert.IsInstanceOfType(action.Result, typeof(BadRequestObjectResult));
     }
 
 
@@ -140,6 +140,6 @@ public sealed class AcGetControllerBaseTests
         var action = await _controller.GetEntityAsync(request);
 
         // Assert
-        Assert.IsInstanceOfType(action.Result, typeof(BadRequestResult));
+        Assert.IsInstanceOfType(action.Result, typeof(BadRequestObjectResult));
     }
 }
