@@ -12,7 +12,7 @@ public abstract class AcGetControllerBase<Dto, DetailDto> : ControllerBase
 {
     protected readonly IMediator _mediator;
 
-    public AcGetControllerBase(IMediator mediator)
+    protected AcGetControllerBase(IMediator mediator)
     {
         _mediator = mediator;
     }

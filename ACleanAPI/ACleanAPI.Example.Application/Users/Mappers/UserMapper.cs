@@ -12,8 +12,7 @@ public class UserMapper : IUserMapper
 {
     public UserDto MapToDto(User user)
     {
-        if (user == null)
-            throw new ArgumentNullException(nameof(user));
+        ArgumentNullException.ThrowIfNull(user);
 
         return new UserDto
         {

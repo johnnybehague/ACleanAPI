@@ -8,8 +8,7 @@ public sealed class UserMapperTests
 {
     private UserMapper _mapper;
 
-    [TestInitialize]
-    public void Setup()
+    public UserMapperTests()
     {
         _mapper = new UserMapper();
     }

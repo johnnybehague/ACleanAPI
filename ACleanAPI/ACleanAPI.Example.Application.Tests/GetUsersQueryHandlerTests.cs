@@ -14,8 +14,7 @@ public sealed class GetUsersQueryHandlerTests
     private Mock<IUserMapper> _userMapperMock;
     private GetUsersQueryHandler _handler;
 
-    [TestInitialize]
-    public void Setup()
+    public GetUsersQueryHandlerTests()
     {
         _userRepositoryMock = new Mock<IUserRepository>();
         _userMapperMock = new Mock<IUserMapper>();

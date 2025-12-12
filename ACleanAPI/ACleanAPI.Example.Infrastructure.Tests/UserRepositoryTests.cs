@@ -15,8 +15,7 @@ public sealed class UserRepositoryTests
     private Mock<IUserModelMapper> _mapperMock;
     private UserRepository _repository;
 
-    [TestInitialize]
-    public void Setup()
+    public UserRepositoryTests()
     {
         var options = new DbContextOptionsBuilder<AppDbContext>()
             .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
