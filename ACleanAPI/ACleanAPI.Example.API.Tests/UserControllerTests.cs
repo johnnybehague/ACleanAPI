@@ -12,8 +12,8 @@ namespace ACleanAPI.Example.API.Tests
     [TestClass]
     public sealed class UserControllerTests
     {
-        private Mock<IMediator> _mediatorMock;
-        private UserController _controller;
+        private readonly Mock<IMediator> _mediatorMock;
+        private readonly UserController _controller;
 
         public UserControllerTests()
         {

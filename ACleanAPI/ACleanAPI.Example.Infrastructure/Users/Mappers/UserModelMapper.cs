@@ -10,9 +10,6 @@ public class UserModelMapper : IUserModelMapper
 {
     public User MapToEntity(UserModel model)
     {
-        if (model == null)
-            throw new ArgumentNullException(nameof(model));
-
         return new User
         {
             Id = model.Id,
