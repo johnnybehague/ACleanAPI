@@ -13,6 +13,6 @@ public class GetUserByIdTestQueryHandler : AcGetEntityByIdQueryHandlerBase<UserT
     {
     }
 
-    public async Task<Result<UserTestDto>> Handle(IAcGetEntityByIdRequest<UserTestDto> request, CancellationToken cancellationToken)
+    public async Task<Result<UserTestDto?>> Handle(IAcGetEntityByIdRequest<UserTestDto> request, CancellationToken cancellationToken)
         => await HandleRequest(request, cancellationToken);
 }

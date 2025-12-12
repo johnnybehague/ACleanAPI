@@ -18,10 +18,10 @@ public class AcGetEntityByIdQueryHandlerBase<TEntity, TDto> // : IRequestHandler
         _mapper = mapper;
     }
 
-    public async Task<Result<TDto>> HandleRequest(IAcGetEntityByIdRequest<TDto> request, CancellationToken cancellationToken)
+    public async Task<Result<TDto?>> HandleRequest(IAcGetEntityByIdRequest<TDto> request, CancellationToken cancellationToken)
     {
         var entity = await _repository.GetEntityByIdAsync(request.Id, cancellationToken);
-        var dto = _mapper.MapToDto(entity);
+        TDto? dto = entity != null ? _mapper.MapToDto(entity) : default(TDto);
         return Result.Ok(dto);
     }
 }

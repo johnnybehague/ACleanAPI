@@ -10,9 +10,9 @@ namespace ACleanAPI.Example.Application.Tests;
 [TestClass]
 public sealed class GetUserByIdQueryHandlerTests
 {
-    private Mock<IUserRepository> _userRepositoryMock;
-    private Mock<IUserDetailMapper> _userDetailMapperMock;
-    private GetUserByIdQueryHandler _handler;
+    private readonly Mock<IUserRepository> _userRepositoryMock;
+    private readonly Mock<IUserDetailMapper> _userDetailMapperMock;
+    private readonly GetUserByIdQueryHandler _handler;
 
     public GetUserByIdQueryHandlerTests()
     {

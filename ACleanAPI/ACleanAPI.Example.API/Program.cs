@@ -25,13 +25,6 @@ internal class Program
             options.ReportApiVersions = true;
         });
 
-        // Pour Swagger / ApiExplorer
-        //builder.Services.AddVersionedApiExplorer(options =>
-        //{
-        //    options.GroupNameFormat = "'v'VVV";
-        //    options.SubstituteApiVersionInUrl = true;
-        //});
-
         builder.Services.AddControllers();
         // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
         builder.Services.AddOpenApi();
