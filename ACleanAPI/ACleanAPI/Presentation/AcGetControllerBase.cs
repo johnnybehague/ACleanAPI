@@ -19,6 +19,9 @@ public abstract class AcGetControllerBase<Dto, DetailDto> : ControllerBase
 
     public async Task<ActionResult<IEnumerable<Dto>>> GetEntitiesAsync(IAcGetEntitiesRequest<Dto> request, CancellationToken cancellationToken = default)
     {
+        if (!ModelState.IsValid)
+            return BadRequest(ModelState);
+
         var result = await _mediator.Send(request, cancellationToken);
 
         if (result.IsFailed)
@@ -29,6 +32,9 @@ public abstract class AcGetControllerBase<Dto, DetailDto> : ControllerBase
 
     public async Task<ActionResult<DetailDto>> GetEntityAsync(IRequest<Result<DetailDto>> request, CancellationToken cancellationToken = default)
     {
+        if (!ModelState.IsValid)
+            return BadRequest(ModelState);
+
         var result = await _mediator.Send(request, cancellationToken);
         if (result.IsFailed)
             return BadRequest();

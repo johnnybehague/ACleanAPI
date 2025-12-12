@@ -7,6 +7,6 @@ public interface IUserRepository : IAcEntityRepository<User>
 {
     Task<IEnumerable<User>> GetAllAsync(CancellationToken cancellationToken);
 
-    Task<User> GetByIdAsync(int id, CancellationToken cancellationToken);
+    Task<User?> GetByIdAsync(int id, CancellationToken cancellationToken);
 }
 

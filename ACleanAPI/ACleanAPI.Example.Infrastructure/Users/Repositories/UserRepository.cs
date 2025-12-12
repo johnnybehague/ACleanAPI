@@ -18,6 +18,6 @@ public class UserRepository : AcEntityRepositoryBase<UserModel, User>,
     public async Task<IEnumerable<User>> GetAllAsync(CancellationToken cancellationToken)
         => await GetEntitiesAsync(cancellationToken);
 
-    public async Task<User> GetByIdAsync(int id, CancellationToken cancellationToken)
-        => await GetByIdAsync(id, cancellationToken);
+    public async Task<User?> GetByIdAsync(int id, CancellationToken cancellationToken)
+        => await GetEntityByIdAsync(id, cancellationToken);
 }

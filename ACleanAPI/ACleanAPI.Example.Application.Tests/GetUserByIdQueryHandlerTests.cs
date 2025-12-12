@@ -14,8 +14,7 @@ public sealed class GetUserByIdQueryHandlerTests
     private Mock<IUserDetailMapper> _userDetailMapperMock;
     private GetUserByIdQueryHandler _handler;
 
-    [TestInitialize]
-    public void Setup()
+    public GetUserByIdQueryHandlerTests()
     {
         _userRepositoryMock = new Mock<IUserRepository>();
         _userDetailMapperMock = new Mock<IUserDetailMapper>();

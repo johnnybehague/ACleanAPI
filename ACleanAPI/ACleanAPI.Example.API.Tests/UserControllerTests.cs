@@ -15,8 +15,7 @@ namespace ACleanAPI.Example.API.Tests
         private Mock<IMediator> _mediatorMock;
         private UserController _controller;
 
-        [TestInitialize]
-        public void Setup()
+        public UserControllerTests()
         {
             _mediatorMock = new Mock<IMediator>();
             _controller = new UserController(_mediatorMock.Object);
