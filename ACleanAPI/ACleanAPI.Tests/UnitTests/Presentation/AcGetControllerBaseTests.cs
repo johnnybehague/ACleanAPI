@@ -22,6 +22,21 @@ public sealed class AcGetControllerBaseTests
     }
 
     [TestMethod]
+    public async Task GetEntitiesAsync_ReturnsBadRequest_WhenModelStateIsInvalid()
+    {
+        // Arrange
+        _controller.ModelState.AddModelError("field", "Error message");
+        var request = Mock.Of<IAcGetEntitiesRequest<UserTestDto>>();
+
+        // Act
+        var action = await _controller.GetEntitiesAsync(request);
+
+        // Assert
+        Assert.IsInstanceOfType(action.Result, typeof(BadRequestResult));
+    }
+
+
+    [TestMethod]
     public async Task GetEntitiesAsync_ReturnsOk_WhenQuerySuccess()
     {
         // Arrange
@@ -106,6 +121,20 @@ public sealed class AcGetControllerBaseTests
         _mediatorMock
             .Setup(m => m.Send(request, It.IsAny<CancellationToken>()))
             .ReturnsAsync(Result.Fail<UserTestDetailDto>("error"));
+
+        // Act
+        var action = await _controller.GetEntityAsync(request);
+
+        // Assert
+        Assert.IsInstanceOfType(action.Result, typeof(BadRequestResult));
+    }
+
+    [TestMethod]
+    public async Task GetEntityAsync_ReturnsBadRequest_WhenModelStateIsInvalid()
+    {
+        // Arrange
+        _controller.ModelState.AddModelError("field", "Error message");
+        var request = Mock.Of<IRequest<Result<UserTestDetailDto>>>();
 
         // Act
         var action = await _controller.GetEntityAsync(request);

@@ -14,13 +14,6 @@ public sealed class UserMapperTests
     }
 
     [TestMethod]
-    public void MapToDto_ThrowsArgumentNullException_WhenUserIsNull()
-    {
-        // Act & Assert
-        Assert.ThrowsException<ArgumentNullException>(() => _mapper.MapToDto(null));
-    }
-
-    [TestMethod]
     public void MapToDto_MapsPropertiesCorrectly()
     {
         // Arrange

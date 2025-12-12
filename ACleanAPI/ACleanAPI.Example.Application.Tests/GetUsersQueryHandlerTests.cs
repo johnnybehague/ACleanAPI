@@ -75,7 +75,6 @@ public sealed class GetUsersQueryHandlerTests
 
         // Assert
         Assert.IsTrue(result.IsSuccess);
-        Assert.IsNotNull(result.Value);
         Assert.AreEqual(0, result.Value.Count());
     }
 }

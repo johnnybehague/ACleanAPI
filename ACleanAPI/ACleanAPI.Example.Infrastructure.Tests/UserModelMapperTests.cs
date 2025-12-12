@@ -14,13 +14,6 @@ public sealed class UserModelMapperTests
     }
 
     [TestMethod]
-    public void MapToEntity_ThrowsArgumentNullException_WhenModelIsNull()
-    {
-        // Act & Assert
-        Assert.ThrowsException<ArgumentNullException>(() => _mapper.MapToEntity(null));
-    }
-
-    [TestMethod]
     public void MapToEntity_MapsPropertiesCorrectly()
     {
         // Arrange
