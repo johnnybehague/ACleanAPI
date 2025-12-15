@@ -30,7 +30,6 @@ namespace ACleanAPI.Example.API.Tests
                 new UserDto { Id = 1, FirstName = "John", LastName = "Doe" },
                 new UserDto { Id = 2, FirstName = "Jane", LastName = "Smith" }
             };
-            var result = new ActionResult<IEnumerable<UserDto>>(users);
 
             _mediatorMock
                 .Setup(m => m.Send(It.IsAny<GetUsersQuery>(), It.IsAny<CancellationToken>()))
@@ -52,11 +51,10 @@ namespace ACleanAPI.Example.API.Tests
         {
             // Arrange
             var userDetail = new UserDetailDto { Id = 1, Email = "john@doe.com", FirstName = "John", LastName = "Doe" };
-            var result = new ActionResult<UserDetailDto>(userDetail);
 
             _mediatorMock
                 .Setup(m => m.Send(It.Is<GetUserByIdQuery>(q => q.Id == 1), It.IsAny<CancellationToken>()))
-                .ReturnsAsync(Result.Ok(userDetail));
+                .ReturnsAsync(Result.Ok<UserDetailDto?>(userDetail));
 
             // Act
             var response = await _controller.Details(1, CancellationToken.None);

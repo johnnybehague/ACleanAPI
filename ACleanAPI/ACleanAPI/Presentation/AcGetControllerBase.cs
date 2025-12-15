@@ -30,7 +30,7 @@ public abstract class AcGetControllerBase<Dto, DetailDto> : ControllerBase
         return Ok(result.Value);
     }
 
-    public async Task<ActionResult<DetailDto>> GetEntityAsync(IRequest<Result<DetailDto>> request, CancellationToken cancellationToken = default)
+    public async Task<ActionResult<DetailDto?>> GetEntityAsync(IRequest<Result<DetailDto?>> request, CancellationToken cancellationToken = default)
     {
         if (!ModelState.IsValid)
             return BadRequest(ModelState);
