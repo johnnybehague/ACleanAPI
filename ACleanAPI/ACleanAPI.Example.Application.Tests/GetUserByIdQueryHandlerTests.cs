@@ -1,4 +1,4 @@
-﻿using ACleanAPI.Example.Application.Users.DTO;
+using ACleanAPI.Example.Application.Users.DTO;
 using ACleanAPI.Example.Application.Users.Mappers;
 using ACleanAPI.Example.Application.Users.Queries.GetUserById;
 using ACleanAPI.Example.Domain.Users.Entities;
@@ -42,7 +42,6 @@ public sealed class GetUserByIdQueryHandlerTests
 
         // Assert
         Assert.IsTrue(result.IsSuccess);
-        Assert.IsNotNull(result.Value);
         Assert.AreEqual(dto.Id, result.Value.Id);
         Assert.AreEqual(dto.Email, result.Value.Email);
         Assert.AreEqual(dto.FirstName, result.Value.FirstName);

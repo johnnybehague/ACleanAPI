@@ -1,4 +1,4 @@
-﻿using ACleanAPI.Application.Interfaces;
+using ACleanAPI.Application.Interfaces;
 using ACleanAPI.Infrastructure.Interfaces;
 using ACleanAPI.Tests.App.Application;
 using ACleanAPI.Tests.Common;
@@ -72,7 +72,6 @@ public sealed class AcGetEntityByIdQueryHandlerBaseTests
 
         // Assert
         Assert.IsTrue(result.IsSuccess);
-        Assert.IsNotNull(result.Value);
         Assert.AreEqual(mockedTestEntity.Id, result.Value.Id);
         Assert.AreEqual(mockedTestEntity.FirstName, result.Value.FirstName);
         Assert.AreEqual(mockedTestEntity.LastName, result.Value.LastName);
