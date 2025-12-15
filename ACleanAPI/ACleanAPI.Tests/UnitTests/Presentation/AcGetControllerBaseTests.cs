@@ -82,7 +82,7 @@ public sealed class AcGetControllerBaseTests
         var detail = new UserTestDetailDto { Id = 10 };
         _mediatorMock
             .Setup(m => m.Send(request, It.IsAny<CancellationToken>()))
-            .ReturnsAsync(Result.Ok(detail));
+            .ReturnsAsync(Result.Ok<UserTestDetailDto?>(detail));
 
         // Act
         var action = await _controller.GetEntityByIdAsync(request);
@@ -98,7 +98,7 @@ public sealed class AcGetControllerBaseTests
     public async Task GetEntityAsync_ReturnsNotFound_WhenValueIsNull()
     {
         // Arrange
-        var request = Mock.Of<IRequest<Result<UserTestDetailDto>>>();
+        var request = Mock.Of<IAcGetEntityByIdRequest<UserTestDetailDto>>();
 
         _mediatorMock
             .Setup(m => m.Send(request, It.IsAny<CancellationToken>()))
@@ -115,11 +115,11 @@ public sealed class AcGetControllerBaseTests
     public async Task GetEntityAsync_ReturnsBadRequest_WhenQueryFails()
     {
         // Arrange
-        var request = Mock.Of<IRequest<Result<UserTestDetailDto>>>();
+        var request = Mock.Of<IAcGetEntityByIdRequest<UserTestDetailDto>>();
 
         _mediatorMock
             .Setup(m => m.Send(request, It.IsAny<CancellationToken>()))
-            .ReturnsAsync(Result.Fail<UserTestDetailDto>("error"));
+            .ReturnsAsync(Result.Fail<UserTestDetailDto?>("error"));
 
         // Act
         var action = await _controller.GetEntityByIdAsync(request);
@@ -133,7 +133,7 @@ public sealed class AcGetControllerBaseTests
     {
         // Arrange
         _controller.ModelState.AddModelError("field", "Error message");
-        var request = Mock.Of<IRequest<Result<UserTestDetailDto>>>();
+        var request = Mock.Of<IAcGetEntityByIdRequest<UserTestDetailDto>>();
 
         // Act
         var action = await _controller.GetEntityByIdAsync(request);
