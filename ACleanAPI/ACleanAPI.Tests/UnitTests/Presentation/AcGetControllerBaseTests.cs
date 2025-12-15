@@ -78,14 +78,14 @@ public sealed class AcGetControllerBaseTests
     public async Task GetEntityAsync_ReturnsOk_WhenValueExists()
     {
         // Arrange
-        var request = Mock.Of<IRequest<Result<UserTestDetailDto>>>();
+        var request = Mock.Of<IAcGetEntityByIdRequest<UserTestDetailDto>>();
         var detail = new UserTestDetailDto { Id = 10 };
         _mediatorMock
             .Setup(m => m.Send(request, It.IsAny<CancellationToken>()))
             .ReturnsAsync(Result.Ok(detail));
 
         // Act
-        var action = await _controller.GetEntityAsync(request);
+        var action = await _controller.GetEntityByIdAsync(request);
 
         // Assert
         var ok = action.Result as OkObjectResult;
@@ -105,7 +105,7 @@ public sealed class AcGetControllerBaseTests
             .ReturnsAsync(Result.Ok<UserTestDetailDto?>(null));
 
         // Act
-        var action = await _controller.GetEntityAsync(request);
+        var action = await _controller.GetEntityByIdAsync(request);
 
         // Assert
         Assert.IsInstanceOfType<NotFoundResult>(action.Result);
@@ -122,7 +122,7 @@ public sealed class AcGetControllerBaseTests
             .ReturnsAsync(Result.Fail<UserTestDetailDto>("error"));
 
         // Act
-        var action = await _controller.GetEntityAsync(request);
+        var action = await _controller.GetEntityByIdAsync(request);
 
         // Assert
         Assert.IsInstanceOfType<BadRequestResult>(action.Result);
@@ -136,7 +136,7 @@ public sealed class AcGetControllerBaseTests
         var request = Mock.Of<IRequest<Result<UserTestDetailDto>>>();
 
         // Act
-        var action = await _controller.GetEntityAsync(request);
+        var action = await _controller.GetEntityByIdAsync(request);
 
         // Assert
         Assert.IsInstanceOfType<BadRequestObjectResult>(action.Result);

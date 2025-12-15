@@ -1,6 +1,5 @@
 ﻿using ACleanAPI.Application.Core;
 using ACleanAPI.Application.Interfaces;
-using FluentResults;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -30,7 +29,7 @@ public abstract class AcGetControllerBase<Dto, DetailDto> : ControllerBase
         return Ok(result.Value);
     }
 
-    public async Task<ActionResult<DetailDto>> GetEntityAsync(IRequest<Result<DetailDto?>> request, CancellationToken cancellationToken = default)
+    public async Task<ActionResult<DetailDto>> GetEntityByIdAsync(IAcGetEntityByIdRequest<DetailDto> request, CancellationToken cancellationToken = default)
     {
         if (!ModelState.IsValid)
             return BadRequest(ModelState);
