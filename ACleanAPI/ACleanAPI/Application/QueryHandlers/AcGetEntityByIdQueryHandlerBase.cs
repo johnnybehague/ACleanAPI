@@ -21,7 +21,7 @@ public class AcGetEntityByIdQueryHandlerBase<TEntity, TDto> // : IRequestHandler
     public async Task<Result<TDto?>> HandleRequest(IAcGetEntityByIdRequest<TDto> request, CancellationToken cancellationToken)
     {
         var entity = await _repository.GetEntityByIdAsync(request.Id, cancellationToken);
-        TDto? dto = !object.Equals(entity, default(TEntity)) ? _mapper.MapToDto(entity) : default;
+        TDto? dto = entity is not null ? _mapper.MapToDto(entity) : default;
         return Result.Ok(dto);
     }
 }

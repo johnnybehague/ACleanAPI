@@ -72,6 +72,7 @@ public sealed class AcGetEntityByIdQueryHandlerBaseTests
 
         // Assert
         Assert.IsTrue(result.IsSuccess);
+        Assert.IsNotNull(result.Value);
         Assert.AreEqual(mockedTestEntity.Id, result.Value.Id);
         Assert.AreEqual(mockedTestEntity.FirstName, result.Value.FirstName);
         Assert.AreEqual(mockedTestEntity.LastName, result.Value.LastName);

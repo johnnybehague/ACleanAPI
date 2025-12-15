@@ -32,7 +32,7 @@ public sealed class AcGetControllerBaseTests
         var action = await _controller.GetEntitiesAsync(request);
 
         // Assert
-        Assert.IsInstanceOfType(action.Result, typeof(BadRequestObjectResult));
+        Assert.IsInstanceOfType<BadRequestObjectResult>(action.Result);
     }
 
 
@@ -71,7 +71,7 @@ public sealed class AcGetControllerBaseTests
         var action = await _controller.GetEntitiesAsync(request);
 
         // Assert
-        Assert.IsInstanceOfType(action.Result, typeof(BadRequestResult));
+        Assert.IsInstanceOfType<BadRequestResult>(action.Result);
     }
 
     [TestMethod]
@@ -80,7 +80,6 @@ public sealed class AcGetControllerBaseTests
         // Arrange
         var request = Mock.Of<IRequest<Result<UserTestDetailDto>>>();
         var detail = new UserTestDetailDto { Id = 10 };
-
         _mediatorMock
             .Setup(m => m.Send(request, It.IsAny<CancellationToken>()))
             .ReturnsAsync(Result.Ok(detail));
@@ -103,13 +102,13 @@ public sealed class AcGetControllerBaseTests
 
         _mediatorMock
             .Setup(m => m.Send(request, It.IsAny<CancellationToken>()))
-            .ReturnsAsync(Result.Ok<UserTestDetailDto>(null));
+            .ReturnsAsync(Result.Ok<UserTestDetailDto?>(null));
 
         // Act
         var action = await _controller.GetEntityAsync(request);
 
         // Assert
-        Assert.IsInstanceOfType(action.Result, typeof(NotFoundResult));
+        Assert.IsInstanceOfType<NotFoundResult>(action.Result);
     }
 
     [TestMethod]
@@ -126,7 +125,7 @@ public sealed class AcGetControllerBaseTests
         var action = await _controller.GetEntityAsync(request);
 
         // Assert
-        Assert.IsInstanceOfType(action.Result, typeof(BadRequestResult));
+        Assert.IsInstanceOfType<BadRequestResult>(action.Result);
     }
 
     [TestMethod]
@@ -140,6 +139,6 @@ public sealed class AcGetControllerBaseTests
         var action = await _controller.GetEntityAsync(request);
 
         // Assert
-        Assert.IsInstanceOfType(action.Result, typeof(BadRequestObjectResult));
+        Assert.IsInstanceOfType<BadRequestObjectResult>(action.Result);
     }
 }
