@@ -1,4 +1,4 @@
-﻿using ACleanAPI.Application.Core;
+using ACleanAPI.Application.Core;
 using ACleanAPI.Application.Interfaces;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -36,8 +36,13 @@ public abstract class AcGetControllerBase<Dto, DetailDto> : ControllerBase
 
         var result = await _mediator.Send(request, cancellationToken);
         if (result.IsFailed)
-            return BadRequest();
+        {
+            if(result.Errors.Any(e => e.Message == "ENTITY_NOT_FOUND"))
+                return NotFound();
 
-        return result.Value is not null ? Ok(result.Value) : NotFound();
+            return BadRequest();
+        }
+
+        return Ok(result.Value);
     }
 }

@@ -26,6 +26,7 @@ public sealed class AcGetEntityByIdQueryHandlerBaseTests
     {
         // Arrange
         var requestMock = new Mock<IAcGetEntityByIdRequest<UserTestDto>>();
+        requestMock.Setup(r => r.Id).Returns(1);
         var cancellationToken = CancellationToken.None;
 
         // Act
@@ -40,6 +41,7 @@ public sealed class AcGetEntityByIdQueryHandlerBaseTests
     {
         // Arrange
         var requestMock = new Mock<IAcGetEntityByIdRequest<UserTestDto>>();
+        requestMock.Setup(r => r.Id).Returns(1);
         var cancellationToken = CancellationToken.None;
         var mockedTestEntity = new UserTestEntity { Id = 1 };
 
@@ -59,6 +61,7 @@ public sealed class AcGetEntityByIdQueryHandlerBaseTests
     {
         // Arrange
         var requestMock = new Mock<IAcGetEntityByIdRequest<UserTestDto>>();
+        requestMock.Setup(r => r.Id).Returns(1);
         var cancellationToken = CancellationToken.None;
         var mockedTestEntity = new UserTestEntity { Id = 1, FirstName = "John", LastName = "Doe" };
 

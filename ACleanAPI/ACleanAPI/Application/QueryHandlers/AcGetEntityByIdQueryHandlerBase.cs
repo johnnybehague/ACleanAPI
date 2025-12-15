@@ -1,4 +1,4 @@
-﻿using ACleanAPI.Application.Interfaces;
+using ACleanAPI.Application.Interfaces;
 using ACleanAPI.Domain.Interfaces;
 using ACleanAPI.Infrastructure.Interfaces;
 using FluentResults;
@@ -20,7 +20,10 @@ public class AcGetEntityByIdQueryHandlerBase<TEntity, TDto>
 
     public async Task<Result<TDto>> HandleRequest(IAcGetEntityByIdRequest<TDto> request, CancellationToken cancellationToken)
     {
-        var entity = await _repository.GetEntityByIdAsync(request.Id, cancellationToken);
+        if(!request.Id.HasValue)
+            return Result.Fail("Id is required.");
+
+        var entity = await _repository.GetEntityByIdAsync(request.Id.Value, cancellationToken);
 
         if(entity is null)
             return Result.Fail("Entity not found.");

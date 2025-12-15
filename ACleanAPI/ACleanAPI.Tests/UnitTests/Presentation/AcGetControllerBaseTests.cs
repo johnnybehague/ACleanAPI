@@ -1,4 +1,4 @@
-﻿using ACleanAPI.Application.Interfaces;
+using ACleanAPI.Application.Interfaces;
 using ACleanAPI.Tests.App;
 using ACleanAPI.Tests.App.Presentation;
 using ACleanAPI.Tests.Common;
@@ -82,7 +82,7 @@ public sealed class AcGetControllerBaseTests
         var detail = new UserTestDetailDto { Id = 10 };
         _mediatorMock
             .Setup(m => m.Send(request, It.IsAny<CancellationToken>()))
-            .ReturnsAsync(Result.Ok<UserTestDetailDto?>(detail));
+            .ReturnsAsync(Result.Ok<UserTestDetailDto>(detail));
 
         // Act
         var action = await _controller.GetEntityByIdAsync(request);
@@ -102,7 +102,7 @@ public sealed class AcGetControllerBaseTests
 
         _mediatorMock
             .Setup(m => m.Send(request, It.IsAny<CancellationToken>()))
-            .ReturnsAsync(Result.Ok<UserTestDetailDto?>(null));
+            .ReturnsAsync(Result.Fail("ENTITY_NOT_FOUND"));
 
         // Act
         var action = await _controller.GetEntityByIdAsync(request);
@@ -119,7 +119,7 @@ public sealed class AcGetControllerBaseTests
 
         _mediatorMock
             .Setup(m => m.Send(request, It.IsAny<CancellationToken>()))
-            .ReturnsAsync(Result.Fail<UserTestDetailDto?>("error"));
+            .ReturnsAsync(Result.Fail("Some error"));
 
         // Act
         var action = await _controller.GetEntityByIdAsync(request);

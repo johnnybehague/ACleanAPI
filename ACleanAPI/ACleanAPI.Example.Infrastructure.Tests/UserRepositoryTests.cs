@@ -1,4 +1,4 @@
-﻿using ACleanAPI.Example.Domain.Users.Entities;
+using ACleanAPI.Example.Domain.Users.Entities;
 using ACleanAPI.Example.Infrastructure.Models;
 using ACleanAPI.Example.Infrastructure.Persistence;
 using ACleanAPI.Example.Infrastructure.Users.Mappers;
@@ -11,9 +11,9 @@ namespace ACleanAPI.Example.Infrastructure.Tests;
 [TestClass]
 public sealed class UserRepositoryTests
 {
-    private AppDbContext _context;
-    private Mock<IUserModelMapper> _mapperMock;
-    private UserRepository _repository;
+    private readonly AppDbContext _context;
+    private readonly Mock<IUserModelMapper> _mapperMock;
+    private readonly UserRepository _repository;
 
     public UserRepositoryTests()
     {
