@@ -1,4 +1,4 @@
-﻿using ACleanAPI.API.Controllers;
+using ACleanAPI.API.Controllers;
 using ACleanAPI.Example.Application.Users.DTO;
 using ACleanAPI.Example.Application.Users.Queries.GetUserById;
 using ACleanAPI.Example.Application.Users.Queries.GetUsers;
@@ -54,7 +54,7 @@ namespace ACleanAPI.Example.API.Tests
 
             _mediatorMock
                 .Setup(m => m.Send(It.Is<GetUserByIdQuery>(q => q.Id == 1), It.IsAny<CancellationToken>()))
-                .ReturnsAsync(Result.Ok<UserDetailDto?>(userDetail));
+                .ReturnsAsync(Result.Ok(userDetail));
 
             // Act
             var response = await _controller.Details(1, CancellationToken.None);

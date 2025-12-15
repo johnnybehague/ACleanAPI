@@ -21,6 +21,21 @@ public sealed class AcGetEntityByIdQueryHandlerBaseTests
             _mapperMock.Object);
     }
 
+    public async Task Handle_ShouldReturnFailWhenIdIsNull()
+    {
+        // Arrange
+        var requestMock = new Mock<IAcGetEntityByIdRequest<UserTestDto>>();
+        requestMock.Setup(r => r.Id).Returns((int?)null);
+        var cancellationToken = CancellationToken.None;
+
+        // Act
+        var result = await _handler.Handle(requestMock.Object, cancellationToken);
+
+        // Assert
+        Assert.IsTrue(result.IsFailed);
+        Assert.AreEqual("Id is required.", result.Errors[0].Message);
+    }
+
     [TestMethod]
     public async Task Handle_ShouldCallRepository()
     {

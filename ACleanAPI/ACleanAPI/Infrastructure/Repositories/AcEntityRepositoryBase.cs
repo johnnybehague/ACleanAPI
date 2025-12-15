@@ -1,4 +1,4 @@
-﻿using ACleanAPI.Domain.Core;
+using ACleanAPI.Domain.Core;
 using ACleanAPI.Infrastructure.Core;
 using ACleanAPI.Infrastructure.Interfaces;
 using Microsoft.EntityFrameworkCore;
@@ -33,6 +33,7 @@ public abstract class AcEntityRepositoryBase<TModel, TEntity> : IAcEntityReposit
         return  data != null ? _mapper.MapToEntity(data) : null;
     }
 
+    [ExcludeFromCodeCoverage]
     private async Task<IEnumerable<TModel>> GetModelsAsync(CancellationToken cancellationToken)
     {
         var dbSet = GetDbSet();
@@ -40,12 +41,14 @@ public abstract class AcEntityRepositoryBase<TModel, TEntity> : IAcEntityReposit
         return dbSet != null ? await dbSet.ToListAsync(cancellationToken) : Enumerable.Empty<TModel>();
     }
 
+    [ExcludeFromCodeCoverage]
     private async Task<TModel?> GetModelByIdAsync(int id, CancellationToken cancellationToken)
     {
         var dbSet = GetDbSet();
         return dbSet != null ? await dbSet.FirstOrDefaultAsync(x => x.Id == id, cancellationToken) : null;
     }
 
+    [ExcludeFromCodeCoverage]
     private DbSet<TModel>? GetDbSet()
     {
         var property = _context.GetType()
