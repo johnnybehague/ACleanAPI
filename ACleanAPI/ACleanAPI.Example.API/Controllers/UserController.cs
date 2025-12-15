@@ -18,6 +18,6 @@ public class UserController : AcGetControllerBase<UserDto, UserDetailDto>
         => await GetEntitiesAsync(new GetUsersQuery(), cancellationToken);
 
     [HttpGet("{id}")]
-    public async Task<ActionResult<UserDetailDto?>> Details(int id, CancellationToken cancellationToken)
+    public async Task<ActionResult<UserDetailDto>> Details(int id, CancellationToken cancellationToken)
         => await GetEntityByIdAsync(new GetUserByIdQuery { Id = id }, cancellationToken);
 }

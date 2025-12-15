@@ -5,7 +5,7 @@ using FluentResults;
 
 namespace ACleanAPI.Application.QueryHandlers;
 
-public class AcGetEntityByIdQueryHandlerBase<TEntity, TDto> // : IRequestHandler<IAcEntitiesRequest<TDto>, Result<IEnumerable<TDto>>>
+public class AcGetEntityByIdQueryHandlerBase<TEntity, TDto>
     where TEntity : IAcEntity
     where TDto : IAcEntityDto
 {
@@ -18,10 +18,14 @@ public class AcGetEntityByIdQueryHandlerBase<TEntity, TDto> // : IRequestHandler
         _mapper = mapper;
     }
 
-    public async Task<Result<TDto?>> HandleRequest(IAcGetEntityByIdRequest<TDto> request, CancellationToken cancellationToken)
+    public async Task<Result<TDto>> HandleRequest(IAcGetEntityByIdRequest<TDto> request, CancellationToken cancellationToken)
     {
         var entity = await _repository.GetEntityByIdAsync(request.Id, cancellationToken);
-        TDto? dto = entity is not null ? _mapper.MapToDto(entity) : default;
+
+        if(entity is null)
+            return Result.Fail("Entity not found.");
+
+        TDto dto =  _mapper.MapToDto(entity);
         return Result.Ok(dto);
     }
 }

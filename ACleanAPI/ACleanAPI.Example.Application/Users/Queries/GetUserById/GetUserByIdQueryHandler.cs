@@ -16,7 +16,7 @@ public class GetUserByIdQueryHandler : AcGetEntityByIdQueryHandlerBase<User, Use
     {
     }
 
-    public async Task<Result<UserDetailDto?>> Handle(GetUserByIdQuery request, CancellationToken cancellationToken)
+    public async Task<Result<UserDetailDto>> Handle(GetUserByIdQuery request, CancellationToken cancellationToken)
      => await HandleRequest(request, cancellationToken);
 }
 

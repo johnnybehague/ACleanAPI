@@ -62,7 +62,6 @@ public sealed class GetUserByIdQueryHandlerTests
         var result = await _handler.Handle(query, CancellationToken.None);
 
         // Assert
-        Assert.IsTrue(result.IsSuccess);
-        Assert.IsNull(result.Value);
+        Assert.IsFalse(result.IsSuccess);
     }
 }
