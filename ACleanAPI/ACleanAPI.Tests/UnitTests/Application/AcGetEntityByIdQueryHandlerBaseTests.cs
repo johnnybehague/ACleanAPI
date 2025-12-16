@@ -21,6 +21,7 @@ public sealed class AcGetEntityByIdQueryHandlerBaseTests
             _mapperMock.Object);
     }
 
+    [TestMethod]
     public async Task Handle_ShouldReturnFailWhenIdIsNull()
     {
         // Arrange
