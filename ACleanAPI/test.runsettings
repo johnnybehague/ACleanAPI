@@ -1,0 +1,9 @@
+﻿<RunSettings>
+	<RunConfiguration>
+		<MaxCpuCount>1</MaxCpuCount>
+	</RunConfiguration>
+
+	<MSTest>
+		<Parallelize Enabled="false" />
+	</MSTest>
+</RunSettings>

@@ -1,0 +1,48 @@
+using ACleanAPI.Application.Core;
+using ACleanAPI.Application.Interfaces;
+using MediatR;
+using Microsoft.AspNetCore.Mvc;
+
+namespace ACleanAPI.Presentation;
+
+public abstract class AcGetControllerBase<Dto, DetailDto> : ControllerBase
+    where Dto : AcEntityDtoBase
+    where DetailDto : AcEntityDtoBase
+{
+    protected readonly IMediator _mediator;
+
+    protected AcGetControllerBase(IMediator mediator)
+    {
+        _mediator = mediator;
+    }
+
+    public async Task<ActionResult<IEnumerable<Dto>>> GetEntitiesAsync(IAcGetEntitiesRequest<Dto> request, CancellationToken cancellationToken = default)
+    {
+        if (!ModelState.IsValid)
+            return BadRequest(ModelState);
+
+        var result = await _mediator.Send(request, cancellationToken);
+
+        if (result.IsFailed)
+            return BadRequest();
+
+        return Ok(result.Value);
+    }
+
+    public async Task<ActionResult<DetailDto>> GetEntityByIdAsync(IAcGetEntityByIdRequest<DetailDto> request, CancellationToken cancellationToken = default)
+    {
+        if (!ModelState.IsValid)
+            return BadRequest(ModelState);
+
+        var result = await _mediator.Send(request, cancellationToken);
+        if (result.IsFailed)
+        {
+            if(result.Errors.Any(e => e.Message == "ENTITY_NOT_FOUND"))
+                return NotFound();
+
+            return BadRequest();
+        }
+
+        return Ok(result.Value);
+    }
+}
