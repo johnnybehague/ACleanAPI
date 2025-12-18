@@ -49,6 +49,21 @@ public abstract class AcEntityRepositoryBase<TModel, TEntity> : IAcEntityReposit
     }
 
     [ExcludeFromCodeCoverage]
+    public async Task DeleteEntityAsync(int id, CancellationToken cancellationToken)
+    {
+        var dbSet = GetDbSet();
+        if (dbSet != null)
+        {
+            var entity = await dbSet.FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
+            if (entity != null)
+            {
+                dbSet.Remove(entity);
+                await _context.SaveChangesAsync(cancellationToken);
+            }
+        }
+    }
+
+    [ExcludeFromCodeCoverage]
     private DbSet<TModel>? GetDbSet()
     {
         var property = _context.GetType()

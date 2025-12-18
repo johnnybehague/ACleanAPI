@@ -10,12 +10,12 @@ using Moq;
 namespace ACleanAPI.Tests.UnitTests.Presentation;
 
 [TestClass]
-public sealed class AcGetControllerBaseTests
+public sealed class AcCrudControllerBaseTests
 {
     private readonly Mock<IMediator> _mediatorMock;
     private readonly UserTestController _controller;
 
-    public AcGetControllerBaseTests()
+    public AcCrudControllerBaseTests()
     {
         _mediatorMock = new Mock<IMediator>();
         _controller = new UserTestController(_mediatorMock.Object);

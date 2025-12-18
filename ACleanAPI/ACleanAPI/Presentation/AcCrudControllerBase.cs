@@ -5,13 +5,13 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ACleanAPI.Presentation;
 
-public abstract class AcGetControllerBase<Dto, DetailDto> : ControllerBase
+public abstract class AcCrudControllerBase<Dto, DetailDto> : ControllerBase
     where Dto : AcEntityDtoBase
     where DetailDto : AcEntityDtoBase
 {
     protected readonly IMediator _mediator;
 
-    protected AcGetControllerBase(IMediator mediator)
+    protected AcCrudControllerBase(IMediator mediator)
     {
         _mediator = mediator;
     }
@@ -44,5 +44,17 @@ public abstract class AcGetControllerBase<Dto, DetailDto> : ControllerBase
         }
 
         return Ok(result.Value);
+    }
+
+    public async Task<IActionResult> DeleteEntityAsync(IAcDeleteEntityRequest request, CancellationToken cancellationToken = default)
+    {
+        if (!ModelState.IsValid)
+            return BadRequest(ModelState);
+
+        var result = await _mediator.Send(request, cancellationToken);
+        if (result.IsFailed)
+            return BadRequest();
+
+        return NoContent();
     }
 }

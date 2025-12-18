@@ -1,4 +1,4 @@
-﻿using ACleanAPI.Example.Domain.Users.Entities;
+using ACleanAPI.Example.Domain.Users.Entities;
 using ACleanAPI.Example.Domain.Users.Interfaces;
 using ACleanAPI.Example.Infrastructure.Models;
 using ACleanAPI.Example.Infrastructure.Persistence;
@@ -20,4 +20,7 @@ public class UserRepository : AcEntityRepositoryBase<UserModel, User>,
 
     public async Task<User?> GetByIdAsync(int id, CancellationToken cancellationToken)
         => await GetEntityByIdAsync(id, cancellationToken);
+
+    public async Task DeleteAsync(int id, CancellationToken cancellationToken)
+        => await DeleteEntityAsync(id, cancellationToken);
 }
