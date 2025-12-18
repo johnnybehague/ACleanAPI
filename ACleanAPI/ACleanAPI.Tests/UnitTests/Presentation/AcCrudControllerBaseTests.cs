@@ -172,7 +172,7 @@ public sealed class AcCrudControllerBaseTests
         var result = await _controller.DeleteEntityAsync(requestMock.Object);
 
         // Assert
-        Assert.IsInstanceOfType(result, typeof(BadRequestResult));
+        Assert.IsInstanceOfType<BadRequestResult>(result);
         _mediatorMock.Verify(m => m.Send(requestMock.Object, It.IsAny<CancellationToken>()), Times.Once);
     }
 
@@ -189,7 +189,7 @@ public sealed class AcCrudControllerBaseTests
         var result = await _controller.DeleteEntityAsync(requestMock.Object);
 
         // Assert
-        Assert.IsInstanceOfType(result, typeof(NoContentResult));
+        Assert.IsInstanceOfType<NoContentResult>(result);
         _mediatorMock.Verify(m => m.Send(requestMock.Object, It.IsAny<CancellationToken>()), Times.Once);
     }
 }

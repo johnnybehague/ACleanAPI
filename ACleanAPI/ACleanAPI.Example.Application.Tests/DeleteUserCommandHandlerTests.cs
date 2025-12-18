@@ -42,7 +42,6 @@ public class DeleteUserCommandHandlerTests
     public async Task Handle_ImplementsIRequestHandlerContract()
     {
         // Arrange
-        IRequestHandler<DeleteUserCommand, Result> handler = _handler;
         var userId = 1;
         var command = new DeleteUserCommand { Id = userId };
 
@@ -51,7 +50,7 @@ public class DeleteUserCommandHandlerTests
             .Returns(Task.CompletedTask);
 
         // Act
-        var result = await handler.Handle(command, CancellationToken.None);
+        var result = await _handler.Handle(command, CancellationToken.None);
 
         // Assert
         Assert.IsTrue(result.IsSuccess);
