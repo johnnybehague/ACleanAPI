@@ -1,4 +1,4 @@
-﻿using ACleanAPI.Application.Interfaces;
+using ACleanAPI.Application.Interfaces;
 using ACleanAPI.Presentation;
 using ACleanAPI.Tests.Common;
 using MediatR;
@@ -8,7 +8,7 @@ namespace ACleanAPI.Tests.App.Presentation;
 
 [ApiController]
 [Route("api/[controller]")]
-public class UserTestController : AcGetControllerBase<UserTestDto, UserTestDetailDto>
+public class UserTestController : AcCrudControllerBase<UserTestDto, UserTestDetailDto>
 {
     public UserTestController(IMediator mediator) : base(mediator)
     {

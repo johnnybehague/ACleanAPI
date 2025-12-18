@@ -1,4 +1,5 @@
 using ACleanAPI.API.Controllers;
+using ACleanAPI.Example.Application.Users.Commands;
 using ACleanAPI.Example.Application.Users.DTO;
 using ACleanAPI.Example.Application.Users.Queries.GetUserById;
 using ACleanAPI.Example.Application.Users.Queries.GetUsers;
@@ -66,6 +67,22 @@ namespace ACleanAPI.Example.API.Tests
             var returnedUser = okResult.Value as UserDetailDto;
             Assert.IsNotNull(returnedUser);
             Assert.AreEqual(1, returnedUser.Id);
+        }
+
+        [TestMethod]
+        public async Task Delete_ReturnsNoContent()
+        {
+            // Arrange
+            int id = 1;
+            _mediatorMock.Setup(m => m.Send(It.Is<DeleteUserCommand>(q => q.Id == id), It.IsAny<CancellationToken>()))
+                .ReturnsAsync(Result.Ok());
+
+            // Act
+            var result = await _controller.Delete(id, CancellationToken.None);
+
+            // Assert
+            Assert.IsNotNull(result);
+            Assert.IsInstanceOfType<NoContentResult>(result);
         }
     }
 }

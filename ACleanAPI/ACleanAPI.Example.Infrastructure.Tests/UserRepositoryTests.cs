@@ -95,4 +95,25 @@ public sealed class UserRepositoryTests
         // Assert
         Assert.IsNull(result);
     }
+
+    [TestMethod]
+    public async Task DeleteAsync_CallsDeleteEntityAsync()
+    {
+        // Arrange
+        var id = 1;
+        var cancellationToken = new CancellationToken();
+        var userModels = new List<UserModel>
+            {
+                new UserModel { Id = 1, FirstName = "Alice", LastName = "Dupont", Email = "alice@dupont.com" }
+            };
+
+        _context.Users.AddRange(userModels);
+        _context.SaveChanges();
+
+        // Act
+        await _repository.DeleteAsync(id, cancellationToken);
+
+        // Assert
+        Assert.IsNull(await _context.Users.FindAsync(id));
+    }
 }

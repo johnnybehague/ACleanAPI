@@ -10,12 +10,12 @@ using Moq;
 namespace ACleanAPI.Tests.UnitTests.Presentation;
 
 [TestClass]
-public sealed class AcGetControllerBaseTests
+public sealed class AcCrudControllerBaseTests
 {
     private readonly Mock<IMediator> _mediatorMock;
     private readonly UserTestController _controller;
 
-    public AcGetControllerBaseTests()
+    public AcCrudControllerBaseTests()
     {
         _mediatorMock = new Mock<IMediator>();
         _controller = new UserTestController(_mediatorMock.Object);
@@ -140,5 +140,56 @@ public sealed class AcGetControllerBaseTests
 
         // Assert
         Assert.IsInstanceOfType<BadRequestObjectResult>(action.Result);
+    }
+
+    [TestMethod]
+    public async Task DeleteEntityAsync_ModelStateInvalid_ReturnsBadRequestWithModelState()
+    {
+        // Arrange
+        _controller.ModelState.AddModelError("Id", "Id is required");
+        var requestMock = new Mock<IAcDeleteEntityRequest>();
+
+        // Act
+        var result = await _controller.DeleteEntityAsync(requestMock.Object);
+
+        // Assert
+        var badRequest = result as BadRequestObjectResult;
+        Assert.IsNotNull(badRequest);
+        Assert.IsFalse(_controller.ModelState.IsValid);
+        _mediatorMock.Verify(m => m.Send(It.IsAny<IAcDeleteEntityRequest>(), It.IsAny<CancellationToken>()), Times.Never);
+    }
+
+    [TestMethod]
+    public async Task DeleteEntityAsync_MediatorReturnsFailedResult_ReturnsBadRequest()
+    {
+        // Arrange
+        var requestMock = new Mock<IAcDeleteEntityRequest>();
+        _mediatorMock
+            .Setup(m => m.Send(requestMock.Object, It.IsAny<CancellationToken>()))
+            .ReturnsAsync(Result.Fail("Fail"));
+
+        // Act
+        var result = await _controller.DeleteEntityAsync(requestMock.Object);
+
+        // Assert
+        Assert.IsInstanceOfType<BadRequestResult>(result);
+        _mediatorMock.Verify(m => m.Send(requestMock.Object, It.IsAny<CancellationToken>()), Times.Once);
+    }
+
+    [TestMethod]
+    public async Task DeleteEntityAsync_MediatorReturnsSuccess_ReturnsNoContent()
+    {
+        // Arrange
+        var requestMock = new Mock<IAcDeleteEntityRequest>();
+        _mediatorMock
+            .Setup(m => m.Send(requestMock.Object, It.IsAny<CancellationToken>()))
+            .ReturnsAsync(Result.Ok());
+
+        // Act
+        var result = await _controller.DeleteEntityAsync(requestMock.Object);
+
+        // Assert
+        Assert.IsInstanceOfType<NoContentResult>(result);
+        _mediatorMock.Verify(m => m.Send(requestMock.Object, It.IsAny<CancellationToken>()), Times.Once);
     }
 }
