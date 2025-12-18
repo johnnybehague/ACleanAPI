@@ -23,6 +23,6 @@ public class UserController : AcCrudControllerBase<UserDto, UserDetailDto>
         => await GetEntityByIdAsync(new GetUserByIdQuery { Id = id }, cancellationToken);
 
     [HttpDelete("{id}")]
-    public async Task<IActionResult> Delete(int id, [FromQuery] int? userId)
-        => await DeleteEntityAsync(new DeleteUserCommand { Id = id }, CancellationToken.None);
+    public async Task<IActionResult> Delete(int id, CancellationToken cancellationToken)
+        => await DeleteEntityAsync(new DeleteUserCommand { Id = id }, cancellationToken);
 }
