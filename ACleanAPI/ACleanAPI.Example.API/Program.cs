@@ -31,18 +31,13 @@ internal class Program
         // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
         builder.Services.AddOpenApi();
 
-        builder.Services.AddMediatR(cfg =>
-            cfg.RegisterServicesFromAssemblies(
-                typeof(GetUsersQuery).Assembly
-            ));
-
         var app = builder.Build();
 
         using (var scope = app.Services.CreateScope())
         {
             var context = scope.ServiceProvider.GetRequiredService<AppDbContext>();
 
-            // Supprime et recrée la base InMemory
+            // Supprime et recrÃ©e la base InMemory
             context.Database.EnsureDeleted();
             context.Database.EnsureCreated();
 
