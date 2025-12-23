@@ -1,7 +1,6 @@
 using ACleanAPI.Application.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
-using System;
 
 namespace ACleanAPI.Infrastructure.Persistence;
 

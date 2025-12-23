@@ -1,10 +1,12 @@
 using ACleanAPI.Application.Behaviors;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
+using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
 
 namespace ACleanAPI.Application;
 
+[ExcludeFromCodeCoverage]
 public static class ApplicationDependencyInjection
 {
     public static IServiceCollection AddAcApplication(this IServiceCollection services, params Assembly[] mediatorAssemblies)
