@@ -4,6 +4,7 @@ using MediatR;
 namespace ACleanAPI.Application.Behaviors;
 
 public class TransactionBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
+    where TRequest : notnull
 {
     private readonly IUnitOfWork _unitOfWork;
 
@@ -18,7 +19,7 @@ public class TransactionBehavior<TRequest, TResponse> : IPipelineBehavior<TReque
 
         try
         {
-            var response = await next();
+            var response = await next(cancellationToken);
             await _unitOfWork.CommitAsync(cancellationToken);
             return response;
         }

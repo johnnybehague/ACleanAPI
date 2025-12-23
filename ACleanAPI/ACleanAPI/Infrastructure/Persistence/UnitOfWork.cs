@@ -1,17 +1,19 @@
 using ACleanAPI.Application.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
+using System.Diagnostics.CodeAnalysis;
 
 namespace ACleanAPI.Infrastructure.Persistence;
 
 public class UnitOfWork : IUnitOfWork
 {
     private readonly DbContext _context;
-    private IDbContextTransaction _currentTransaction;
+    private IDbContextTransaction? _currentTransaction;
 
     public UnitOfWork(DbContext context)
     {
         _context = context;
+        _currentTransaction = null;
     }
 
     public async Task BeginTransactionAsync(CancellationToken cancellationToken = default)
@@ -29,13 +31,13 @@ public class UnitOfWork : IUnitOfWork
 
         try
         {
-            await _context.SaveChangesAsync();
+            await _context.SaveChangesAsync(cancellationToken);
             await _currentTransaction.CommitAsync(cancellationToken);
             await DisposeTransactionAsync();
         }
         catch
         {
-            await RollbackAsync();
+            await RollbackAsync(cancellationToken);
             throw;
         }
     }
@@ -52,6 +54,7 @@ public class UnitOfWork : IUnitOfWork
     public async Task SaveChangesAsync(CancellationToken cancellationToken = default)
         => await _context.SaveChangesAsync(cancellationToken);
 
+    [ExcludeFromCodeCoverage]
     private async Task DisposeTransactionAsync()
     {
         if (_currentTransaction is null)
