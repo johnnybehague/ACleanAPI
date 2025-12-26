@@ -64,7 +64,10 @@ public abstract class AcEntityRepositoryBase<TModel, TEntity> : IAcEntityReposit
     {
         var dbSet = GetDbSet();
         if (dbSet != null)
+        {
             await dbSet.AddAsync(model, cancellationToken);
+            await _context.SaveChangesAsync(cancellationToken);
+        }
     }
 
     #endregion
