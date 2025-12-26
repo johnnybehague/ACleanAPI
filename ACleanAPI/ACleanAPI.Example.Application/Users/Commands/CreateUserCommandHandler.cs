@@ -11,7 +11,6 @@ namespace ACleanAPI.Example.Application.Users.Commands;
 
 public record CreateUserCommand : IAcCreateEntityRequest<UserDto>
 {
-    public int? Id { get; set; }
     public UserDto? Dto { get; set; }
 }
 
