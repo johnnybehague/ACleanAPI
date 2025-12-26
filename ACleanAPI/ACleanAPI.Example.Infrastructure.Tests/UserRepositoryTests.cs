@@ -107,6 +107,7 @@ public sealed class UserRepositoryTests
 
         // Act
         await _repository.CreateAsync(entity, cancellationToken);
+        await _context.SaveChangesAsync(cancellationToken);
 
         // Assert
         var expectedModel = await _context.Users.FirstOrDefaultAsync(u => u.Id == entity.Id);
@@ -128,10 +129,11 @@ public sealed class UserRepositoryTests
             };
 
         _context.Users.AddRange(userModels);
-        _context.SaveChanges();
+        await _context.SaveChangesAsync(cancellationToken);
 
         // Act
         await _repository.DeleteAsync(id, cancellationToken);
+        await _context.SaveChangesAsync(cancellationToken);
 
         // Assert
         Assert.IsNull(await _context.Users.FindAsync(id));

@@ -66,7 +66,6 @@ public abstract class AcEntityRepositoryBase<TModel, TEntity> : IAcEntityReposit
         if (dbSet != null)
         {
             await dbSet.AddAsync(model, cancellationToken);
-            await _context.SaveChangesAsync(cancellationToken);
         }
     }
 
@@ -83,7 +82,6 @@ public abstract class AcEntityRepositoryBase<TModel, TEntity> : IAcEntityReposit
             if (entity != null)
             {
                 dbSet.Remove(entity);
-                await _context.SaveChangesAsync(cancellationToken);
             }
         }
     }
