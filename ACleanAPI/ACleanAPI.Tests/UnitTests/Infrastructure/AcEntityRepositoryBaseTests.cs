@@ -1,4 +1,4 @@
-﻿using ACleanAPI.Infrastructure.Interfaces;
+using ACleanAPI.Infrastructure.Interfaces;
 using ACleanAPI.Tests.App;
 using ACleanAPI.Tests.App.Infrastructure;
 using ACleanAPI.Tests.Common;
@@ -74,5 +74,24 @@ public sealed class AcEntityRepositoryBaseTests
         Assert.AreEqual(1, result.Id);
 
         _mapperMock.Verify(m => m.MapToEntity(It.Is<UserTestModel>(x => x.Id == 1)), Times.Once);
+    }
+
+    [TestMethod]
+    public async Task CreateEntityAsync_ReturnTaskValid()
+    {
+        // Arrange
+        var entity = new UserTestEntity { Id = 1, FirstName = "John", LastName = "Doe", Email = "john@doe.com" };
+
+        var model = new UserTestModel { Id = 1, FirstName = "John", LastName = "Doe", Email = "john@doe.com" };
+        await _context.SaveChangesAsync();
+
+        _mapperMock.Setup(m => m.MapToModel(entity))
+            .Returns(model);
+
+        // Act
+        await _repository.CreateEntityAsync(entity, CancellationToken.None);
+
+        // Assert
+        _mapperMock.Verify(m => m.MapToModel(It.Is<UserTestEntity>(x => x.Id == 1)), Times.Once);
     }
 }
