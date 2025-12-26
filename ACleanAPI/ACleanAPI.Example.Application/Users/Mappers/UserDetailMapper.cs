@@ -1,4 +1,4 @@
-﻿using ACleanAPI.Application.Interfaces;
+using ACleanAPI.Application.Interfaces;
 using ACleanAPI.Example.Application.Users.DTO;
 using ACleanAPI.Example.Domain.Users.Entities;
 
@@ -18,6 +18,17 @@ public class UserDetailMapper : IUserDetailMapper
             FirstName = user.FirstName,
             LastName = user.LastName,
             Email = user.Email
+        };
+    }
+
+    public User MapToEntity(UserDetailDto dto)
+    {
+        return new User
+        {
+            Id = dto.Id,
+            FirstName = dto.FirstName,
+            LastName = dto.LastName,
+            Email = dto.Email
         };
     }
 }

@@ -70,6 +70,22 @@ namespace ACleanAPI.Example.API.Tests
         }
 
         [TestMethod]
+        public async Task DelCreate_ReturnsNoContent()
+        {
+            // Arrange
+            UserDto dto = new UserDto { Id = 1, FirstName = "John", LastName = "Doe" };
+            _mediatorMock.Setup(m => m.Send(It.Is<CreateUserCommand>(q => q.Dto == dto), It.IsAny<CancellationToken>()))
+                .ReturnsAsync(Result.Ok());
+
+            // Act
+            var result = await _controller.Create(dto, CancellationToken.None);
+
+            // Assert
+            Assert.IsNotNull(result);
+            Assert.IsInstanceOfType<NoContentResult>(result);
+        }
+
+        [TestMethod]
         public async Task Delete_ReturnsNoContent()
         {
             // Arrange

@@ -1,4 +1,5 @@
-﻿using ACleanAPI.Example.Infrastructure.Models;
+using ACleanAPI.Example.Domain.Users.Entities;
+using ACleanAPI.Example.Infrastructure.Models;
 using ACleanAPI.Example.Infrastructure.Users.Mappers;
 
 namespace ACleanAPI.Example.Infrastructure.Tests;
@@ -34,5 +35,28 @@ public sealed class UserModelMapperTests
         Assert.AreEqual(model.FirstName, entity.FirstName);
         Assert.AreEqual(model.LastName, entity.LastName);
         Assert.AreEqual(model.Email, entity.Email);
+    }
+
+    [TestMethod]
+    public void MapToModel_MapsPropertiesCorrectly()
+    {
+        // Arrange
+        var entity = new User
+        {
+            Id = 5,
+            FirstName = "Jean",
+            LastName = "Martin",
+            Email = "jean.martin@email.com"
+        };
+
+        // Act
+        var model = _mapper.MapToModel(entity);
+
+        // Assert
+        Assert.IsNotNull(model);
+        Assert.AreEqual(entity.Id, model.Id);
+        Assert.AreEqual(entity.FirstName, model.FirstName);
+        Assert.AreEqual(entity.LastName, model.LastName);
+        Assert.AreEqual(entity.Email, model.Email);
     }
 }
