@@ -21,6 +21,8 @@ public abstract class AcEntityRepositoryBase<TModel, TEntity> : IAcEntityReposit
         _mapper = mapper;
     }
 
+    #region Entities
+
     public async Task<IEnumerable<TEntity>> GetEntitiesAsync(CancellationToken cancellationToken)
     {
         var data = await GetModelsAsync(cancellationToken);
@@ -33,11 +35,20 @@ public abstract class AcEntityRepositoryBase<TModel, TEntity> : IAcEntityReposit
         return  data != null ? _mapper.MapToEntity(data) : null;
     }
 
+    public async Task CreateEntityAsync(TEntity entity, CancellationToken cancellationToken)
+    {
+        var model = _mapper.MapToModel(entity);
+        await CreateModelAsync(model, cancellationToken);
+    }
+
+    #endregion
+
+    #region Models
+
     [ExcludeFromCodeCoverage]
     private async Task<IEnumerable<TModel>> GetModelsAsync(CancellationToken cancellationToken)
     {
         var dbSet = GetDbSet();
-
         return dbSet != null ? await dbSet.ToListAsync(cancellationToken) : Enumerable.Empty<TModel>();
     }
 
@@ -47,6 +58,17 @@ public abstract class AcEntityRepositoryBase<TModel, TEntity> : IAcEntityReposit
         var dbSet = GetDbSet();
         return dbSet != null ? await dbSet.FirstOrDefaultAsync(x => x.Id == id, cancellationToken) : null;
     }
+
+    [ExcludeFromCodeCoverage]
+    private async Task CreateModelAsync(TModel model, CancellationToken cancellationToken)
+    {
+        var dbSet = GetDbSet();
+        if (dbSet != null)
+            await dbSet.AddAsync(model, cancellationToken);
+    }
+
+    #endregion
+
 
     [ExcludeFromCodeCoverage]
     public async Task DeleteEntityAsync(int id, CancellationToken cancellationToken)

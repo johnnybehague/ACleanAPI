@@ -9,5 +9,7 @@ public interface IAcEntityRepository<TEntity>
 
     Task<TEntity?> GetEntityByIdAsync(int id, CancellationToken cancellationToken);
 
+    Task CreateEntityAsync(TEntity entity, CancellationToken cancellationToken);
+
     Task DeleteEntityAsync(int id, CancellationToken cancellationToken);
 }

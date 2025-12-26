@@ -1,4 +1,4 @@
-﻿using ACleanAPI.Example.Domain.Users.Entities;
+using ACleanAPI.Example.Domain.Users.Entities;
 using ACleanAPI.Example.Infrastructure.Models;
 using ACleanAPI.Infrastructure.Interfaces;
 
@@ -16,6 +16,17 @@ public class UserModelMapper : IUserModelMapper
             FirstName = model.FirstName,
             LastName = model.LastName,
             Email = model.Email
+        };
+    }
+
+    public UserModel MapToModel(User entity)
+    {
+        return new UserModel
+        {
+            Id = entity.Id,
+            FirstName = entity.FirstName,
+            LastName = entity.LastName,
+            Email = entity.Email
         };
     }
 }
