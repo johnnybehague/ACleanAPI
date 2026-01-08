@@ -1,4 +1,3 @@
-using ACleanAPI.Example.Application.Users.Queries.GetUsers;
 using ACleanAPI.Example.Application;
 using ACleanAPI.Example.Infrastructure;
 using ACleanAPI.Example.Infrastructure.Models;

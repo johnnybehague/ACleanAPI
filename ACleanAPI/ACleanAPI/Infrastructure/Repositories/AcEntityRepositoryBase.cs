@@ -41,6 +41,26 @@ public abstract class AcEntityRepositoryBase<TModel, TEntity> : IAcEntityReposit
         await CreateModelAsync(model, cancellationToken);
     }
 
+    public async Task UpdateEntityAsync(int entityId, TEntity entity,  CancellationToken cancellationToken)
+    {
+        var model = _mapper.MapToModel(entity);
+        await UpdateModelAsync(entityId, model, cancellationToken);
+    }
+
+    [ExcludeFromCodeCoverage]
+    public async Task DeleteEntityAsync(int id, CancellationToken cancellationToken)
+    {
+        var dbSet = GetDbSet();
+        if (dbSet != null)
+        {
+            var entity = await dbSet.FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
+            if (entity != null)
+            {
+                dbSet.Remove(entity);
+            }
+        }
+    }
+
     #endregion
 
     #region Models
@@ -69,22 +89,21 @@ public abstract class AcEntityRepositoryBase<TModel, TEntity> : IAcEntityReposit
         }
     }
 
-    #endregion
-
-
     [ExcludeFromCodeCoverage]
-    public async Task DeleteEntityAsync(int id, CancellationToken cancellationToken)
+    public async Task UpdateModelAsync(int id, TModel model, CancellationToken cancellationToken)
     {
         var dbSet = GetDbSet();
         if (dbSet != null)
         {
-            var entity = await dbSet.FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
-            if (entity != null)
+            var existingModel = await dbSet.FindAsync(id, cancellationToken);
+            if (existingModel != null)
             {
-                dbSet.Remove(entity);
+                existingModel.UpdateFrom(model);
             }
         }
     }
+
+    #endregion
 
     [ExcludeFromCodeCoverage]
     private DbSet<TModel>? GetDbSet()

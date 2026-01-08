@@ -23,6 +23,10 @@ public class UserRepository : AcEntityRepositoryBase<UserModel, User>,
 
     public async Task CreateAsync(User entity, CancellationToken cancellationToken)
         => await CreateEntityAsync(entity, cancellationToken);
+
+    public async Task UpdateAsync(int id, User entity, CancellationToken cancellationToken)
+        => await UpdateEntityAsync(id,  entity, cancellationToken);
+
     public async Task DeleteAsync(int id, CancellationToken cancellationToken)
         => await DeleteEntityAsync(id, cancellationToken);
 }

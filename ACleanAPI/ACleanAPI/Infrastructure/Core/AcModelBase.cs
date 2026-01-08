@@ -1,4 +1,4 @@
-﻿using ACleanAPI.Domain.Interfaces;
+using ACleanAPI.Domain.Interfaces;
 
 namespace ACleanAPI.Infrastructure.Core;
 

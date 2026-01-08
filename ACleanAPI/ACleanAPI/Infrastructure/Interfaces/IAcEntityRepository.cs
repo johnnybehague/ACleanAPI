@@ -11,5 +11,7 @@ public interface IAcEntityRepository<TEntity>
 
     Task CreateEntityAsync(TEntity entity, CancellationToken cancellationToken);
 
+    Task UpdateEntityAsync(int entityId, TEntity entity, CancellationToken cancellationToken);
+
     Task DeleteEntityAsync(int id, CancellationToken cancellationToken);
 }
