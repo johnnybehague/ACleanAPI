@@ -1,5 +1,5 @@
 using ACleanAPI.Application.Core;
-using ACleanAPI.Application.Interfaces;
+using ACleanAPI.Application.Requests;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -16,7 +16,7 @@ public abstract class AcCrudControllerBase<Dto, DetailDto> : ControllerBase
         _mediator = mediator;
     }
 
-    public async Task<ActionResult<IEnumerable<Dto>>> GetEntitiesAsync(IAcGetEntitiesRequest<Dto> request, CancellationToken cancellationToken = default)
+    public async Task<ActionResult<IEnumerable<Dto>>> GetEntitiesAsync(AcGetEntitiesRequest<Dto> request, CancellationToken cancellationToken = default)
     {
         if (!ModelState.IsValid)
             return BadRequest(ModelState);
@@ -29,7 +29,7 @@ public abstract class AcCrudControllerBase<Dto, DetailDto> : ControllerBase
         return Ok(result.Value);
     }
 
-    public async Task<ActionResult<DetailDto>> GetEntityByIdAsync(IAcGetEntityByIdRequest<DetailDto> request, CancellationToken cancellationToken = default)
+    public async Task<ActionResult<DetailDto>> GetEntityByIdAsync(AcGetEntityByIdRequest<DetailDto> request, CancellationToken cancellationToken = default)
     {
         if (!ModelState.IsValid)
             return BadRequest(ModelState);
@@ -46,7 +46,7 @@ public abstract class AcCrudControllerBase<Dto, DetailDto> : ControllerBase
         return Ok(result.Value);
     }
 
-    public async Task<IActionResult> CreateEntityAsync(IAcCreateEntityRequest<Dto> request, CancellationToken cancellationToken = default)
+    public async Task<IActionResult> CreateEntityAsync(AcCreateEntityRequest<Dto> request, CancellationToken cancellationToken = default)
     {
         if (!ModelState.IsValid)
             return BadRequest(ModelState);
@@ -70,7 +70,7 @@ public abstract class AcCrudControllerBase<Dto, DetailDto> : ControllerBase
         return NoContent();
     }
 
-    public async Task<IActionResult> DeleteEntityAsync(IAcDeleteEntityRequest request, CancellationToken cancellationToken = default)
+    public async Task<IActionResult> DeleteEntityAsync(AcDeleteEntityRequest request, CancellationToken cancellationToken = default)
     {
         if (!ModelState.IsValid)
             return BadRequest(ModelState);

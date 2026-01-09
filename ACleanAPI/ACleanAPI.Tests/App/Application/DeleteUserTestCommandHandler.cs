@@ -1,5 +1,5 @@
 using ACleanAPI.Application.CommandHandlers;
-using ACleanAPI.Application.Interfaces;
+using ACleanAPI.Application.Requests;
 using ACleanAPI.Infrastructure.Interfaces;
 using ACleanAPI.Tests.Common;
 using FluentResults;
@@ -13,6 +13,6 @@ public class DeleteUserTestCommandHandler : AcDeleteEntityCommandHandlerBase<Use
     {
     }
 
-    public async Task<Result> Handle(IAcDeleteEntityRequest request, CancellationToken cancellationToken)
+    public async Task<Result> Handle(AcDeleteEntityRequest request, CancellationToken cancellationToken)
         => await HandleRequest(request, cancellationToken);
 }

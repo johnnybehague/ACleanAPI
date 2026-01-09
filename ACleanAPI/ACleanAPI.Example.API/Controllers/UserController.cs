@@ -1,7 +1,6 @@
 using ACleanAPI.Example.Application.Users.Commands;
 using ACleanAPI.Example.Application.Users.DTO;
-using ACleanAPI.Example.Application.Users.Queries.GetUserById;
-using ACleanAPI.Example.Application.Users.Queries.GetUsers;
+using ACleanAPI.Example.Application.Users.Queries;
 using ACleanAPI.Presentation;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -20,11 +19,11 @@ public class UserController : AcCrudControllerBase<UserDto, UserDetailDto>
 
     [HttpGet("{id}")]
     public async Task<ActionResult<UserDetailDto>> Details(int id, CancellationToken cancellationToken)
-        => await GetEntityByIdAsync(new GetUserByIdQuery { Id = id }, cancellationToken);
+        => await GetEntityByIdAsync(new GetUserByIdQuery(id), cancellationToken);
 
     [HttpPost]
     public async Task<IActionResult> Create(UserDto dto, CancellationToken cancellationToken)
-        => await CreateEntityAsync(new CreateUserCommand { Dto = dto }, cancellationToken);
+        => await CreateEntityAsync(new CreateUserCommand(dto), cancellationToken);
 
     [HttpPut("{id}")]
     public async Task<IActionResult> Update(int id, UserDto dto, CancellationToken cancellationToken)
@@ -32,5 +31,5 @@ public class UserController : AcCrudControllerBase<UserDto, UserDetailDto>
 
     [HttpDelete("{id}")]
     public async Task<IActionResult> Delete(int id, CancellationToken cancellationToken)
-        => await DeleteEntityAsync(new DeleteUserCommand { Id = id }, cancellationToken);
+        => await DeleteEntityAsync(new DeleteUserCommand(id), cancellationToken);
 }

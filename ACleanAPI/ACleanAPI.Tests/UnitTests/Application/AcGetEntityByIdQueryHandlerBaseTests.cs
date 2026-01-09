@@ -1,4 +1,5 @@
 using ACleanAPI.Application.Interfaces;
+using ACleanAPI.Application.Requests;
 using ACleanAPI.Infrastructure.Interfaces;
 using ACleanAPI.Tests.App.Application;
 using ACleanAPI.Tests.Common;
@@ -25,12 +26,11 @@ public sealed class AcGetEntityByIdQueryHandlerBaseTests
     public async Task Handle_ShouldReturnFailWhenIdIsNull()
     {
         // Arrange
-        var requestMock = new Mock<IAcGetEntityByIdRequest<UserTestDto>>();
-        requestMock.Setup(r => r.Id).Returns((int?)null);
+        var request = new AcGetEntityByIdRequest<UserTestDto>(null);
         var cancellationToken = CancellationToken.None;
 
         // Act
-        var result = await _handler.Handle(requestMock.Object, cancellationToken);
+        var result = await _handler.Handle(request, cancellationToken);
 
         // Assert
         Assert.IsTrue(result.IsFailed);
@@ -41,32 +41,33 @@ public sealed class AcGetEntityByIdQueryHandlerBaseTests
     public async Task Handle_ShouldCallRepository()
     {
         // Arrange
-        var requestMock = new Mock<IAcGetEntityByIdRequest<UserTestDto>>();
-        requestMock.Setup(r => r.Id).Returns(1);
+        int id = 1;
+        var request = new AcGetEntityByIdRequest<UserTestDto>(id);
         var cancellationToken = CancellationToken.None;
 
         // Act
-        await _handler.Handle(requestMock.Object, cancellationToken);
+        await _handler.Handle(request, cancellationToken);
 
         // Assert
-        _repositoryMock.Verify(r => r.GetEntityByIdAsync(It.IsAny<int>(), cancellationToken), Times.Once);
+        _repositoryMock.Verify(r => r.GetEntityByIdAsync(id, cancellationToken), Times.Once);
     }
 
     [TestMethod]
     public async Task Handle_ShouldMapEntityToDto()
     {
         // Arrange
-        var requestMock = new Mock<IAcGetEntityByIdRequest<UserTestDto>>();
-        requestMock.Setup(r => r.Id).Returns(1);
+        int id = 1;
+        var request = new AcGetEntityByIdRequest<UserTestDto>(id);
         var cancellationToken = CancellationToken.None;
-        var mockedTestEntity = new UserTestEntity { Id = 1 };
+        var mockedTestEntity = new UserTestEntity { Id = id };
 
         _repositoryMock.Setup(r => r.GetEntityByIdAsync(It.IsAny<int>(), cancellationToken))
             .ReturnsAsync(mockedTestEntity);
         _mapperMock.Setup(m => m.MapToDto(It.IsAny<UserTestEntity>()))
-            .Returns(new UserTestDto { Id = 1 }); // Revoir le code
+            .Returns(new UserTestDto { Id = id }); // Revoir le code
+
         // Act
-        await _handler.Handle(requestMock.Object, cancellationToken);
+        await _handler.Handle(request, cancellationToken);
 
         // Assert
         _mapperMock.Verify(r => r.MapToDto(It.IsAny<UserTestEntity>()), Times.Once);
@@ -76,18 +77,18 @@ public sealed class AcGetEntityByIdQueryHandlerBaseTests
     public async Task Handle_ShouldReturnsOkWithDto()
     {
         // Arrange
-        var requestMock = new Mock<IAcGetEntityByIdRequest<UserTestDto>>();
-        requestMock.Setup(r => r.Id).Returns(1);
+        int id = 1;
+        var request = new AcGetEntityByIdRequest<UserTestDto>(id);
         var cancellationToken = CancellationToken.None;
-        var mockedTestEntity = new UserTestEntity { Id = 1, FirstName = "John", LastName = "Doe" };
+        var mockedTestEntity = new UserTestEntity { Id = id, FirstName = "John", LastName = "Doe" };
 
         _repositoryMock.Setup(r => r.GetEntityByIdAsync(It.IsAny<int>(), cancellationToken))
             .ReturnsAsync(mockedTestEntity);
         _mapperMock.Setup(m => m.MapToDto(It.IsAny<UserTestEntity>()))
-            .Returns(new UserTestDto { Id = 1, FirstName = "John", LastName = "Doe" });
+            .Returns(new UserTestDto { Id = id, FirstName = "John", LastName = "Doe" });
 
         // Act
-        var result = await _handler.Handle(requestMock.Object, cancellationToken);
+        var result = await _handler.Handle(request, cancellationToken);
 
         // Assert
         Assert.IsTrue(result.IsSuccess);

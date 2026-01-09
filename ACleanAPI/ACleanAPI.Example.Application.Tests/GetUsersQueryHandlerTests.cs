@@ -1,6 +1,6 @@
-﻿using ACleanAPI.Example.Application.Users.DTO;
+using ACleanAPI.Example.Application.Users.DTO;
 using ACleanAPI.Example.Application.Users.Mappers;
-using ACleanAPI.Example.Application.Users.Queries.GetUsers;
+using ACleanAPI.Example.Application.Users.Queries;
 using ACleanAPI.Example.Domain.Users.Entities;
 using ACleanAPI.Example.Domain.Users.Interfaces;
 using Moq;
@@ -10,9 +10,9 @@ namespace ACleanAPI.Example.Application.Tests;
 [TestClass]
 public sealed class GetUsersQueryHandlerTests
 {
-    private Mock<IUserRepository> _userRepositoryMock;
-    private Mock<IUserMapper> _userMapperMock;
-    private GetUsersQueryHandler _handler;
+    private readonly Mock<IUserRepository> _userRepositoryMock;
+    private readonly Mock<IUserMapper> _userMapperMock;
+    private readonly GetUsersQueryHandler _handler;
 
     public GetUsersQueryHandlerTests()
     {

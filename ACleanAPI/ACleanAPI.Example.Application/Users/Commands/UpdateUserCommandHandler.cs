@@ -1,5 +1,5 @@
 using ACleanAPI.Application.CommandHandlers;
-using ACleanAPI.Application.Interfaces;
+using ACleanAPI.Application.Requests;
 using ACleanAPI.Example.Application.Users.DTO;
 using ACleanAPI.Example.Application.Users.Mappers;
 using ACleanAPI.Example.Domain.Users.Entities;

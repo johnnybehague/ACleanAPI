@@ -1,4 +1,5 @@
 using ACleanAPI.Application.Interfaces;
+using ACleanAPI.Application.Requests;
 using ACleanAPI.Tests.App.Presentation;
 using ACleanAPI.Tests.Common;
 using FluentResults;

@@ -1,4 +1,4 @@
-using ACleanAPI.Application.Interfaces;
+using ACleanAPI.Application.Requests;
 using ACleanAPI.Presentation;
 using ACleanAPI.Tests.Common;
 using MediatR;
@@ -14,9 +14,9 @@ public class UserTestController : AcCrudControllerBase<UserTestDto, UserTestDeta
     {
     }
 
-    public async Task<ActionResult<IEnumerable<UserTestDto>>> Index(IAcGetEntitiesRequest<UserTestDto> request, CancellationToken cancellationToken = default)
+    public async Task<ActionResult<IEnumerable<UserTestDto>>> Index(AcGetEntitiesRequest<UserTestDto> request, CancellationToken cancellationToken = default)
         => await GetEntitiesAsync(request, cancellationToken);
 
-    public async Task<ActionResult<UserTestDetailDto>> Details(IAcGetEntityByIdRequest<UserTestDetailDto> request, CancellationToken cancellationToken = default)
+    public async Task<ActionResult<UserTestDetailDto>> Details(AcGetEntityByIdRequest<UserTestDetailDto> request, CancellationToken cancellationToken = default)
         => await GetEntityByIdAsync(request, cancellationToken);
 }

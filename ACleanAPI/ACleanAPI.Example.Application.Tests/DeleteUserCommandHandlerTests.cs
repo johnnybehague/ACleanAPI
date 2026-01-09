@@ -23,7 +23,7 @@ public class DeleteUserCommandHandlerTests
     {
         // Arrange
         var userId = 1;
-        var command = new DeleteUserCommand { Id = userId };
+        var command = new DeleteUserCommand(userId);
 
         _userRepositoryMock
             .Setup(r => r.DeleteEntityAsync(userId, It.IsAny<CancellationToken>()))
@@ -43,7 +43,7 @@ public class DeleteUserCommandHandlerTests
     {
         // Arrange
         var userId = 1;
-        var command = new DeleteUserCommand { Id = userId };
+        var command = new DeleteUserCommand(userId);
 
         _userRepositoryMock
             .Setup(r => r.DeleteEntityAsync(userId, It.IsAny<CancellationToken>()))
