@@ -5,11 +5,5 @@ using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace ACleanAPI.Application.Interfaces;
 
-public record AcUpdateEntityRequest<TDto>(int id, TDto? dto): IRequest<Result>
-    where TDto : AcEntityDtoBase
-{
-    [BindRequired]
-    public int Id { get; init; } = id;
-
-    public TDto? Dto { get; init; } = dto;
-}
+public record AcUpdateEntityRequest<TDto>([BindRequired] int Id, TDto? Dto): IRequest<Result>
+    where TDto : AcEntityDtoBase;
