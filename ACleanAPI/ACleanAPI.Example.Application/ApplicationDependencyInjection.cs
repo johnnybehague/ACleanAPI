@@ -1,6 +1,6 @@
 using ACleanAPI.Application;
 using ACleanAPI.Example.Application.Users.Mappers;
-using ACleanAPI.Example.Application.Users.Queries.GetUsers;
+using ACleanAPI.Example.Application.Users.Queries;
 using Microsoft.Extensions.DependencyInjection;
 using System.Diagnostics.CodeAnalysis;
 

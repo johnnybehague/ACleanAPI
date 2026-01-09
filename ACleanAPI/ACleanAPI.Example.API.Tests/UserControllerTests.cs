@@ -1,8 +1,7 @@
 using ACleanAPI.API.Controllers;
 using ACleanAPI.Example.Application.Users.Commands;
 using ACleanAPI.Example.Application.Users.DTO;
-using ACleanAPI.Example.Application.Users.Queries.GetUserById;
-using ACleanAPI.Example.Application.Users.Queries.GetUsers;
+using ACleanAPI.Example.Application.Users.Queries;
 using FluentResults;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;

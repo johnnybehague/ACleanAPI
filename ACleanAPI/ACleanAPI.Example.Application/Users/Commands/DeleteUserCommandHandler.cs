@@ -1,9 +1,5 @@
 using ACleanAPI.Application.CommandHandlers;
-using ACleanAPI.Application.Interfaces;
-using ACleanAPI.Application.QueryHandlers;
-using ACleanAPI.Example.Application.Users.DTO;
-using ACleanAPI.Example.Application.Users.Mappers;
-using ACleanAPI.Example.Application.Users.Queries.GetUserById;
+using ACleanAPI.Application.Requests;
 using ACleanAPI.Example.Domain.Users.Entities;
 using ACleanAPI.Example.Domain.Users.Interfaces;
 using FluentResults;
@@ -11,10 +7,7 @@ using MediatR;
 
 namespace ACleanAPI.Example.Application.Users.Commands;
 
-public record DeleteUserCommand : IAcDeleteEntityRequest
-{
-    public int? Id { get; set; }
-}
+public record DeleteUserCommand(int? Id) : AcDeleteEntityRequest(Id);
 
 public class DeleteUserCommandHandler : AcDeleteEntityCommandHandlerBase<User>, IRequestHandler<DeleteUserCommand, Result>
 {

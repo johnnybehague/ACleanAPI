@@ -1,4 +1,4 @@
-using ACleanAPI.Application.Interfaces;
+using ACleanAPI.Application.Requests;
 using ACleanAPI.Infrastructure.Interfaces;
 using ACleanAPI.Tests.App.Application;
 using ACleanAPI.Tests.Common;
@@ -22,11 +22,10 @@ public class AcDeleteEntityCommandHandlerBaseTests
     public async Task HandleRequest_IdIsNull_ReturnsFailResult()
     {
         // Arrange
-        var requestMock = new Mock<IAcDeleteEntityRequest>();
-        requestMock.Setup(r => r.Id).Returns((int?)null);
+        var request = new AcDeleteEntityRequest(null);
 
         // Act
-        var result = await _handler.HandleRequest(requestMock.Object, CancellationToken.None);
+        var result = await _handler.HandleRequest(request, CancellationToken.None);
 
         // Assert
         Assert.IsFalse(result.IsSuccess);
@@ -39,16 +38,14 @@ public class AcDeleteEntityCommandHandlerBaseTests
     {
         // Arrange
         var entityId = 1;
-
-        var requestMock = new Mock<IAcDeleteEntityRequest>();
-        requestMock.Setup(r => r.Id).Returns(entityId);
+        var request = new AcDeleteEntityRequest(entityId);
 
         _repositoryMock
             .Setup(r => r.DeleteEntityAsync(entityId, It.IsAny<CancellationToken>()))
             .Returns(Task.CompletedTask);
 
         // Act
-        var result = await _handler.HandleRequest(requestMock.Object, CancellationToken.None);
+        var result = await _handler.HandleRequest(request, CancellationToken.None);
 
         // Assert
         Assert.IsTrue(result.IsSuccess);
@@ -62,16 +59,14 @@ public class AcDeleteEntityCommandHandlerBaseTests
         // Arrange
         var entityId = 1;
         var exceptionMessage = "DB error";
-
-        var requestMock = new Mock<IAcDeleteEntityRequest>();
-        requestMock.Setup(r => r.Id).Returns(entityId);
+        var request = new AcDeleteEntityRequest(entityId);
 
         _repositoryMock
             .Setup(r => r.DeleteEntityAsync(entityId, It.IsAny<CancellationToken>()))
             .ThrowsAsync(new Exception(exceptionMessage));
 
         // Act
-        var result = await _handler.HandleRequest(requestMock.Object, CancellationToken.None);
+        var result = await _handler.HandleRequest(request, CancellationToken.None);
 
         // Assert
         Assert.IsFalse(result.IsSuccess);

@@ -27,7 +27,7 @@ public class CreateUserCommandHandlerTests
         // Arrange
         var dto = new UserDto { Id = 1 };
         var entity = new User { Id = 1 };
-        var command = new CreateUserCommand { Dto = dto };
+        var command = new CreateUserCommand(dto);
 
         _userMapper.Setup(m => m.MapToEntity(dto))
             .Returns(entity);
@@ -50,7 +50,7 @@ public class CreateUserCommandHandlerTests
         // Arrange
         var dto = new UserDto { Id = 1 };
         var entity = new User { Id = 1 };
-        var command = new CreateUserCommand { Dto = dto };
+        var command = new CreateUserCommand(dto);
 
         _userMapper.Setup(m => m.MapToEntity(dto))
             .Returns(entity);

@@ -1,4 +1,5 @@
 using ACleanAPI.Application.Interfaces;
+using ACleanAPI.Application.Requests;
 using ACleanAPI.Infrastructure.Interfaces;
 using ACleanAPI.Tests.App.Application;
 using ACleanAPI.Tests.Common;
@@ -24,11 +25,10 @@ public class AcCreateEntityCommandHandlerBaseTests
     public async Task HandleRequest_ReturnsFail_WhenDtoIsNull()
     {
         // Arrange
-        var requestMock = new Mock<IAcCreateEntityRequest<UserTestDto>>();
-        requestMock.Setup(r => r.Dto).Returns((UserTestDto?)null);
+        var request = new AcCreateEntityRequest<UserTestDto>(null);
 
         // Act
-        var result = await _handler.HandleRequest(requestMock.Object, CancellationToken.None);
+        var result = await _handler.HandleRequest(request, CancellationToken.None);
 
         // Assert
         Assert.IsFalse(result.IsSuccess);
@@ -43,16 +43,14 @@ public class AcCreateEntityCommandHandlerBaseTests
         // Arrange
         var dto = new UserTestDto();
         var entity = new UserTestEntity();
-
-        var requestMock = new Mock<IAcCreateEntityRequest<UserTestDto>>();
-        requestMock.Setup(r => r.Dto).Returns(dto);
+        var request = new AcCreateEntityRequest<UserTestDto>(dto);
 
         _mapperMock.Setup(m => m.MapToEntity(dto)).Returns(entity);
         _repositoryMock.Setup(r => r.CreateEntityAsync(entity, It.IsAny<CancellationToken>()))
             .Returns(Task.CompletedTask);
 
         // Act
-        var result = await _handler.HandleRequest(requestMock.Object, CancellationToken.None);
+        var result = await _handler.HandleRequest(request, CancellationToken.None);
 
         // Assert
         Assert.IsTrue(result.IsSuccess);
@@ -66,16 +64,14 @@ public class AcCreateEntityCommandHandlerBaseTests
         // Arrange
         var dto = new UserTestDto();
         var entity = new UserTestEntity();
-
-        var requestMock = new Mock<IAcCreateEntityRequest<UserTestDto>>();
-        requestMock.Setup(r => r.Dto).Returns(dto);
+        var request = new AcCreateEntityRequest<UserTestDto>(dto);
 
         _mapperMock.Setup(m => m.MapToEntity(dto)).Returns(entity);
         _repositoryMock.Setup(r => r.CreateEntityAsync(entity, It.IsAny<CancellationToken>()))
             .ThrowsAsync(new Exception("DB error"));
 
         // Act
-        var result = await _handler.HandleRequest(requestMock.Object, CancellationToken.None);
+        var result = await _handler.HandleRequest(request, CancellationToken.None);
 
         // Assert
         Assert.IsFalse(result.IsSuccess);

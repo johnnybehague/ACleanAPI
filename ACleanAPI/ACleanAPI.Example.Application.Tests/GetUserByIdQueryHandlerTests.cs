@@ -1,6 +1,6 @@
 using ACleanAPI.Example.Application.Users.DTO;
 using ACleanAPI.Example.Application.Users.Mappers;
-using ACleanAPI.Example.Application.Users.Queries.GetUserById;
+using ACleanAPI.Example.Application.Users.Queries;
 using ACleanAPI.Example.Domain.Users.Entities;
 using ACleanAPI.Example.Domain.Users.Interfaces;
 using Moq;
@@ -27,7 +27,7 @@ public sealed class GetUserByIdQueryHandlerTests
         // Arrange
         var user = new User { Id = 1, Email = "test@mail.com", FirstName = "John", LastName = "Doe" };
         var dto = new UserDetailDto { Id = 1, Email = "test@mail.com", FirstName = "John", LastName = "Doe" };
-        var query = new GetUserByIdQuery { Id = 1 };
+        var query = new GetUserByIdQuery(1);
 
         _userRepositoryMock
             .Setup(r => r.GetEntityByIdAsync(1, It.IsAny<CancellationToken>()))
@@ -52,7 +52,7 @@ public sealed class GetUserByIdQueryHandlerTests
     public async Task Handle_ReturnsSuccessWithNull_WhenUserDoesNotExist()
     {
         // Arrange
-        var query = new GetUserByIdQuery { Id = 99 };
+        var query = new GetUserByIdQuery(99);
         _userRepositoryMock
             .Setup(r => r.GetEntityByIdAsync(99, It.IsAny<CancellationToken>()))
             .ReturnsAsync((User?)null);

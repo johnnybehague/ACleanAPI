@@ -1,5 +1,5 @@
 using ACleanAPI.Application.CommandHandlers;
-using ACleanAPI.Application.Interfaces;
+using ACleanAPI.Application.Requests;
 using ACleanAPI.Example.Application.Users.DTO;
 using ACleanAPI.Example.Application.Users.Mappers;
 using ACleanAPI.Example.Domain.Users.Entities;
@@ -9,10 +9,7 @@ using MediatR;
 
 namespace ACleanAPI.Example.Application.Users.Commands;
 
-public record CreateUserCommand : IAcCreateEntityRequest<UserDto>
-{
-    public UserDto? Dto { get; set; }
-}
+public record CreateUserCommand(UserDto? Dto) : AcCreateEntityRequest<UserDto>(Dto);
 
 public class CreateUserCommandHandler : AcCreateEntityCommandHandlerBase<UserDto, User>, IRequestHandler<CreateUserCommand, Result>
 {
