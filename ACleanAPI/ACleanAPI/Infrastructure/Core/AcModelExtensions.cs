@@ -8,7 +8,7 @@ public static class AcModelExtensions
         ArgumentNullException.ThrowIfNull(source);
 
         var properties = typeof(TModel).GetProperties()
-            .Where(prop => prop.CanRead && prop.CanWrite && prop.Name != nameof(AcModelBase.Id));
+            .Where(prop => prop.Name != nameof(AcModelBase.Id));
 
         foreach (var property in properties)
         {
