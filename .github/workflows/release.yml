@@ -1,0 +1,54 @@
+name: Release
+
+on:
+  push:
+    branches: [ "master" ]
+
+jobs:
+  release:
+    runs-on: windows-latest
+
+    permissions:
+      contents: write   # nécessaire pour créer un tag
+      packages: write   # utile si GitHub Packages
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0   # IMPORTANT pour les tags
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: 8.0.x
+
+    - name: Read version from csproj
+      id: version
+      run: |
+        VERSION=$(grep -oP '(?<=<Version>).*?(?=</Version>)' ./ACleanAPI/ACleanAPI/ACleanAPI.csproj)
+        echo "version=$VERSION" >> $GITHUB_OUTPUT
+
+    - name: Check if tag exists
+      run: |
+        if git rev-parse "v${{ steps.version.outputs.version }}" >/dev/null 2>&1; then
+          echo "Tag already exists"
+          exit 1
+        fi
+
+    - name: Create git tag
+      run: |
+        git tag -a v${{ steps.version.outputs.version }} -m "Release v${{ steps.version.outputs.version }}"
+        git push origin v${{ steps.version.outputs.version }}
+
+    - name: Restore
+      run: dotnet restore
+
+    - name: Build
+      run: dotnet build --configuration Release --no-restore
+
+    - name: Pack NuGet
+      run: dotnet pack ./ACleanAPI/ACleanAPI/ACleanAPI.csproj --configuration Release --no-build -p:PackageVersion=${{ steps.version.outputs.version }} -o ./artifacts
+
+    - name: Publish NuGet
+      run: dotnet nuget push ./artifacts/*.nupkg --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json --skip-duplicate
