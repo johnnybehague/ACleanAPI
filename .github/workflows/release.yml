@@ -37,6 +37,8 @@ jobs:
         
     - name: Create git tag if not exists
       run: |
+        git config user.name "Johnny Behague"
+        git config user.email "johnny.behague@live.fr"
         $tag = "v${{ steps.version.outputs.version }}"
         # vérifier sur le remote
         if (git ls-remote --tags origin | Select-String $tag) {
