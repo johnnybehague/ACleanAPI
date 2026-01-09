@@ -2,11 +2,9 @@ namespace ACleanAPI.Infrastructure.Core;
 
 public static class AcModelExtensions
 {
-    public static void UpdateFrom<TModel>(this TModel target, TModel source)
+    public static void UpdateFrom<TModel>(this TModel target, TModel? source)
         where TModel : AcModelBase
     {
-        if (target == null)
-            throw new ArgumentNullException(nameof(target));
         if (source == null)
             throw new ArgumentNullException(nameof(source));
 

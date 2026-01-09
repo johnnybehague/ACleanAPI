@@ -70,7 +70,7 @@ namespace ACleanAPI.Example.API.Tests
         }
 
         [TestMethod]
-        public async Task DelCreate_ReturnsNoContent()
+        public async Task Create_ReturnsNoContent()
         {
             // Arrange
             UserDto dto = new UserDto { Id = 1, FirstName = "John", LastName = "Doe" };
@@ -79,6 +79,23 @@ namespace ACleanAPI.Example.API.Tests
 
             // Act
             var result = await _controller.Create(dto, CancellationToken.None);
+
+            // Assert
+            Assert.IsNotNull(result);
+            Assert.IsInstanceOfType<NoContentResult>(result);
+        }
+
+        [TestMethod]
+        public async Task Update_ReturnsNoContent()
+        {
+            // Arrange
+            int id = 1;
+            UserDto dto = new UserDto { Id = 1, FirstName = "John", LastName = "Doe" };
+            _mediatorMock.Setup(m => m.Send(It.Is<UpdateUserCommand>(q => q.Id == id && q.Dto == dto), It.IsAny<CancellationToken>()))
+                .ReturnsAsync(Result.Ok());
+
+            // Act
+            var result = await _controller.Update(id, dto, CancellationToken.None);
 
             // Assert
             Assert.IsNotNull(result);
