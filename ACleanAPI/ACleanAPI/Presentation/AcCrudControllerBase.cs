@@ -58,6 +58,18 @@ public abstract class AcCrudControllerBase<Dto, DetailDto> : ControllerBase
         return NoContent();
     }
 
+    public async Task<IActionResult> UpdateEntityAsync(AcUpdateEntityRequest<Dto> request, CancellationToken cancellationToken = default)
+    {
+        if (!ModelState.IsValid)
+            return BadRequest(ModelState);
+
+        var result = await _mediator.Send(request, cancellationToken);
+        if (result.IsFailed)
+            return BadRequest();
+
+        return NoContent();
+    }
+
     public async Task<IActionResult> DeleteEntityAsync(IAcDeleteEntityRequest request, CancellationToken cancellationToken = default)
     {
         if (!ModelState.IsValid)

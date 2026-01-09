@@ -118,6 +118,30 @@ public sealed class UserRepositoryTests
     }
 
     [TestMethod]
+    public async Task UpdateAsync_CallsUpdateEntityAsync()
+    {
+        // Arrange
+        var id = 1;
+        var entity = new User { Id = 1, FirstName = "Charly", LastName = "Brown", Email = "charlie@brown.com" };
+        var model = new UserModel { Id = 1, FirstName = "Charlie", LastName = "Brown", Email = "charlie@brown.com" };
+        _context.Users.Add(model);
+
+        _mapperMock.Setup(m => m.MapToModel(entity)).Returns(new UserModel { Id = 1, FirstName = "Charly", LastName = "Brown", Email = "charlie@brown.com" });
+        var cancellationToken = new CancellationToken();
+
+        // Act
+        await _repository.UpdateAsync(id, entity, cancellationToken); 
+        await _context.SaveChangesAsync(cancellationToken);
+
+        // Assert
+        var expectedModel = await _context.Users.FirstOrDefaultAsync(u => u.Id == entity.Id);
+        Assert.IsNotNull(expectedModel);
+        Assert.AreEqual(entity.FirstName, expectedModel.FirstName);
+        Assert.AreEqual(entity.LastName, expectedModel.LastName);
+        Assert.AreEqual(entity.Email, expectedModel.Email);
+    }
+
+    [TestMethod]
     public async Task DeleteAsync_CallsDeleteEntityAsync()
     {
         // Arrange
