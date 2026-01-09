@@ -18,6 +18,9 @@ jobs:
       with:
         fetch-depth: 0   # IMPORTANT pour les tags
 
+    - name: Fetch all tags
+      run: git fetch --tags
+  
     - name: Setup .NET
       uses: actions/setup-dotnet@v4
       with:
@@ -28,8 +31,10 @@ jobs:
       run: |
         $content = Get-Content ./ACleanAPI/ACleanAPI/ACleanAPI.csproj
         $version = ($content | Select-String '<Version>(.*)</Version>').Matches.Groups[1].Value
+        if (-not $version) { throw "Version not found in csproj" }
+        Write-Host "Found version: $version"
         "version=$version" | Out-File -FilePath $env:GITHUB_OUTPUT -Append
-
+        
     - name: Check if tag exists
       run: |
         $tag = "v${{ steps.version.outputs.version }}"
