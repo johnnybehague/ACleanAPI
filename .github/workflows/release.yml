@@ -35,19 +35,16 @@ jobs:
         Write-Host "Found version: $version"
         "version=$version" | Out-File -FilePath $env:GITHUB_OUTPUT -Append
         
-    - name: Check if tag exists
+    - name: Create git tag if not exists
       run: |
         $tag = "v${{ steps.version.outputs.version }}"
-        if (git rev-parse $tag -q) {
-            Write-Host "Tag $tag already exists, stopping workflow"
-            exit 1
+        # vérifier sur le remote
+        if (git ls-remote --tags origin | Select-String $tag) {
+            Write-Host "Tag $tag already exists on remote, skipping creation"
+        } else {
+            git tag -a $tag -m "Release $tag"
+            git push origin $tag
         }
-
-    - name: Create git tag
-      run: |
-        $tag = "v${{ steps.version.outputs.version }}"
-        git tag -a $tag -m "Release $tag"
-        git push origin $tag
 
     - name: Restore
       run: dotnet restore
