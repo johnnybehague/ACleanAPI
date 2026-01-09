@@ -32,15 +32,17 @@ jobs:
 
     - name: Check if tag exists
       run: |
-        if git rev-parse "v${{ steps.version.outputs.version }}" >/dev/null 2>&1; then
-          echo "Tag already exists"
-          exit 1
-        fi
+        $tag = "v${{ steps.version.outputs.version }}"
+        if (git rev-parse $tag -q) {
+            Write-Host "Tag $tag already exists, stopping workflow"
+            exit 1
+        }
 
     - name: Create git tag
       run: |
-        git tag -a v${{ steps.version.outputs.version }} -m "Release v${{ steps.version.outputs.version }}"
-        git push origin v${{ steps.version.outputs.version }}
+        $tag = "v${{ steps.version.outputs.version }}"
+        git tag -a $tag -m "Release $tag"
+        git push origin $tag
 
     - name: Restore
       run: dotnet restore
