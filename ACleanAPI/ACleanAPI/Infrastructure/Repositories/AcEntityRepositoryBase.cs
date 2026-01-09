@@ -95,7 +95,7 @@ public abstract class AcEntityRepositoryBase<TModel, TEntity> : IAcEntityReposit
         var dbSet = GetDbSet();
         if (dbSet != null)
         {
-            var existingModel = await dbSet.FindAsync(id, cancellationToken);
+            var existingModel = await dbSet.FindAsync([id], cancellationToken);
             if (existingModel != null)
             {
                 existingModel.UpdateFrom(model);

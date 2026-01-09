@@ -5,8 +5,7 @@ public static class AcModelExtensions
     public static void UpdateFrom<TModel>(this TModel target, TModel? source)
         where TModel : AcModelBase
     {
-        if (source == null)
-            throw new ArgumentNullException(nameof(source));
+        ArgumentNullException.ThrowIfNull(source);
 
         var properties = typeof(TModel).GetProperties()
             .Where(prop => prop.CanRead && prop.CanWrite && prop.Name != nameof(AcModelBase.Id));
