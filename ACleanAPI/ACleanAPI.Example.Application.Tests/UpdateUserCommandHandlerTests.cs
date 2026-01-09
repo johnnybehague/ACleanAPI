@@ -28,7 +28,7 @@ public class UpdateUserCommandHandlerTests
         var id = 1;
         var dto = new UserDto { Id = 1 };
         var entity = new User { Id = 1 };
-        var command = new UpdateUserCommand { Id = id, Dto = dto };
+        var command = new UpdateUserCommand(id, dto);
 
         _userMapper.Setup(m => m.MapToEntity(dto))
             .Returns(entity);
@@ -52,7 +52,7 @@ public class UpdateUserCommandHandlerTests
         var id = 1;
         var dto = new UserDto { Id = 1 };
         var entity = new User { Id = 1 };
-        var command = new UpdateUserCommand { Id = id, Dto = dto };
+        var command = new UpdateUserCommand(id, dto);
 
         _userMapper.Setup(m => m.MapToEntity(dto))
             .Returns(entity);

@@ -58,7 +58,7 @@ public abstract class AcCrudControllerBase<Dto, DetailDto> : ControllerBase
         return NoContent();
     }
 
-    public async Task<IActionResult> UpdateEntityAsync(IAcUpdateEntityRequest<Dto> request, CancellationToken cancellationToken = default)
+    public async Task<IActionResult> UpdateEntityAsync(AcUpdateEntityRequest<Dto> request, CancellationToken cancellationToken = default)
     {
         if (!ModelState.IsValid)
             return BadRequest(ModelState);

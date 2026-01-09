@@ -6,7 +6,7 @@ using FluentResults;
 
 namespace ACleanAPI.Application.CommandHandlers;
 
-public class AcUpdateEntityCommandHandlerBase<TDto, TEntity>
+public abstract class AcUpdateEntityCommandHandlerBase<TDto, TEntity>
     where TEntity : AcEntityBase
     where TDto : AcEntityDtoBase
 {
@@ -19,7 +19,7 @@ public class AcUpdateEntityCommandHandlerBase<TDto, TEntity>
         _mapper = mapper;
     }
 
-    public async Task<Result> HandleRequest(IAcUpdateEntityRequest<TDto> request, CancellationToken cancellationToken)
+    public async Task<Result> HandleRequest(AcUpdateEntityRequest<TDto> request, CancellationToken cancellationToken)
     {
         if(request.Id <= 0)
             return Result.Fail("Valid entity ID is required.");

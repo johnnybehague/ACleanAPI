@@ -28,7 +28,7 @@ public class UserController : AcCrudControllerBase<UserDto, UserDetailDto>
 
     [HttpPut("{id}")]
     public async Task<IActionResult> Update(int id, UserDto dto, CancellationToken cancellationToken)
-        => await UpdateEntityAsync(new UpdateUserCommand { Id = id, Dto = dto }, cancellationToken);
+        => await UpdateEntityAsync(new UpdateUserCommand(id, dto), cancellationToken);
 
     [HttpDelete("{id}")]
     public async Task<IActionResult> Delete(int id, CancellationToken cancellationToken)

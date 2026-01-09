@@ -25,49 +25,49 @@ public class AcCrudControllerBase_UpdateEntityAsyncTests
     {
         // Arrange
         _controller.ModelState.AddModelError("Dto", "Dto is required");
-        var requestMock = new Mock<IAcUpdateEntityRequest<UserTestDto>>();
+        var request = new AcUpdateEntityRequest<UserTestDto>(1, null);
 
         // Act
-        var result = await _controller.UpdateEntityAsync(requestMock.Object);
+        var result = await _controller.UpdateEntityAsync(request);
 
         // Assert
         var badRequest = result as BadRequestObjectResult;
         Assert.IsNotNull(badRequest);
         Assert.IsFalse(_controller.ModelState.IsValid);
-        _mediatorMock.Verify(m => m.Send(It.IsAny<IAcUpdateEntityRequest<UserTestDto>>(), It.IsAny<CancellationToken>()), Times.Never);
+        _mediatorMock.Verify(m => m.Send(request, It.IsAny<CancellationToken>()), Times.Never);
     }
 
     [TestMethod]
     public async Task UpdateEntityAsync_MediatorReturnsFailedResult_ReturnsBadRequest()
     {
         // Arrange
-        var requestMock = new Mock<IAcUpdateEntityRequest<UserTestDto>>();
+        var request = new AcUpdateEntityRequest<UserTestDto>(0, null);
         _mediatorMock
-            .Setup(m => m.Send(requestMock.Object, It.IsAny<CancellationToken>()))
+            .Setup(m => m.Send(request, It.IsAny<CancellationToken>()))
             .ReturnsAsync(Result.Fail("Fail"));
 
         // Act
-        var result = await _controller.UpdateEntityAsync(requestMock.Object);
+        var result = await _controller.UpdateEntityAsync(request);
 
         // Assert
         Assert.IsInstanceOfType<BadRequestResult>(result);
-        _mediatorMock.Verify(m => m.Send(requestMock.Object, It.IsAny<CancellationToken>()), Times.Once);
+        _mediatorMock.Verify(m => m.Send(request, It.IsAny<CancellationToken>()), Times.Once);
     }
 
     [TestMethod]
     public async Task UpdateEntityAsync_MediatorReturnsSuccess_ReturnsNoContent()
     {
         // Arrange
-        var requestMock = new Mock<IAcUpdateEntityRequest<UserTestDto>>();
+        var request = new AcUpdateEntityRequest<UserTestDto>(1, new UserTestDto { Id = 1 });
         _mediatorMock
-            .Setup(m => m.Send(requestMock.Object, It.IsAny<CancellationToken>()))
+            .Setup(m => m.Send(request, It.IsAny<CancellationToken>()))
             .ReturnsAsync(Result.Ok());
 
         // Act
-        var result = await _controller.UpdateEntityAsync(requestMock.Object);
+        var result = await _controller.UpdateEntityAsync(request);
 
         // Assert
         Assert.IsInstanceOfType<NoContentResult>(result);
-        _mediatorMock.Verify(m => m.Send(requestMock.Object, It.IsAny<CancellationToken>()), Times.Once);
+        _mediatorMock.Verify(m => m.Send(request, It.IsAny<CancellationToken>()), Times.Once);
     }
 }

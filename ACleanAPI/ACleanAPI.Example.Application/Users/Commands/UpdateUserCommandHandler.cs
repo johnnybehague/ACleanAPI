@@ -9,11 +9,7 @@ using MediatR;
 
 namespace ACleanAPI.Example.Application.Users.Commands;
 
-public record UpdateUserCommand : IAcUpdateEntityRequest<UserDto>
-{
-    public int Id { get; set; }
-    public UserDto? Dto { get; set; }
-}
+public record UpdateUserCommand(int Id, UserDto? Dto) : AcUpdateEntityRequest<UserDto>(Id, Dto);
 
 public class UpdateUserCommandHandler : AcUpdateEntityCommandHandlerBase<UserDto, User>, IRequestHandler<UpdateUserCommand, Result>
 {
