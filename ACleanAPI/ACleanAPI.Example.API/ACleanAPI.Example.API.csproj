@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Asp.Versioning.Mvc" Version="8.1.0" />
+    <PackageReference Include="MediatR" Version="13.1.0" />
+    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.10" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ACleanAPI.Example.Application\ACleanAPI.Example.Application.csproj" />
+    <ProjectReference Include="..\ACleanAPI.Example.Domain\ACleanAPI.Example.Domain.csproj" />
+    <ProjectReference Include="..\ACleanAPI.Example.Infrastructure\ACleanAPI.Example.Infrastructure.csproj" />
+  </ItemGroup>
+
+</Project>

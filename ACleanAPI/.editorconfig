@@ -1,0 +1,93 @@
+root = true
+
+############################
+# GLOBAL
+############################
+[*]
+charset = utf-8
+end_of_line = lf
+indent_style = space
+indent_size = 4
+insert_final_newline = true
+
+############################
+# C# FILES
+############################
+[*.cs]
+
+# Nullable reference types
+dotnet_style_nullable_reference_types = true
+
+# Var usage
+csharp_style_var_for_built_in_types = true:suggestion
+csharp_style_var_when_type_is_apparent = true:suggestion
+csharp_style_var_elsewhere = true:suggestion
+
+# Expression-bodied members
+csharp_style_expression_bodied_methods = when_on_single_line:suggestion
+csharp_style_expression_bodied_properties = true:suggestion
+
+# Async best practices
+dotnet_diagnostic.CS1998.severity = suggestion     # async without await
+dotnet_diagnostic.VSTHRD200.severity = warning     # async naming
+
+# Remove unused parameters (MediatR handlers)
+dotnet_diagnostic.IDE0060.severity = suggestion
+
+############################
+# CLEAN ARCHITECTURE / CQRS
+############################
+
+# Allow records for commands/queries
+dotnet_diagnostic.IDE0042.severity = none
+
+# Result<T> pattern often replaces null checks
+dotnet_diagnostic.CS8602.severity = warning        # dereference of possibly null
+dotnet_diagnostic.CS8604.severity = warning
+
+# Allow explicit failures instead of null returns
+dotnet_diagnostic.CS8618.severity = suggestion     # non-nullable not initialized
+
+############################
+# SONAR RULES (COMMON FALSE POSITIVES)
+############################
+
+# Utility classes should not have public constructors
+dotnet_diagnostic.S1118.severity = warning
+
+# Generic exception catching (often acceptable in pipelines)
+dotnet_diagnostic.S2221.severity = suggestion
+
+# Cognitive complexity (handlers can be readable even if "complex")
+dotnet_diagnostic.S3776.severity = suggestion
+
+############################
+# PROGRAM.CS (TOP-LEVEL)
+############################
+
+[Program.cs]
+
+# Top-level statements → false positive
+dotnet_diagnostic.S1118.severity = none
+
+# ASP.NET Core validates ModelState automatically
+dotnet_diagnostic.ASP0001.severity = none
+
+############################
+# CONTROLLERS
+############################
+
+[*Controller.cs]
+
+# ModelState handled by [ApiController]
+dotnet_diagnostic.ASP0001.severity = none
+
+############################
+# TESTS
+############################
+
+[*Tests.cs]
+
+# Assertions often trigger "magic numbers" or complexity rules
+dotnet_diagnostic.S109.severity = none
+dotnet_diagnostic.S3776.severity = none
