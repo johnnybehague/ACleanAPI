@@ -26,8 +26,9 @@ jobs:
     - name: Read version from csproj
       id: version
       run: |
-        VERSION=$(grep -oP '(?<=<Version>).*?(?=</Version>)' ./ACleanAPI/ACleanAPI/ACleanAPI.csproj)
-        echo "version=$VERSION" >> $GITHUB_OUTPUT
+        $content = Get-Content ./ACleanAPI/ACleanAPI/ACleanAPI.csproj
+        $version = ($content | Select-String '<Version>(.*)</Version>').Matches.Groups[1].Value
+        "version=$version" | Out-File -FilePath $env:GITHUB_OUTPUT -Append
 
     - name: Check if tag exists
       run: |
