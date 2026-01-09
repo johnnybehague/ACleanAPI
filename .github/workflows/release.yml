@@ -27,9 +27,10 @@ jobs:
         dotnet-version: 8.0.x
 
     - name: Read version from csproj
+      working-directory: ./ACleanAPI
       id: version
       run: |
-        $content = Get-Content ./ACleanAPI/ACleanAPI/ACleanAPI.csproj
+        $content = Get-Content ACleanAPI.csproj
         $version = ($content | Select-String '<Version>(.*)</Version>').Matches.Groups[1].Value
         if (-not $version) { throw "Version not found in csproj" }
         Write-Host "Found version: $version"
@@ -49,13 +50,17 @@ jobs:
         }
 
     - name: Restore
+      working-directory: ./ACleanAPI
       run: dotnet restore
 
     - name: Build
+      working-directory: ./ACleanAPI
       run: dotnet build --configuration Release --no-restore
 
     - name: Pack NuGet
-      run: dotnet pack ./ACleanAPI/ACleanAPI/ACleanAPI.csproj --configuration Release --no-build -p:PackageVersion=${{ steps.version.outputs.version }} -o ./artifacts
+      working-directory: ./ACleanAPI
+      run: dotnet pack ACleanAPI.csproj --configuration Release --no-build -p:PackageVersion=${{ steps.version.outputs.version }} -o ./artifacts
 
     - name: Publish NuGet
+    working-directory: ./ACleanAPI
       run: dotnet nuget push ./artifacts/*.nupkg --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json --skip-duplicate
