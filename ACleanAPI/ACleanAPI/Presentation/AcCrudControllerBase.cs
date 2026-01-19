@@ -5,9 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ACleanAPI.Presentation;
 
-public abstract class AcCrudControllerBase<Dto, DetailDto> : ControllerBase
-    where Dto : AcEntityDtoBase
-    where DetailDto : AcEntityDtoBase
+public abstract class AcCrudControllerBase : ControllerBase
 {
     protected readonly IMediator _mediator;
 
@@ -16,7 +14,8 @@ public abstract class AcCrudControllerBase<Dto, DetailDto> : ControllerBase
         _mediator = mediator;
     }
 
-    public async Task<ActionResult<IEnumerable<Dto>>> GetEntitiesAsync(AcGetEntitiesRequest<Dto> request, CancellationToken cancellationToken = default)
+    public async Task<ActionResult<IEnumerable<T>>> GetEntitiesAsync<T>(AcGetEntitiesRequest<T> request, CancellationToken cancellationToken = default)
+        where T : AcEntityDtoBase
     {
         if (!ModelState.IsValid)
             return BadRequest(ModelState);
@@ -29,7 +28,8 @@ public abstract class AcCrudControllerBase<Dto, DetailDto> : ControllerBase
         return Ok(result.Value);
     }
 
-    public async Task<ActionResult<DetailDto>> GetEntityByIdAsync(AcGetEntityByIdRequest<DetailDto> request, CancellationToken cancellationToken = default)
+    public async Task<ActionResult<T>> GetEntityByIdAsync<T>(AcGetEntityByIdRequest<T> request, CancellationToken cancellationToken = default)
+        where T : AcEntityDtoBase
     {
         if (!ModelState.IsValid)
             return BadRequest(ModelState);
@@ -37,7 +37,7 @@ public abstract class AcCrudControllerBase<Dto, DetailDto> : ControllerBase
         var result = await _mediator.Send(request, cancellationToken);
         if (result.IsFailed)
         {
-            if(result.Errors.Any(e => e.Message == "ENTITY_NOT_FOUND"))
+            if (result.Errors.Any(e => e.Message == "ENTITY_NOT_FOUND"))
                 return NotFound();
 
             return BadRequest();
@@ -46,7 +46,8 @@ public abstract class AcCrudControllerBase<Dto, DetailDto> : ControllerBase
         return Ok(result.Value);
     }
 
-    public async Task<IActionResult> CreateEntityAsync(AcCreateEntityRequest<Dto> request, CancellationToken cancellationToken = default)
+    public async Task<IActionResult> CreateEntityAsync<T>(AcCreateEntityRequest<T> request, CancellationToken cancellationToken = default)
+        where T : AcEntityDtoBase
     {
         if (!ModelState.IsValid)
             return BadRequest(ModelState);
@@ -58,7 +59,8 @@ public abstract class AcCrudControllerBase<Dto, DetailDto> : ControllerBase
         return NoContent();
     }
 
-    public async Task<IActionResult> UpdateEntityAsync(AcUpdateEntityRequest<Dto> request, CancellationToken cancellationToken = default)
+    public async Task<IActionResult> UpdateEntityAsync<T>(AcUpdateEntityRequest<T> request, CancellationToken cancellationToken = default)
+        where T : AcEntityDtoBase
     {
         if (!ModelState.IsValid)
             return BadRequest(ModelState);
