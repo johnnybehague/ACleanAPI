@@ -1,0 +1,64 @@
+name: Release
+
+on:
+  push:
+    branches: [ "master" ]
+
+jobs:
+  release:
+    runs-on: windows-latest
+
+    permissions:
+      contents: write   # nécessaire pour créer un tag
+      packages: write   # utile si GitHub Packages
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0   # IMPORTANT pour les tags
+
+    - name: Fetch all tags
+      run: git fetch --tags
+  
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: 8.0.x
+
+    - name: Read version from csproj
+      id: version
+      run: |
+        $content = Get-Content ./ACleanAPI/ACleanAPI/ACleanAPI.csproj
+        $version = ($content | Select-String '<Version>(.*)</Version>').Matches.Groups[1].Value
+        if (-not $version) { throw "Version not found in csproj" }
+        Write-Host "Found version: $version"
+        "version=$version" | Out-File -FilePath $env:GITHUB_OUTPUT -Append
+        
+    - name: Create git tag if not exists
+      run: |
+        git config user.name "Johnny Behague"
+        git config user.email "johnny.behague@live.fr"
+        $tag = "v${{ steps.version.outputs.version }}"
+        # vérifier sur le remote
+        if (git ls-remote --tags origin | Select-String $tag) {
+            Write-Host "Tag $tag already exists on remote, skipping creation"
+        } else {
+            git tag -a $tag -m "Release $tag"
+            git push origin $tag
+        }
+
+    - name: Restore
+      working-directory: ./ACleanAPI
+      run: dotnet restore
+
+    - name: Build
+      working-directory: ./ACleanAPI
+      run: dotnet build --configuration Release --no-restore
+
+    - name: Pack NuGet
+      run: dotnet pack ./ACleanAPI/ACleanAPI/ACleanAPI.csproj --configuration Release --no-build -p:PackageVersion=${{ steps.version.outputs.version }} -o ./artifacts
+  
+    - name: Publish NuGet
+      shell: bash
+      run: dotnet nuget push ./artifacts/*.nupkg --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json --skip-duplicate
