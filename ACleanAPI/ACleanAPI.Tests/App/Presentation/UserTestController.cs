@@ -8,7 +8,7 @@ namespace ACleanAPI.Tests.App.Presentation;
 
 [ApiController]
 [Route("api/[controller]")]
-public class UserTestController : AcCrudControllerBase<UserTestDto, UserTestDetailDto>
+public class UserTestController : AcCrudControllerBase
 {
     public UserTestController(IMediator mediator) : base(mediator)
     {

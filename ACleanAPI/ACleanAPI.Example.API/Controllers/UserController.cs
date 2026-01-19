@@ -9,7 +9,7 @@ namespace ACleanAPI.API.Controllers;
 
 [Route("api/v1/[controller]")]
 [ApiController]
-public class UserController : AcCrudControllerBase<UserDto, UserDetailDto>
+public class UserController : AcCrudControllerBase
 {
     public UserController(IMediator mediator) : base(mediator) { }
 
