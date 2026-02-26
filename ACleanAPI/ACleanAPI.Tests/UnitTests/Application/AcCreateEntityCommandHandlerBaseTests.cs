@@ -1,5 +1,5 @@
+using ACleanAPI.Application.Commands;
 using ACleanAPI.Application.Interfaces;
-using ACleanAPI.Application.Requests;
 using ACleanAPI.Infrastructure.Interfaces;
 using ACleanAPI.Tests.App.Application;
 using ACleanAPI.Tests.Common;
@@ -25,7 +25,7 @@ public class AcCreateEntityCommandHandlerBaseTests
     public async Task HandleRequest_ReturnsFail_WhenDtoIsNull()
     {
         // Arrange
-        var request = new AcCreateEntityRequest<UserTestDto>(null);
+        var request = new AcCreateEntityCommand<UserTestDto>(null);
 
         // Act
         var result = await _handler.HandleRequest(request, CancellationToken.None);
@@ -43,7 +43,7 @@ public class AcCreateEntityCommandHandlerBaseTests
         // Arrange
         var dto = new UserTestDto();
         var entity = new UserTestEntity();
-        var request = new AcCreateEntityRequest<UserTestDto>(dto);
+        var request = new AcCreateEntityCommand<UserTestDto>(dto);
 
         _mapperMock.Setup(m => m.MapToEntity(dto)).Returns(entity);
         _repositoryMock.Setup(r => r.CreateEntityAsync(entity, It.IsAny<CancellationToken>()))
@@ -64,7 +64,7 @@ public class AcCreateEntityCommandHandlerBaseTests
         // Arrange
         var dto = new UserTestDto();
         var entity = new UserTestEntity();
-        var request = new AcCreateEntityRequest<UserTestDto>(dto);
+        var request = new AcCreateEntityCommand<UserTestDto>(dto);
 
         _mapperMock.Setup(m => m.MapToEntity(dto)).Returns(entity);
         _repositoryMock.Setup(r => r.CreateEntityAsync(entity, It.IsAny<CancellationToken>()))

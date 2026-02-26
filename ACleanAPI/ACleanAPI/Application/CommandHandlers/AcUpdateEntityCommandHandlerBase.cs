@@ -1,6 +1,6 @@
+using ACleanAPI.Application.Commands;
 using ACleanAPI.Application.Core;
 using ACleanAPI.Application.Interfaces;
-using ACleanAPI.Application.Requests;
 using ACleanAPI.Domain.Core;
 using ACleanAPI.Infrastructure.Interfaces;
 using FluentResults;
@@ -20,7 +20,7 @@ public abstract class AcUpdateEntityCommandHandlerBase<TDto, TEntity>
         _mapper = mapper;
     }
 
-    public async Task<Result> HandleRequest(AcUpdateEntityRequest<TDto> request, CancellationToken cancellationToken)
+    public async Task<Result> HandleRequest(AcUpdateEntityCommand<TDto> request, CancellationToken cancellationToken)
     {
         if(request.Id <= 0)
             return Result.Fail("Valid entity ID is required.");

@@ -1,4 +1,4 @@
-using ACleanAPI.Application.Requests;
+using ACleanAPI.Application.Commands;
 using ACleanAPI.Domain.Interfaces;
 using ACleanAPI.Infrastructure.Interfaces;
 using FluentResults;
@@ -15,7 +15,7 @@ public class AcDeleteEntityCommandHandlerBase<TEntity>
         _repository = repository;
     }
 
-    public async Task<Result> HandleRequest(AcDeleteEntityRequest request, CancellationToken cancellationToken)
+    public async Task<Result> HandleRequest(AcDeleteEntityCommand request, CancellationToken cancellationToken)
     {
         if (!request.Id.HasValue)
             return Result.Fail("Id is required.");

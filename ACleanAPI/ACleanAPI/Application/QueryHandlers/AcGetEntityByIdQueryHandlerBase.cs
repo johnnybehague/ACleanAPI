@@ -1,5 +1,5 @@
 using ACleanAPI.Application.Interfaces;
-using ACleanAPI.Application.Requests;
+using ACleanAPI.Application.Queries;
 using ACleanAPI.Domain.Interfaces;
 using ACleanAPI.Infrastructure.Interfaces;
 using FluentResults;
@@ -19,7 +19,7 @@ public class AcGetEntityByIdQueryHandlerBase<TEntity, TDto>
         _mapper = mapper;
     }
 
-    public async Task<Result<TDto>> HandleRequest(AcGetEntityByIdRequest<TDto> request, CancellationToken cancellationToken)
+    public async Task<Result<TDto>> HandleRequest(AcGetEntityByIdQuery<TDto> request, CancellationToken cancellationToken)
     {
         if(!request.Id.HasValue)
             return Result.Fail("Id is required.");

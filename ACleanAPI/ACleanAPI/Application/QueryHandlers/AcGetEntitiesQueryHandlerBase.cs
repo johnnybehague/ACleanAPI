@@ -1,5 +1,5 @@
 using ACleanAPI.Application.Interfaces;
-using ACleanAPI.Application.Requests;
+using ACleanAPI.Application.Queries;
 using ACleanAPI.Domain.Interfaces;
 using ACleanAPI.Infrastructure.Interfaces;
 using FluentResults;
@@ -19,7 +19,7 @@ public abstract class AcGetEntitiesQueryHandlerBase<TEntity, TDto>
         _mapper = mapper;
     }
 
-    public async Task<Result<IEnumerable<TDto>>> HandleRequest(AcGetEntitiesRequest<TDto> request, CancellationToken cancellationToken)
+    public async Task<Result<IEnumerable<TDto>>> HandleRequest(AcGetEntitiesQuery<TDto> request, CancellationToken cancellationToken)
     {
         var entities = await _repository.GetEntitiesAsync(cancellationToken);
         IEnumerable<TDto> dtos = entities.Select(_mapper.MapToDto).ToList();

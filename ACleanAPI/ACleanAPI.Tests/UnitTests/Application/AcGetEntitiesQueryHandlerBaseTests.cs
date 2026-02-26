@@ -1,5 +1,5 @@
 using ACleanAPI.Application.Interfaces;
-using ACleanAPI.Application.Requests;
+using ACleanAPI.Application.Queries;
 using ACleanAPI.Infrastructure.Interfaces;
 using ACleanAPI.Tests.App.Application;
 using ACleanAPI.Tests.Common;
@@ -27,7 +27,7 @@ public sealed class AcGetEntitiesQueryHandlerBaseTests
     public async Task Handle_ShouldCallRepository()
     {
         // Arrange
-        var requestMock = new Mock<AcGetEntitiesRequest<UserTestDto>>();
+        var requestMock = new Mock<AcGetEntitiesQuery<UserTestDto>>();
         var cancellationToken = CancellationToken.None;
 
         // Act
@@ -41,7 +41,7 @@ public sealed class AcGetEntitiesQueryHandlerBaseTests
     public async Task Handle_ShouldMapEntitiesToDtos()
     {
         // Arrange
-        var requestMock = new Mock<AcGetEntitiesRequest<UserTestDto>>();
+        var requestMock = new Mock<AcGetEntitiesQuery<UserTestDto>>();
         var cancellationToken = CancellationToken.None;
         var entities = new List<UserTestEntity>
         {
@@ -62,7 +62,7 @@ public sealed class AcGetEntitiesQueryHandlerBaseTests
     public async Task Handle_ShouldReturnsOkWithDtos()
     {
         // Arrange
-        var requestMock = new Mock<AcGetEntitiesRequest<UserTestDto>>();
+        var requestMock = new Mock<AcGetEntitiesQuery<UserTestDto>>();
         var cancellationToken = CancellationToken.None;
         var entities = new List<UserTestEntity>
         {

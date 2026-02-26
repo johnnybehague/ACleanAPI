@@ -1,4 +1,4 @@
-using ACleanAPI.Application.Requests;
+using ACleanAPI.Application.Commands;
 using ACleanAPI.Infrastructure.Interfaces;
 using ACleanAPI.Tests.App.Application;
 using ACleanAPI.Tests.Common;
@@ -22,7 +22,7 @@ public class AcDeleteEntityCommandHandlerBaseTests
     public async Task HandleRequest_IdIsNull_ReturnsFailResult()
     {
         // Arrange
-        var request = new AcDeleteEntityRequest(null);
+        var request = new AcDeleteEntityCommand(null);
 
         // Act
         var result = await _handler.HandleRequest(request, CancellationToken.None);
@@ -38,7 +38,7 @@ public class AcDeleteEntityCommandHandlerBaseTests
     {
         // Arrange
         var entityId = 1;
-        var request = new AcDeleteEntityRequest(entityId);
+        var request = new AcDeleteEntityCommand(entityId);
 
         _repositoryMock
             .Setup(r => r.DeleteEntityAsync(entityId, It.IsAny<CancellationToken>()))
@@ -59,7 +59,7 @@ public class AcDeleteEntityCommandHandlerBaseTests
         // Arrange
         var entityId = 1;
         var exceptionMessage = "DB error";
-        var request = new AcDeleteEntityRequest(entityId);
+        var request = new AcDeleteEntityCommand(entityId);
 
         _repositoryMock
             .Setup(r => r.DeleteEntityAsync(entityId, It.IsAny<CancellationToken>()))

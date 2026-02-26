@@ -9,10 +9,11 @@ namespace ACleanAPI.Infrastructure;
 [ExcludeFromCodeCoverage]
 public static class InfrastructureDependencyInjection
 {
-    public static IServiceCollection AddAcInfrastructure(this IServiceCollection services, Action<DbContextOptionsBuilder> dbContextOptionsAction)
+    public static IServiceCollection AddAcInfrastructure<TContext>(this IServiceCollection services, Action<DbContextOptionsBuilder> dbContextOptionsAction)
+        where TContext: DbContext
     {
-        services.AddDbContext<DbContext>(dbContextOptionsAction);
-        services.AddScoped<IUnitOfWork, UnitOfWork>();
+        services.AddDbContext<TContext>(dbContextOptionsAction);
+        services.AddScoped<IUnitOfWork, UnitOfWork<TContext>>();
 
         return services;
     }

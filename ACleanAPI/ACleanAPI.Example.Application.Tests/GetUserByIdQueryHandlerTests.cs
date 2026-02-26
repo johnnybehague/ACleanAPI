@@ -38,7 +38,7 @@ public sealed class GetUserByIdQueryHandlerTests
             .Returns(dto);
 
         // Act
-        var result = await _handler.Handle(query, CancellationToken.None);
+        var result = await _handler.HandleAsync(query, CancellationToken.None);
 
         // Assert
         Assert.IsTrue(result.IsSuccess);
@@ -58,7 +58,7 @@ public sealed class GetUserByIdQueryHandlerTests
             .ReturnsAsync((User?)null);
 
         // Act
-        var result = await _handler.Handle(query, CancellationToken.None);
+        var result = await _handler.HandleAsync(query, CancellationToken.None);
 
         // Assert
         Assert.IsFalse(result.IsSuccess);

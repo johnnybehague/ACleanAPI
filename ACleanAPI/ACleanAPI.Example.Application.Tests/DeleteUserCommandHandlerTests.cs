@@ -30,7 +30,7 @@ public class DeleteUserCommandHandlerTests
             .Returns(Task.CompletedTask);
 
         // Act
-        var result = await _handler.Handle(command, CancellationToken.None);
+        var result = await _handler.HandleAsync(command, CancellationToken.None);
 
         // Assert
         Assert.IsTrue(result.IsSuccess);
@@ -50,7 +50,7 @@ public class DeleteUserCommandHandlerTests
             .Returns(Task.CompletedTask);
 
         // Act
-        var result = await _handler.Handle(command, CancellationToken.None);
+        var result = await _handler.HandleAsync(command, CancellationToken.None);
 
         // Assert
         Assert.IsTrue(result.IsSuccess);

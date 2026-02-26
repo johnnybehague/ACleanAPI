@@ -2,8 +2,8 @@ using ACleanAPI.API.Controllers;
 using ACleanAPI.Example.Application.Users.Commands;
 using ACleanAPI.Example.Application.Users.DTO;
 using ACleanAPI.Example.Application.Users.Queries;
+using ACleanAPI.Presentation.Interfaces;
 using FluentResults;
-using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 
@@ -12,12 +12,12 @@ namespace ACleanAPI.Example.API.Tests
     [TestClass]
     public sealed class UserControllerTests
     {
-        private readonly Mock<IMediator> _mediatorMock;
+        private readonly Mock<IAcMediator> _mediatorMock;
         private readonly UserController _controller;
 
         public UserControllerTests()
         {
-            _mediatorMock = new Mock<IMediator>();
+            _mediatorMock = new Mock<IAcMediator>();
             _controller = new UserController(_mediatorMock.Object);
         }
 
@@ -32,7 +32,7 @@ namespace ACleanAPI.Example.API.Tests
             };
 
             _mediatorMock
-                .Setup(m => m.Send(It.IsAny<GetUsersQuery>(), It.IsAny<CancellationToken>()))
+                .Setup(m => m.QueryAsync(It.IsAny<GetUsersQuery>(), It.IsAny<CancellationToken>()))
                 .ReturnsAsync(Result.Ok<IEnumerable<UserDto>>(users));
 
             // Act
@@ -53,7 +53,7 @@ namespace ACleanAPI.Example.API.Tests
             var userDetail = new UserDetailDto { Id = 1, Email = "john@doe.com", FirstName = "John", LastName = "Doe" };
 
             _mediatorMock
-                .Setup(m => m.Send(It.Is<GetUserByIdQuery>(q => q.Id == 1), It.IsAny<CancellationToken>()))
+                .Setup(m => m.QueryAsync(It.Is<GetUserByIdQuery>(q => q.Id == 1), It.IsAny<CancellationToken>()))
                 .ReturnsAsync(Result.Ok(userDetail));
 
             // Act
@@ -73,7 +73,7 @@ namespace ACleanAPI.Example.API.Tests
         {
             // Arrange
             UserDto dto = new UserDto { Id = 1, FirstName = "John", LastName = "Doe" };
-            _mediatorMock.Setup(m => m.Send(It.Is<CreateUserCommand>(q => q.Dto == dto), It.IsAny<CancellationToken>()))
+            _mediatorMock.Setup(m => m.SendAsync(It.Is<CreateUserCommand>(q => q.Dto == dto), It.IsAny<CancellationToken>()))
                 .ReturnsAsync(Result.Ok());
 
             // Act
@@ -90,7 +90,7 @@ namespace ACleanAPI.Example.API.Tests
             // Arrange
             int id = 1;
             UserDto dto = new UserDto { Id = 1, FirstName = "John", LastName = "Doe" };
-            _mediatorMock.Setup(m => m.Send(It.Is<UpdateUserCommand>(q => q.Id == id && q.Dto == dto), It.IsAny<CancellationToken>()))
+            _mediatorMock.Setup(m => m.SendAsync(It.Is<UpdateUserCommand>(q => q.Id == id && q.Dto == dto), It.IsAny<CancellationToken>()))
                 .ReturnsAsync(Result.Ok());
 
             // Act
@@ -106,7 +106,7 @@ namespace ACleanAPI.Example.API.Tests
         {
             // Arrange
             int id = 1;
-            _mediatorMock.Setup(m => m.Send(It.Is<DeleteUserCommand>(q => q.Id == id), It.IsAny<CancellationToken>()))
+            _mediatorMock.Setup(m => m.SendAsync(It.Is<DeleteUserCommand>(q => q.Id == id), It.IsAny<CancellationToken>()))
                 .ReturnsAsync(Result.Ok());
 
             // Act

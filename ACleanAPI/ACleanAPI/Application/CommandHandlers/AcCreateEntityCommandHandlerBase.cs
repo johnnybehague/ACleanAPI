@@ -1,6 +1,6 @@
+using ACleanAPI.Application.Commands;
 using ACleanAPI.Application.Core;
 using ACleanAPI.Application.Interfaces;
-using ACleanAPI.Application.Requests;
 using ACleanAPI.Domain.Core;
 using ACleanAPI.Infrastructure.Interfaces;
 using FluentResults;
@@ -20,7 +20,7 @@ public class AcCreateEntityCommandHandlerBase<TDto, TEntity>
         _mapper = mapper;
     }
 
-    public async Task<Result> HandleRequest(AcCreateEntityRequest<TDto> request, CancellationToken cancellationToken)
+    public async Task<Result> HandleRequest(AcCreateEntityCommand<TDto> request, CancellationToken cancellationToken)
     {
         if (request.Dto == null)
             return Result.Fail("Entity is required.");

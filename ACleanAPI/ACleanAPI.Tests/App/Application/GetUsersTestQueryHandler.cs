@@ -1,6 +1,6 @@
 using ACleanAPI.Application.Interfaces;
+using ACleanAPI.Application.Queries;
 using ACleanAPI.Application.QueryHandlers;
-using ACleanAPI.Application.Requests;
 using ACleanAPI.Infrastructure.Interfaces;
 using ACleanAPI.Tests.Common;
 using FluentResults;
@@ -14,6 +14,6 @@ public class GetUsersTestQueryHandler : AcGetEntitiesQueryHandlerBase<UserTestEn
     {
     }
 
-    public async Task<Result<IEnumerable<UserTestDto>>> Handle(AcGetEntitiesRequest<UserTestDto> request, CancellationToken cancellationToken)
+    public async Task<Result<IEnumerable<UserTestDto>>> Handle(AcGetEntitiesQuery<UserTestDto> request, CancellationToken cancellationToken)
         => await HandleRequest(request, cancellationToken);
 }
