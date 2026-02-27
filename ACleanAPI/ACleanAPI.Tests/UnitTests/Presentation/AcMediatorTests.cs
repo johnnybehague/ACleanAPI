@@ -8,12 +8,11 @@ namespace ACleanAPI.Tests.UnitTests.Presentation
     [TestClass]
     public class AcMediatorTests
     {
-        private Mock<IQueryMediator> _mockQueryMediator;
-        private Mock<ICommandMediator> _mockCommandMediator;
-        private AcMediator _acMediator;
+        private readonly Mock<IQueryMediator> _mockQueryMediator;
+        private readonly Mock<ICommandMediator> _mockCommandMediator;
+        private readonly AcMediator _acMediator;
 
-        [TestInitialize]
-        public void Setup()
+        public AcMediatorTests()
         {
             _mockQueryMediator = new Mock<IQueryMediator>();
             _mockCommandMediator = new Mock<ICommandMediator>();
