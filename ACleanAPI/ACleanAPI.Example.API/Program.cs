@@ -2,6 +2,7 @@ using ACleanAPI.Example.Application;
 using ACleanAPI.Example.Infrastructure;
 using ACleanAPI.Example.Infrastructure.Models;
 using ACleanAPI.Example.Infrastructure.Persistence;
+using ACleanAPI.Presentation;
 using Asp.Versioning;
 using System.Diagnostics.CodeAnalysis;
 
@@ -17,6 +18,7 @@ internal class Program
         // Add services to the container.
         builder.Services.AddApplication();
         builder.Services.AddInfrastructure();
+        builder.Services.AddAcPresentation();
 
         // Versionning
         builder.Services.AddApiVersioning(options =>
@@ -56,6 +58,7 @@ internal class Program
         if (app.Environment.IsDevelopment())
         {
             app.MapOpenApi();
+
         }
 
         app.UseHttpsRedirection();
