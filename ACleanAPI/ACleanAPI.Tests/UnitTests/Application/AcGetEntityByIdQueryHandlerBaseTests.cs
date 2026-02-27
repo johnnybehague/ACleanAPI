@@ -1,5 +1,5 @@
 using ACleanAPI.Application.Interfaces;
-using ACleanAPI.Application.Requests;
+using ACleanAPI.Application.Queries;
 using ACleanAPI.Infrastructure.Interfaces;
 using ACleanAPI.Tests.App.Application;
 using ACleanAPI.Tests.Common;
@@ -26,7 +26,7 @@ public sealed class AcGetEntityByIdQueryHandlerBaseTests
     public async Task Handle_ShouldReturnFailWhenIdIsNull()
     {
         // Arrange
-        var request = new AcGetEntityByIdRequest<UserTestDto>(null);
+        var request = new AcGetEntityByIdQuery<UserTestDto>(null);
         var cancellationToken = CancellationToken.None;
 
         // Act
@@ -42,7 +42,7 @@ public sealed class AcGetEntityByIdQueryHandlerBaseTests
     {
         // Arrange
         int id = 1;
-        var request = new AcGetEntityByIdRequest<UserTestDto>(id);
+        var request = new AcGetEntityByIdQuery<UserTestDto>(id);
         var cancellationToken = CancellationToken.None;
 
         // Act
@@ -57,7 +57,7 @@ public sealed class AcGetEntityByIdQueryHandlerBaseTests
     {
         // Arrange
         int id = 1;
-        var request = new AcGetEntityByIdRequest<UserTestDto>(id);
+        var request = new AcGetEntityByIdQuery<UserTestDto>(id);
         var cancellationToken = CancellationToken.None;
         var mockedTestEntity = new UserTestEntity { Id = id };
 
@@ -78,7 +78,7 @@ public sealed class AcGetEntityByIdQueryHandlerBaseTests
     {
         // Arrange
         int id = 1;
-        var request = new AcGetEntityByIdRequest<UserTestDto>(id);
+        var request = new AcGetEntityByIdQuery<UserTestDto>(id);
         var cancellationToken = CancellationToken.None;
         var mockedTestEntity = new UserTestEntity { Id = id, FirstName = "John", LastName = "Doe" };
 

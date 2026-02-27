@@ -1,23 +1,23 @@
+using ACleanAPI.Application.Queries;
 using ACleanAPI.Application.QueryHandlers;
-using ACleanAPI.Application.Requests;
 using ACleanAPI.Example.Application.Users.DTO;
 using ACleanAPI.Example.Application.Users.Mappers;
 using ACleanAPI.Example.Domain.Users.Entities;
 using ACleanAPI.Example.Domain.Users.Interfaces;
 using FluentResults;
-using MediatR;
+using LiteBus.Queries.Abstractions;
 
 namespace ACleanAPI.Example.Application.Users.Queries;
-public record GetUsersQuery : AcGetEntitiesRequest<UserDto>;
+public record GetUsersQuery : AcGetEntitiesQuery<UserDto>;
 
 public class GetUsersQueryHandler : AcGetEntitiesQueryHandlerBase<User, UserDto>, 
-    IRequestHandler<GetUsersQuery, Result<IEnumerable<UserDto>>> 
+    IQueryHandler<GetUsersQuery, Result<IEnumerable<UserDto>>> 
 {
     public GetUsersQueryHandler(IUserRepository userRepository,IUserMapper userMapper)
         : base(userRepository, userMapper)
     {
     }
 
-    public async Task<Result<IEnumerable<UserDto>>> Handle(GetUsersQuery request, CancellationToken cancellationToken)
+    public async Task<Result<IEnumerable<UserDto>>> HandleAsync(GetUsersQuery request, CancellationToken cancellationToken = default)
         => await HandleRequest(request, cancellationToken);
 }

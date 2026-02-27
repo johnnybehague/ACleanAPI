@@ -1,7 +1,7 @@
-using ACleanAPI.Application.Requests;
+using ACleanAPI.Application.Queries;
 using ACleanAPI.Presentation;
+using ACleanAPI.Presentation.Interfaces;
 using ACleanAPI.Tests.Common;
-using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ACleanAPI.Tests.App.Presentation;
@@ -10,13 +10,13 @@ namespace ACleanAPI.Tests.App.Presentation;
 [Route("api/[controller]")]
 public class UserTestController : AcCrudControllerBase
 {
-    public UserTestController(IMediator mediator) : base(mediator)
+    public UserTestController(IAcMediator mediator) : base(mediator)
     {
     }
 
-    public async Task<ActionResult<IEnumerable<UserTestDto>>> Index(AcGetEntitiesRequest<UserTestDto> request, CancellationToken cancellationToken = default)
+    public async Task<ActionResult<IEnumerable<UserTestDto>>> Index(AcGetEntitiesQuery<UserTestDto> request, CancellationToken cancellationToken = default)
         => await GetEntitiesAsync(request, cancellationToken);
 
-    public async Task<ActionResult<UserTestDetailDto>> Details(AcGetEntityByIdRequest<UserTestDetailDto> request, CancellationToken cancellationToken = default)
+    public async Task<ActionResult<UserTestDetailDto>> Details(AcGetEntityByIdQuery<UserTestDetailDto> request, CancellationToken cancellationToken = default)
         => await GetEntityByIdAsync(request, cancellationToken);
 }

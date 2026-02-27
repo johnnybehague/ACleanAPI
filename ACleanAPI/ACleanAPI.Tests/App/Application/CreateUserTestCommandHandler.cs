@@ -1,6 +1,6 @@
 using ACleanAPI.Application.CommandHandlers;
+using ACleanAPI.Application.Commands;
 using ACleanAPI.Application.Interfaces;
-using ACleanAPI.Application.Requests;
 using ACleanAPI.Infrastructure.Interfaces;
 using ACleanAPI.Tests.Common;
 using FluentResults;
@@ -14,6 +14,6 @@ public class CreateUserTestCommandHandler : AcCreateEntityCommandHandlerBase<Use
     {
     }
 
-    public async Task<Result> Handle(AcCreateEntityRequest<UserTestDto> request, CancellationToken cancellationToken)
+    public async Task<Result> Handle(AcCreateEntityCommand<UserTestDto> request, CancellationToken cancellationToken)
         => await HandleRequest(request, cancellationToken);
 }

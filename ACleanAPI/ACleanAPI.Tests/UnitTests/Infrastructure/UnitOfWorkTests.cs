@@ -12,14 +12,14 @@ public class UnitOfWorkTests
     private Mock<DbContext> _dbContextMock;
     private Mock<DatabaseFacade> _databaseMock;
     private Mock<IDbContextTransaction> _transactionMock;
-    private UnitOfWork _unitOfWork;
+    private UnitOfWork<DbContext> _unitOfWork;
 
     public UnitOfWorkTests()
     {
         _dbContextMock = new Mock<DbContext>(new DbContextOptions<DbContext>());
         _databaseMock = new Mock<DatabaseFacade>(_dbContextMock.Object);
         _transactionMock = new Mock<IDbContextTransaction>();
-        _unitOfWork = new UnitOfWork(_dbContextMock.Object);
+        _unitOfWork = new UnitOfWork<DbContext>(_dbContextMock.Object);
     }
 
     [TestInitialize]

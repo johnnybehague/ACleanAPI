@@ -2,7 +2,7 @@ using ACleanAPI.Example.Application.Users.Commands;
 using ACleanAPI.Example.Application.Users.DTO;
 using ACleanAPI.Example.Application.Users.Queries;
 using ACleanAPI.Presentation;
-using MediatR;
+using ACleanAPI.Presentation.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ACleanAPI.API.Controllers;
@@ -11,7 +11,7 @@ namespace ACleanAPI.API.Controllers;
 [ApiController]
 public class UserController : AcCrudControllerBase
 {
-    public UserController(IMediator mediator) : base(mediator) { }
+    public UserController(IAcMediator mediator) : base(mediator) { }
 
     [HttpGet]
     public async Task<ActionResult<IEnumerable<UserDto>>> Index(CancellationToken cancellationToken)

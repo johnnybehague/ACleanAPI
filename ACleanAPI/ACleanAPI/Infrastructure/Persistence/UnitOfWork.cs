@@ -5,12 +5,13 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace ACleanAPI.Infrastructure.Persistence;
 
-public class UnitOfWork : IUnitOfWork
+public class UnitOfWork<TContext> : IUnitOfWork
+    where TContext : DbContext
 {
-    private readonly DbContext _context;
+    private readonly TContext _context;
     private IDbContextTransaction? _currentTransaction;
 
-    public UnitOfWork(DbContext context)
+    public UnitOfWork(TContext context)
     {
         _context = context;
         _currentTransaction = null;
