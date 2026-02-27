@@ -18,18 +18,18 @@ public class AcMediator : IAcMediator
     public Task<TQueryResult> QueryAsync<TQueryResult>(IQuery<TQueryResult> query, CancellationToken cancellationToken = default)
         => _queryMediator.QueryAsync(query, cancellationToken);
 
-    public Task<TQueryResult> QueryAsync<TQueryResult>(IQuery<TQueryResult> query, QueryMediationSettings? queryMediationSettings = null, CancellationToken cancellationToken = default) 
+    public Task<TQueryResult> QueryAsync<TQueryResult>(IQuery<TQueryResult> query, QueryMediationSettings queryMediationSettings, CancellationToken cancellationToken = default) 
         => _queryMediator.QueryAsync(query, queryMediationSettings, cancellationToken);
 
     public Task SendAsync(ICommand command, CancellationToken cancellationToken = default)
         => _commandMediator.SendAsync(command, cancellationToken);
 
-    public Task SendAsync(ICommand command, CommandMediationSettings? commandMediationSettings = null, CancellationToken cancellationToken = default) 
+    public Task SendAsync(ICommand command, CommandMediationSettings commandMediationSettings, CancellationToken cancellationToken = default) 
         => _commandMediator.SendAsync(command, commandMediationSettings, cancellationToken);
 
     public Task<TCommandResult> SendAsync<TCommandResult>(ICommand<TCommandResult> command, CancellationToken cancellationToken = default)
         => _commandMediator.SendAsync(command, cancellationToken);
 
-    public Task<TCommandResult> SendAsync<TCommandResult>(ICommand<TCommandResult> command, CommandMediationSettings? commandMediationSettings = null, CancellationToken cancellationToken = default) 
+    public Task<TCommandResult> SendAsync<TCommandResult>(ICommand<TCommandResult> command, CommandMediationSettings commandMediationSettings, CancellationToken cancellationToken = default) 
         => _commandMediator.SendAsync(command, commandMediationSettings, cancellationToken);
 }
