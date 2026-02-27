@@ -16,6 +16,6 @@ public class DeleteUserCommandHandler : AcDeleteEntityCommandHandlerBase<User>, 
     {
     }
 
-    public async Task<Result> HandleAsync(DeleteUserCommand request, CancellationToken cancellationToken)
+    public async Task<Result> HandleAsync(DeleteUserCommand request, CancellationToken cancellationToken = default)
      => await HandleRequest(request, cancellationToken);
 }

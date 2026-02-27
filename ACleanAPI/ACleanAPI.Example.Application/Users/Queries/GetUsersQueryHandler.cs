@@ -18,6 +18,6 @@ public class GetUsersQueryHandler : AcGetEntitiesQueryHandlerBase<User, UserDto>
     {
     }
 
-    public async Task<Result<IEnumerable<UserDto>>> HandleAsync(GetUsersQuery request, CancellationToken cancellationToken)
+    public async Task<Result<IEnumerable<UserDto>>> HandleAsync(GetUsersQuery request, CancellationToken cancellationToken = default)
         => await HandleRequest(request, cancellationToken);
 }
