@@ -15,5 +15,5 @@ public class GetUsersTestQueryHandler : AcGetEntitiesQueryHandlerBase<UserTestEn
     }
 
     public async Task<Result<IEnumerable<UserTestDto>>> Handle(AcGetEntitiesQuery<UserTestDto> request, CancellationToken cancellationToken)
-        => await HandleRequest(request, cancellationToken);
+        => await HandleQueryAsync(request, cancellationToken);
 }

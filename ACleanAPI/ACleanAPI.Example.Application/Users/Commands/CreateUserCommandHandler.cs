@@ -19,5 +19,5 @@ public class CreateUserCommandHandler : AcCreateEntityCommandHandlerBase<UserDto
     }
 
     public async Task<Result> HandleAsync(CreateUserCommand request, CancellationToken cancellationToken = default)
-     => await HandleRequest(request, cancellationToken);
+     => await HandleCommandAsync(request, cancellationToken);
 }

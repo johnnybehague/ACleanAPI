@@ -23,14 +23,14 @@ public sealed class AcCrudControllerBaseTests
     }
 
     [TestMethod]
-    public async Task GetEntitiesAsync_ReturnsBadRequest_WhenModelStateIsInvalid()
+    public async Task GetAllAsync_ReturnsBadRequest_WhenModelStateIsInvalid()
     {
         // Arrange
         _controller.ModelState.AddModelError("field", "Error message");
         var request = new AcGetEntitiesQuery<UserTestDto>();
 
         // Act
-        var action = await _controller.GetEntitiesAsync(request);
+        var action = await _controller.GetAllAsync(request);
 
         // Assert
         Assert.IsInstanceOfType<BadRequestObjectResult>(action.Result);
@@ -38,7 +38,7 @@ public sealed class AcCrudControllerBaseTests
 
 
     [TestMethod]
-    public async Task GetEntitiesAsync_ReturnsOk_WhenQuerySuccess()
+    public async Task GetAllAsync_ReturnsOk_WhenQuerySuccess()
     {
         // Arrange
         var request = new AcGetEntitiesQuery<UserTestDto>();
@@ -49,7 +49,7 @@ public sealed class AcCrudControllerBaseTests
             .ReturnsAsync(Result.Ok<IEnumerable<UserTestDto>>(expectedList));
 
         // Act
-        var action = await _controller.GetEntitiesAsync(request);
+        var action = await _controller.GetAllAsync(request);
 
         // Assert
         var ok = action.Result as OkObjectResult;
@@ -59,7 +59,7 @@ public sealed class AcCrudControllerBaseTests
     }
 
     [TestMethod]
-    public async Task GetEntitiesAsync_ReturnsBadRequest_WhenQueryFails()
+    public async Task GetAllAsync_ReturnsBadRequest_WhenQueryFails()
     {
         // Arrange
         var request = new AcGetEntitiesQuery<UserTestDto>();
@@ -69,14 +69,14 @@ public sealed class AcCrudControllerBaseTests
             .ReturnsAsync(Result.Fail<IEnumerable<UserTestDto>>("some error"));
 
         // Act
-        var action = await _controller.GetEntitiesAsync(request);
+        var action = await _controller.GetAllAsync(request);
 
         // Assert
         Assert.IsInstanceOfType<BadRequestResult>(action.Result);
     }
 
     [TestMethod]
-    public async Task GetEntityAsync_ReturnsOk_WhenValueExists()
+    public async Task GetByIdAsync_ReturnsOk_WhenValueExists()
     {
         // Arrange
         int userId = 10;
@@ -87,7 +87,7 @@ public sealed class AcCrudControllerBaseTests
             .ReturnsAsync(Result.Ok<UserTestDetailDto>(detail));
 
         // Act
-        var action = await _controller.GetEntityByIdAsync(request);
+        var action = await _controller.GetByIdAsync(request);
 
         // Assert
         var ok = action.Result as OkObjectResult;
@@ -97,7 +97,7 @@ public sealed class AcCrudControllerBaseTests
     }
 
     [TestMethod]
-    public async Task GetEntityAsync_ReturnsNotFound_WhenValueIsNull()
+    public async Task GetByIdAsync_ReturnsNotFound_WhenValueIsNull()
     {
         // Arrange
         var request = new AcGetEntityByIdQuery<UserTestDetailDto>(null);
@@ -107,14 +107,14 @@ public sealed class AcCrudControllerBaseTests
             .ReturnsAsync(Result.Fail("ENTITY_NOT_FOUND"));
 
         // Act
-        var action = await _controller.GetEntityByIdAsync(request);
+        var action = await _controller.GetByIdAsync(request);
 
         // Assert
         Assert.IsInstanceOfType<NotFoundResult>(action.Result);
     }
 
     [TestMethod]
-    public async Task GetEntityAsync_ReturnsBadRequest_WhenQueryFails()
+    public async Task GetByIdAsync_ReturnsBadRequest_WhenQueryFails()
     {
         // Arrange
         var request = new AcGetEntityByIdQuery<UserTestDetailDto>(null);
@@ -124,35 +124,35 @@ public sealed class AcCrudControllerBaseTests
             .ReturnsAsync(Result.Fail("Some error"));
 
         // Act
-        var action = await _controller.GetEntityByIdAsync(request);
+        var action = await _controller.GetByIdAsync(request);
 
         // Assert
         Assert.IsInstanceOfType<BadRequestResult>(action.Result);
     }
 
     [TestMethod]
-    public async Task GetEntityAsync_ReturnsBadRequest_WhenModelStateIsInvalid()
+    public async Task GetByIdAsync_ReturnsBadRequest_WhenModelStateIsInvalid()
     {
         // Arrange
         _controller.ModelState.AddModelError("field", "Error message");
         var request = new AcGetEntityByIdQuery<UserTestDetailDto>(null);
 
         // Act
-        var action = await _controller.GetEntityByIdAsync(request);
+        var action = await _controller.GetByIdAsync(request);
 
         // Assert
         Assert.IsInstanceOfType<BadRequestObjectResult>(action.Result);
     }
 
     [TestMethod]
-    public async Task DeleteEntityAsync_ModelStateInvalid_ReturnsBadRequestWithModelState()
+    public async Task DeleteAsync_ModelStateInvalid_ReturnsBadRequestWithModelState()
     {
         // Arrange
         _controller.ModelState.AddModelError("Id", "Id is required");
         var request = new AcDeleteEntityCommand(null);
 
         // Act
-        var result = await _controller.DeleteEntityAsync(request);
+        var result = await _controller.DeleteAsync(request);
 
         // Assert
         var badRequest = result as BadRequestObjectResult;
@@ -162,7 +162,7 @@ public sealed class AcCrudControllerBaseTests
     }
 
     [TestMethod]
-    public async Task DeleteEntityAsync_MediatorReturnsFailedResult_ReturnsBadRequest()
+    public async Task DeleteAsync_MediatorReturnsFailedResult_ReturnsBadRequest()
     {
         // Arrange
         var request = new AcDeleteEntityCommand(null);
@@ -171,7 +171,7 @@ public sealed class AcCrudControllerBaseTests
             .ReturnsAsync(Result.Fail("Fail"));
 
         // Act
-        var result = await _controller.DeleteEntityAsync(request);
+        var result = await _controller.DeleteAsync(request);
 
         // Assert
         Assert.IsInstanceOfType<BadRequestResult>(result);
@@ -179,7 +179,7 @@ public sealed class AcCrudControllerBaseTests
     }
 
     [TestMethod]
-    public async Task DeleteEntityAsync_MediatorReturnsSuccess_ReturnsNoContent()
+    public async Task DeleteAsync_MediatorReturnsSuccess_ReturnsNoContent()
     {
         // Arrange
         var request = new AcDeleteEntityCommand(null);
@@ -188,7 +188,7 @@ public sealed class AcCrudControllerBaseTests
             .ReturnsAsync(Result.Ok());
 
         // Act
-        var result = await _controller.DeleteEntityAsync(request);
+        var result = await _controller.DeleteAsync(request);
 
         // Assert
         Assert.IsInstanceOfType<NoContentResult>(result);

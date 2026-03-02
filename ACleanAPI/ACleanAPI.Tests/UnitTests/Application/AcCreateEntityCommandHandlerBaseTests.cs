@@ -28,7 +28,7 @@ public class AcCreateEntityCommandHandlerBaseTests
         var request = new AcCreateEntityCommand<UserTestDto>(null);
 
         // Act
-        var result = await _handler.HandleRequest(request, CancellationToken.None);
+        var result = await _handler.HandleCommandAsync(request, CancellationToken.None);
 
         // Assert
         Assert.IsFalse(result.IsSuccess);
@@ -50,7 +50,7 @@ public class AcCreateEntityCommandHandlerBaseTests
             .Returns(Task.CompletedTask);
 
         // Act
-        var result = await _handler.HandleRequest(request, CancellationToken.None);
+        var result = await _handler.HandleCommandAsync(request, CancellationToken.None);
 
         // Assert
         Assert.IsTrue(result.IsSuccess);
@@ -71,7 +71,7 @@ public class AcCreateEntityCommandHandlerBaseTests
             .ThrowsAsync(new Exception("DB error"));
 
         // Act
-        var result = await _handler.HandleRequest(request, CancellationToken.None);
+        var result = await _handler.HandleCommandAsync(request, CancellationToken.None);
 
         // Assert
         Assert.IsFalse(result.IsSuccess);

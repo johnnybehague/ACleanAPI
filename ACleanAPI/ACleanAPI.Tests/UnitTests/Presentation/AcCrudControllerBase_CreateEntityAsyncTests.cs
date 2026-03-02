@@ -21,14 +21,14 @@ public class AcCrudControllerBase_CreateEntityAsyncTests
     }
 
     [TestMethod]
-    public async Task CreateEntityAsync_ModelStateInvalid_ReturnsBadRequestWithModelState()
+    public async Task CreateAsync_ModelStateInvalid_ReturnsBadRequestWithModelState()
     {
         // Arrange
         _controller.ModelState.AddModelError("Dto", "Dto is required");
         var request = new AcCreateEntityCommand<UserTestDto>(null);
 
         // Act
-        var result = await _controller.CreateEntityAsync(request);
+        var result = await _controller.CreateAsync(request);
 
         // Assert
         var badRequest = result as BadRequestObjectResult;
@@ -38,7 +38,7 @@ public class AcCrudControllerBase_CreateEntityAsyncTests
     }
 
     [TestMethod]
-    public async Task CreateEntityAsync_MediatorReturnsFailedResult_ReturnsBadRequest()
+    public async Task CreateAsync_MediatorReturnsFailedResult_ReturnsBadRequest()
     {
         // Arrange
         var request = new AcCreateEntityCommand<UserTestDto>(new UserTestDto());
@@ -47,7 +47,7 @@ public class AcCrudControllerBase_CreateEntityAsyncTests
             .ReturnsAsync(Result.Fail("Fail"));
 
         // Act
-        var result = await _controller.CreateEntityAsync(request);
+        var result = await _controller.CreateAsync(request);
 
         // Assert
         Assert.IsInstanceOfType<BadRequestResult>(result);
@@ -55,7 +55,7 @@ public class AcCrudControllerBase_CreateEntityAsyncTests
     }
 
     [TestMethod]
-    public async Task CreateEntityAsync_MediatorReturnsSuccess_ReturnsNoContent()
+    public async Task CreateAsync_MediatorReturnsSuccess_ReturnsNoContent()
     {
         // Arrange
         var request = new AcCreateEntityCommand<UserTestDto>(new UserTestDto());
@@ -64,7 +64,7 @@ public class AcCrudControllerBase_CreateEntityAsyncTests
             .ReturnsAsync(Result.Ok());
 
         // Act
-        var result = await _controller.CreateEntityAsync(request);
+        var result = await _controller.CreateAsync(request);
 
         // Assert
         Assert.IsInstanceOfType<NoContentResult>(result);

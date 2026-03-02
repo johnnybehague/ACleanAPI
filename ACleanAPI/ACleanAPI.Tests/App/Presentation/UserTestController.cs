@@ -15,8 +15,8 @@ public class UserTestController : AcCrudControllerBase
     }
 
     public async Task<ActionResult<IEnumerable<UserTestDto>>> Index(AcGetEntitiesQuery<UserTestDto> request, CancellationToken cancellationToken = default)
-        => await GetEntitiesAsync(request, cancellationToken);
+        => await GetAllAsync(request, cancellationToken);
 
     public async Task<ActionResult<UserTestDetailDto>> Details(AcGetEntityByIdQuery<UserTestDetailDto> request, CancellationToken cancellationToken = default)
-        => await GetEntityByIdAsync(request, cancellationToken);
+        => await GetByIdAsync(request, cancellationToken);
 }

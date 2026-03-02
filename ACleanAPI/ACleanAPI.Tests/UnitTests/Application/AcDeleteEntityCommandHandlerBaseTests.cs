@@ -25,7 +25,7 @@ public class AcDeleteEntityCommandHandlerBaseTests
         var request = new AcDeleteEntityCommand(null);
 
         // Act
-        var result = await _handler.HandleRequest(request, CancellationToken.None);
+        var result = await _handler.HandleCommandAsync(request, CancellationToken.None);
 
         // Assert
         Assert.IsFalse(result.IsSuccess);
@@ -45,7 +45,7 @@ public class AcDeleteEntityCommandHandlerBaseTests
             .Returns(Task.CompletedTask);
 
         // Act
-        var result = await _handler.HandleRequest(request, CancellationToken.None);
+        var result = await _handler.HandleCommandAsync(request, CancellationToken.None);
 
         // Assert
         Assert.IsTrue(result.IsSuccess);
@@ -66,7 +66,7 @@ public class AcDeleteEntityCommandHandlerBaseTests
             .ThrowsAsync(new Exception(exceptionMessage));
 
         // Act
-        var result = await _handler.HandleRequest(request, CancellationToken.None);
+        var result = await _handler.HandleCommandAsync(request, CancellationToken.None);
 
         // Assert
         Assert.IsFalse(result.IsSuccess);

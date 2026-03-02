@@ -20,6 +20,6 @@ public class GetUserByIdQueryHandler : AcGetEntityByIdQueryHandlerBase<User, Use
     }
 
     public async Task<Result<UserDetailDto>> HandleAsync(GetUserByIdQuery request, CancellationToken cancellationToken = default)
-     => await HandleRequest(request, cancellationToken);
+     => await HandleQueryAsync(request, cancellationToken);
 }
 

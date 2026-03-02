@@ -15,5 +15,5 @@ public class GetUserByIdTestQueryHandler : AcGetEntityByIdQueryHandlerBase<UserT
     }
 
     public async Task<Result<UserTestDto>> Handle(AcGetEntityByIdQuery<UserTestDto> request, CancellationToken cancellationToken)
-        => await HandleRequest(request, cancellationToken);
+        => await HandleQueryAsync(request, cancellationToken);
 }

@@ -19,5 +19,5 @@ public class UpdateUserCommandHandler : AcUpdateEntityCommandHandlerBase<UserDto
     }
 
     public async Task<Result> HandleAsync(UpdateUserCommand request, CancellationToken cancellationToken = default)
-        => await HandleRequest(request, cancellationToken);
+        => await HandleCommandAsync(request, cancellationToken);
 }

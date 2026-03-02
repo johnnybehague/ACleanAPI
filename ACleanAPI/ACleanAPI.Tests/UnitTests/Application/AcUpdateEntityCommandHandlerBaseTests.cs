@@ -30,7 +30,7 @@ public class AcUpdateEntityCommandHandlerBaseTests
         var request = new AcUpdateEntityCommand<UserTestDto>(id, dto);
 
         // Act
-        var result = await _handler.HandleRequest(request, CancellationToken.None);
+        var result = await _handler.HandleCommandAsync(request, CancellationToken.None);
 
         // Assert
         Assert.IsFalse(result.IsSuccess);
@@ -47,7 +47,7 @@ public class AcUpdateEntityCommandHandlerBaseTests
         var request = new AcUpdateEntityCommand<UserTestDto>(id, null);
 
         // Act
-        var result = await _handler.HandleRequest(request, CancellationToken.None);
+        var result = await _handler.HandleCommandAsync(request, CancellationToken.None);
 
         // Assert
         Assert.IsFalse(result.IsSuccess);
@@ -70,7 +70,7 @@ public class AcUpdateEntityCommandHandlerBaseTests
             .Returns(Task.CompletedTask);
 
         // Act
-        var result = await _handler.HandleRequest(request, CancellationToken.None);
+        var result = await _handler.HandleCommandAsync(request, CancellationToken.None);
 
         // Assert
         Assert.IsTrue(result.IsSuccess);
@@ -92,7 +92,7 @@ public class AcUpdateEntityCommandHandlerBaseTests
             .ThrowsAsync(new Exception("DB error"));
 
         // Act
-        var result = await _handler.HandleRequest(request, CancellationToken.None);
+        var result = await _handler.HandleCommandAsync(request, CancellationToken.None);
 
         // Assert
         Assert.IsFalse(result.IsSuccess);
