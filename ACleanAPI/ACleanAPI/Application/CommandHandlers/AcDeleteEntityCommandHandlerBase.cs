@@ -23,7 +23,7 @@ public class AcDeleteEntityCommandHandlerBase<TEntity>
     /// <summary>
     /// Initializes a new instance of the <see cref="AcDeleteEntityCommandHandlerBase{TEntity}"/> class with the specified entity repository.
     /// </summary>
-    /// <remarks>— 
+    /// <remarks>� 
     /// This constructor is intended for use by derived classes to provide the necessary dependencies for entity deleting operations.</remarks>
     /// <param name="repository">The repository used to delete <typeparamref name="TEntity"/> instances.</param>
     protected AcDeleteEntityCommandHandlerBase(IAcEntityRepository<TEntity> repository)

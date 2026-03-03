@@ -4,6 +4,7 @@ using ACleanAPI.Example.Application.Users.DTO;
 using ACleanAPI.Example.Application.Users.Queries;
 using ACleanAPI.Presentation.Interfaces;
 using FluentResults;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 

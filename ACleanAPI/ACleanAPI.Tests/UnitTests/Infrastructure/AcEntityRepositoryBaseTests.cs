@@ -82,6 +82,7 @@ public sealed class AcEntityRepositoryBaseTests
     {
         // Arrange
         var entity = new UserTestEntity { Id = 1, FirstName = "John", LastName = "Doe", Email = "john@doe.com" };
+
         var model = new UserTestModel { Id = 1, FirstName = "John", LastName = "Doe", Email = "john@doe.com" };
 
         await _context.SaveChangesAsync();

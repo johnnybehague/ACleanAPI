@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ACleanAPI.API.Controllers;
 
+[Route("api/v1/[controller]")]
 [ApiController]
 [ApiVersion("1.0")]
 [Route("api/v{version:apiVersion}/[controller]")]

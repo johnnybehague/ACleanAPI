@@ -1,6 +1,7 @@
 using ACleanAPI.Application.Commands;
 using ACleanAPI.Application.Core;
 using ACleanAPI.Application.Interfaces;
+using ACleanAPI.Application.Requests;
 using ACleanAPI.Domain.Core;
 using ACleanAPI.Infrastructure.Interfaces;
 using FluentResults;
@@ -32,7 +33,7 @@ public class AcCreateEntityCommandHandlerBase<TDto, TEntity>
     /// <summary>
     /// Initializes a new instance of the <see cref="AcCreateEntityCommandHandlerBase{TEntity, TDto}"/> class with the specified entity repository and mapper.
     /// </summary>
-    /// <remarks>— 
+    /// <remarks>� 
     /// This constructor is intended for use by derived classes to provide the necessary dependencies for entity creation and mapping operations.</remarks>
     /// <param name="repository">The repository used to persist and retrieve <typeparamref name="TEntity"/> instances.</param>
     /// <param name="mapper">The mapper used to convert between <typeparamref name="TEntity"/> and <typeparamref name="TDto"/> objects.</param>
@@ -51,11 +52,11 @@ public class AcCreateEntityCommandHandlerBase<TDto, TEntity>
     public async Task<Result<TDto>> HandleCommandAsync(AcCreateEntityCommand<TDto> request, CancellationToken cancellationToken)
     {
         try
-        {
-            if (request.Dto == null)
-                return Result.Fail("Entity is required.");
+    {
+        if (request.Dto == null)
+            return Result.Fail("Entity is required.");
 
-            var entity = _mapper.MapToEntity(request.Dto);
+        var entity = _mapper.MapToEntity(request.Dto);
             var result = await _repository.CreateEntityAsync(entity, cancellationToken);
             return Result.Ok(_mapper.MapToDto(result));
         }
@@ -63,5 +64,7 @@ public class AcCreateEntityCommandHandlerBase<TDto, TEntity>
         {
             return Result.Fail($"Error creating entity: {ex.Message}");
         }
+
+        return Result.Ok();
     }
 }

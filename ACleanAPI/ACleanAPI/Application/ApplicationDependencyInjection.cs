@@ -61,17 +61,18 @@ public static class ApplicationDependencyInjection
         services.AddLiteBus(liteBus =>
         {
             liteBus.AddCommandModule(module =>
-            {
+    {
                 module.RegisterFromAssembly(typeof(ApplicationDependencyInjection).Assembly);
                 module.RegisterFromAssembly(commandMediatorAssembly);
             });
 
             liteBus.AddQueryModule(module =>
-            {
+        {
                 module.RegisterFromAssembly(typeof(ApplicationDependencyInjection).Assembly);
                 module.RegisterFromAssembly(queryMediatorAssembly);
             });
         });
+        services.AddTransient(typeof(IPipelineBehavior<,>), typeof(TransactionBehavior<,>));
 
         return services;
     }

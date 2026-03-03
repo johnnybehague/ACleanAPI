@@ -1,6 +1,7 @@
 using ACleanAPI.Application.Commands;
 using ACleanAPI.Application.Core;
 using ACleanAPI.Application.Interfaces;
+using ACleanAPI.Application.Requests;
 using ACleanAPI.Domain.Core;
 using ACleanAPI.Infrastructure.Interfaces;
 using FluentResults;
@@ -32,7 +33,7 @@ public abstract class AcUpdateEntityCommandHandlerBase<TDto, TEntity>
     /// <summary>
     /// Initializes a new instance of the <see cref="AcUpdateEntityCommandHandlerBase{TEntity, TDto}"/> class with the specified entity repository and mapper.
     /// </summary>
-    /// <remarks>— 
+    /// <remarks>� 
     /// This constructor is intended for use by derived classes to provide the necessary dependencies for entity update and mapping operations.</remarks>
     /// <param name="repository">The repository used to update <typeparamref name="TEntity"/> instances.</param>
     /// <param name="mapper">The mapper used to convert between <typeparamref name="TEntity"/> and <typeparamref name="TDto"/> objects.</param>
