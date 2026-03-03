@@ -78,7 +78,7 @@ public abstract class AcEntityRepositoryBase<TModel, TEntity> : IAcEntityReposit
     {
         var model = _mapper.MapToModel(entity);
         var createdModel = await CreateModelAsync(model, cancellationToken);
-        return _mapper.MapToEntity(createdModel ?? model);
+        return _mapper.MapToEntity(createdModel);
     }
 
     /// <summary>
