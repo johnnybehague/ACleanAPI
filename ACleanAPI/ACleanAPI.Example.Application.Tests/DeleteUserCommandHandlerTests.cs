@@ -1,7 +1,5 @@
 using ACleanAPI.Example.Application.Users.Commands;
 using ACleanAPI.Example.Domain.Users.Interfaces;
-using FluentResults;
-using MediatR;
 using Moq;
 
 namespace ACleanAPI.Example.Application.Tests;
