@@ -77,7 +77,7 @@ public sealed class AcEntityRepositoryBaseTests
     }
 
     [TestMethod]
-    public async Task CreateEntityAsync_ReturnTaskValid()
+    public async Task CreateEntityAsync_ReturnTaskWithReturnValue()
     {
         // Arrange
         var entity = new UserTestEntity { Id = 1, FirstName = "John", LastName = "Doe", Email = "john@doe.com" };
@@ -87,11 +87,14 @@ public sealed class AcEntityRepositoryBaseTests
 
         _mapperMock.Setup(m => m.MapToModel(entity))
             .Returns(model);
+        _mapperMock.Setup(m => m.MapToEntity(It.IsAny<UserTestModel>()))
+            .Returns(entity);
 
         // Act
-        await _repository.CreateEntityAsync(entity, CancellationToken.None);
+        var createdEntity = await _repository.CreateEntityAsync(entity, CancellationToken.None);
 
         // Assert
         _mapperMock.Verify(m => m.MapToModel(It.Is<UserTestEntity>(x => x.Id == 1)), Times.Once);
+        _mapperMock.Verify(m => m.MapToEntity(It.Is<UserTestModel>(x => x.Id == createdEntity.Id)), Times.Once);
     }
 }
