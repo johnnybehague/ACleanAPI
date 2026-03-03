@@ -63,7 +63,5 @@ public class AcCreateEntityCommandHandlerBase<TDto, TEntity>
         {
             return Result.Fail($"Error creating entity: {ex.Message}");
         }
-
-        return Result.Ok();
     }
 }
