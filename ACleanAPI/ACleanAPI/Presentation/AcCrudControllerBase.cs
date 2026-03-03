@@ -1,26 +1,46 @@
+using ACleanAPI.Application.Commands;
 using ACleanAPI.Application.Core;
-using ACleanAPI.Application.Requests;
-using MediatR;
+using ACleanAPI.Application.Queries;
+using ACleanAPI.Presentation.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ACleanAPI.Presentation;
 
+/// <summary>
+///  Base class for CRUD Controller.
+/// </summary>
+/// <remarks>This class provide GetAll, GetById, Create, Update and Delete methods</remarks>
 public abstract class AcCrudControllerBase : ControllerBase
 {
-    protected readonly IMediator _mediator;
+    /// <summary>
+    /// Mediator for executing query and command operations within the application.
+    /// </summary>
+    protected readonly IAcMediator _mediator;
 
-    protected AcCrudControllerBase(IMediator mediator)
+    /// <summary>
+    ///  Initializes a new instance of the <see cref="AcCrudControllerBase"/> class with the specified mediator.
+    /// </summary>
+    /// <param name="mediator">Mediator for executing query and command operations</param>
+    protected AcCrudControllerBase(IAcMediator mediator)
     {
         _mediator = mediator;
     }
 
-    public async Task<ActionResult<IEnumerable<T>>> GetEntitiesAsync<T>(AcGetEntitiesRequest<T> request, CancellationToken cancellationToken = default)
-        where T : AcEntityDtoBase
+    /// <summary>
+    /// Asynchronously get all data.
+    /// </summary>
+    /// <typeparam name="TDto">DTO</typeparam>
+    /// <param name="request">Request</param>
+    /// <param name="cancellationToken">A <see cref="CancellationToken" /> to observe while waiting for the task to complete.</param>
+    /// <returns>IEnumerable of data</returns>
+    [NonAction]
+    public async Task<ActionResult<IEnumerable<TDto>>> GetAllAsync<TDto>(AcGetEntitiesQuery<TDto> request, CancellationToken cancellationToken = default)
+        where TDto : AcEntityDtoBase
     {
         if (!ModelState.IsValid)
             return BadRequest(ModelState);
 
-        var result = await _mediator.Send(request, cancellationToken);
+        var result = await _mediator.QueryAsync(request, cancellationToken);
 
         if (result.IsFailed)
             return BadRequest();
@@ -28,13 +48,21 @@ public abstract class AcCrudControllerBase : ControllerBase
         return Ok(result.Value);
     }
 
-    public async Task<ActionResult<T>> GetEntityByIdAsync<T>(AcGetEntityByIdRequest<T> request, CancellationToken cancellationToken = default)
-        where T : AcEntityDtoBase
+    /// <summary>
+    /// Asynchronously get single data.
+    /// </summary>
+    /// <typeparam name="TDto">DTO</typeparam>
+    /// <param name="request">Request</param>
+    /// <param name="cancellationToken">A <see cref="CancellationToken" /> to observe while waiting for the task to complete.</param>
+    /// <returns>ActionResult of data</returns>
+    [NonAction]
+    public async Task<ActionResult<TDto>> GetByIdAsync<TDto>(AcGetEntityByIdQuery<TDto> request, CancellationToken cancellationToken = default)
+        where TDto : AcEntityDtoBase
     {
         if (!ModelState.IsValid)
             return BadRequest(ModelState);
 
-        var result = await _mediator.Send(request, cancellationToken);
+        var result = await _mediator.QueryAsync(request, cancellationToken);
         if (result.IsFailed)
         {
             if (result.Errors.Any(e => e.Message == "ENTITY_NOT_FOUND"))
@@ -46,38 +74,61 @@ public abstract class AcCrudControllerBase : ControllerBase
         return Ok(result.Value);
     }
 
-    public async Task<IActionResult> CreateEntityAsync<T>(AcCreateEntityRequest<T> request, CancellationToken cancellationToken = default)
-        where T : AcEntityDtoBase
+    /// <summary>
+    /// Asynchronously create data.
+    /// </summary>
+    /// <typeparam name="TDto">DTO</typeparam>
+    /// <param name="request">Request</param>
+    /// <param name="cancellationToken">A <see cref="CancellationToken" /> to observe while waiting for the task to complete.</param>
+    /// <returns>IActionResult</returns>
+    [NonAction]
+    public async Task<IActionResult> CreateAsync<TDto>(AcCreateEntityCommand<TDto> request, CancellationToken cancellationToken = default)
+        where TDto : AcEntityDtoBase
     {
         if (!ModelState.IsValid)
             return BadRequest(ModelState);
 
-        var result = await _mediator.Send(request, cancellationToken);
+        var result = await _mediator.SendAsync(request, cancellationToken);
         if (result.IsFailed)
             return BadRequest();
 
         return NoContent();
     }
 
-    public async Task<IActionResult> UpdateEntityAsync<T>(AcUpdateEntityRequest<T> request, CancellationToken cancellationToken = default)
-        where T : AcEntityDtoBase
+    /// <summary>
+    /// Asynchronously update specified data.
+    /// </summary>
+    /// <typeparam name="TDto">DTO</typeparam>
+    /// <param name="request">Request</param>
+    /// <param name="cancellationToken">A <see cref="CancellationToken" /> to observe while waiting for the task to complete.</param>
+    /// <returns>IActionResult</returns>
+    [NonAction]
+    public async Task<IActionResult> UpdateAsync<TDto>(AcUpdateEntityCommand<TDto> request, CancellationToken cancellationToken = default)
+        where TDto : AcEntityDtoBase
     {
         if (!ModelState.IsValid)
             return BadRequest(ModelState);
 
-        var result = await _mediator.Send(request, cancellationToken);
+        var result = await _mediator.SendAsync(request, cancellationToken);
         if (result.IsFailed)
             return BadRequest();
 
         return NoContent();
     }
 
-    public async Task<IActionResult> DeleteEntityAsync(AcDeleteEntityRequest request, CancellationToken cancellationToken = default)
+    /// <summary>
+    /// Asynchronously delete specified data.
+    /// </summary>
+    /// <param name="request">Request</param>
+    /// <param name="cancellationToken">A <see cref="CancellationToken" /> to observe while waiting for the task to complete.</param>
+    /// <returns>IActionResult</returns>
+    [NonAction]
+    public async Task<IActionResult> DeleteAsync(AcDeleteEntityCommand request, CancellationToken cancellationToken = default)
     {
         if (!ModelState.IsValid)
             return BadRequest(ModelState);
 
-        var result = await _mediator.Send(request, cancellationToken);
+        var result = await _mediator.SendAsync(request, cancellationToken);
         if (result.IsFailed)
             return BadRequest();
 

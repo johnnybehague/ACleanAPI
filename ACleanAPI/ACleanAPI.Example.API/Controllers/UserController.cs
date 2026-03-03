@@ -2,34 +2,37 @@ using ACleanAPI.Example.Application.Users.Commands;
 using ACleanAPI.Example.Application.Users.DTO;
 using ACleanAPI.Example.Application.Users.Queries;
 using ACleanAPI.Presentation;
-using MediatR;
+using ACleanAPI.Presentation.Interfaces;
+using Asp.Versioning;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ACleanAPI.API.Controllers;
 
 [Route("api/v1/[controller]")]
 [ApiController]
+[ApiVersion("1.0")]
+[Route("api/v{version:apiVersion}/[controller]")]
 public class UserController : AcCrudControllerBase
 {
-    public UserController(IMediator mediator) : base(mediator) { }
+    public UserController(IAcMediator mediator) : base(mediator) { }
 
     [HttpGet]
     public async Task<ActionResult<IEnumerable<UserDto>>> Index(CancellationToken cancellationToken)
-        => await GetEntitiesAsync(new GetUsersQuery(), cancellationToken);
+        => await GetAllAsync(new GetUsersQuery(), cancellationToken);
 
     [HttpGet("{id}")]
     public async Task<ActionResult<UserDetailDto>> Details(int id, CancellationToken cancellationToken)
-        => await GetEntityByIdAsync(new GetUserByIdQuery(id), cancellationToken);
+        => await GetByIdAsync(new GetUserByIdQuery(id), cancellationToken);
 
     [HttpPost]
     public async Task<IActionResult> Create(UserDto dto, CancellationToken cancellationToken)
-        => await CreateEntityAsync(new CreateUserCommand(dto), cancellationToken);
+        => await CreateAsync(new CreateUserCommand(dto), cancellationToken);
 
     [HttpPut("{id}")]
     public async Task<IActionResult> Update(int id, UserDto dto, CancellationToken cancellationToken)
-        => await UpdateEntityAsync(new UpdateUserCommand(id, dto), cancellationToken);
+        => await UpdateAsync(new UpdateUserCommand(id, dto), cancellationToken);
 
     [HttpDelete("{id}")]
     public async Task<IActionResult> Delete(int id, CancellationToken cancellationToken)
-        => await DeleteEntityAsync(new DeleteUserCommand(id), cancellationToken);
+        => await DeleteAsync(new DeleteUserCommand(id), cancellationToken);
 }

@@ -50,7 +50,7 @@ public sealed class GetUsersQueryHandlerTests
         var query = new GetUsersQuery();
 
         // Act
-        var result = await _handler.Handle(query, CancellationToken.None);
+        var result = await _handler.HandleAsync(query, CancellationToken.None);
 
         // Assert
         Assert.IsTrue(result.IsSuccess);
@@ -71,7 +71,7 @@ public sealed class GetUsersQueryHandlerTests
         var query = new GetUsersQuery();
 
         // Act
-        var result = await _handler.Handle(query, CancellationToken.None);
+        var result = await _handler.HandleAsync(query, CancellationToken.None);
 
         // Assert
         Assert.IsTrue(result.IsSuccess);

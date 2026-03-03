@@ -1,4 +1,4 @@
-using ACleanAPI.Application.Requests;
+using ACleanAPI.Application.Commands;
 using ACleanAPI.Infrastructure.Interfaces;
 using ACleanAPI.Tests.App.Application;
 using ACleanAPI.Tests.Common;
@@ -22,10 +22,10 @@ public class AcDeleteEntityCommandHandlerBaseTests
     public async Task HandleRequest_IdIsNull_ReturnsFailResult()
     {
         // Arrange
-        var request = new AcDeleteEntityRequest(null);
+        var request = new AcDeleteEntityCommand(null);
 
         // Act
-        var result = await _handler.HandleRequest(request, CancellationToken.None);
+        var result = await _handler.HandleCommandAsync(request, CancellationToken.None);
 
         // Assert
         Assert.IsFalse(result.IsSuccess);
@@ -38,14 +38,14 @@ public class AcDeleteEntityCommandHandlerBaseTests
     {
         // Arrange
         var entityId = 1;
-        var request = new AcDeleteEntityRequest(entityId);
+        var request = new AcDeleteEntityCommand(entityId);
 
         _repositoryMock
             .Setup(r => r.DeleteEntityAsync(entityId, It.IsAny<CancellationToken>()))
             .Returns(Task.CompletedTask);
 
         // Act
-        var result = await _handler.HandleRequest(request, CancellationToken.None);
+        var result = await _handler.HandleCommandAsync(request, CancellationToken.None);
 
         // Assert
         Assert.IsTrue(result.IsSuccess);
@@ -59,14 +59,14 @@ public class AcDeleteEntityCommandHandlerBaseTests
         // Arrange
         var entityId = 1;
         var exceptionMessage = "DB error";
-        var request = new AcDeleteEntityRequest(entityId);
+        var request = new AcDeleteEntityCommand(entityId);
 
         _repositoryMock
             .Setup(r => r.DeleteEntityAsync(entityId, It.IsAny<CancellationToken>()))
             .ThrowsAsync(new Exception(exceptionMessage));
 
         // Act
-        var result = await _handler.HandleRequest(request, CancellationToken.None);
+        var result = await _handler.HandleCommandAsync(request, CancellationToken.None);
 
         // Assert
         Assert.IsFalse(result.IsSuccess);

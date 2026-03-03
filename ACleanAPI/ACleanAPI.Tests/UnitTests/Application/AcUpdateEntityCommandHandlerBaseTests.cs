@@ -1,5 +1,5 @@
+using ACleanAPI.Application.Commands;
 using ACleanAPI.Application.Interfaces;
-using ACleanAPI.Application.Requests;
 using ACleanAPI.Infrastructure.Interfaces;
 using ACleanAPI.Tests.App.Application;
 using ACleanAPI.Tests.Common;
@@ -27,10 +27,10 @@ public class AcUpdateEntityCommandHandlerBaseTests
         // Arrange
         var id = 0;
         var dto = new UserTestDto { Id = 1 };
-        var request = new AcUpdateEntityRequest<UserTestDto>(id, dto);
+        var request = new AcUpdateEntityCommand<UserTestDto>(id, dto);
 
         // Act
-        var result = await _handler.HandleRequest(request, CancellationToken.None);
+        var result = await _handler.HandleCommandAsync(request, CancellationToken.None);
 
         // Assert
         Assert.IsFalse(result.IsSuccess);
@@ -44,10 +44,10 @@ public class AcUpdateEntityCommandHandlerBaseTests
     {
         // Arrange
         var id = 1;
-        var request = new AcUpdateEntityRequest<UserTestDto>(id, null);
+        var request = new AcUpdateEntityCommand<UserTestDto>(id, null);
 
         // Act
-        var result = await _handler.HandleRequest(request, CancellationToken.None);
+        var result = await _handler.HandleCommandAsync(request, CancellationToken.None);
 
         // Assert
         Assert.IsFalse(result.IsSuccess);
@@ -63,14 +63,14 @@ public class AcUpdateEntityCommandHandlerBaseTests
         var id = 1;
         var dto = new UserTestDto { Id = 1 };
         var entity = new UserTestEntity { Id = 1 };
-        var request = new AcUpdateEntityRequest<UserTestDto>(id, dto);
+        var request = new AcUpdateEntityCommand<UserTestDto>(id, dto);
 
         _mapperMock.Setup(m => m.MapToEntity(dto)).Returns(entity);
         _repositoryMock.Setup(r => r.UpdateEntityAsync(id, entity, It.IsAny<CancellationToken>()))
-            .Returns(Task.CompletedTask);
+            .ReturnsAsync(new UserTestEntity());
 
         // Act
-        var result = await _handler.HandleRequest(request, CancellationToken.None);
+        var result = await _handler.HandleCommandAsync(request, CancellationToken.None);
 
         // Assert
         Assert.IsTrue(result.IsSuccess);
@@ -85,14 +85,14 @@ public class AcUpdateEntityCommandHandlerBaseTests
         var id = 1;
         var dto = new UserTestDto { Id = 1 };
         var entity = new UserTestEntity { Id = 1 };
-        var request = new AcUpdateEntityRequest<UserTestDto>(id, dto);
+        var request = new AcUpdateEntityCommand<UserTestDto>(id, dto);
 
         _mapperMock.Setup(m => m.MapToEntity(dto)).Returns(entity);
         _repositoryMock.Setup(r => r.UpdateEntityAsync(id, entity, It.IsAny<CancellationToken>()))
             .ThrowsAsync(new Exception("DB error"));
 
         // Act
-        var result = await _handler.HandleRequest(request, CancellationToken.None);
+        var result = await _handler.HandleCommandAsync(request, CancellationToken.None);
 
         // Assert
         Assert.IsFalse(result.IsSuccess);
