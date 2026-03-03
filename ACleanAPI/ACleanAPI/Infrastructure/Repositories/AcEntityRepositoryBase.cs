@@ -105,8 +105,6 @@ public abstract class AcEntityRepositoryBase<TModel, TEntity> : IAcEntityReposit
     public async Task DeleteEntityAsync(int id, CancellationToken cancellationToken)
     {
         await DeleteModelAsync(id, cancellationToken);
-            }
-        }
     }
 
     #endregion
@@ -163,13 +161,11 @@ public abstract class AcEntityRepositoryBase<TModel, TEntity> : IAcEntityReposit
     public async Task<TModel> UpdateModelAsync(int id, TModel model, CancellationToken cancellationToken)
     {
         var dbSet = GetDbSet();
-        if (dbSet != null)
+        var existingModel = await dbSet.FindAsync([id], cancellationToken);
+        if (existingModel != null)
         {
-            var existingModel = await dbSet.FindAsync([id], cancellationToken);
-            if (existingModel != null)
-            {
-                existingModel.UpdateFrom(model);
-            }
+            existingModel.UpdateFrom(model);
+        }
         return existingModel ?? model;
     }
 

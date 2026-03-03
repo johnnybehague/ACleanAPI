@@ -1,6 +1,5 @@
 using ACleanAPI.Application.Queries;
 using ACleanAPI.Application.QueryHandlers;
-using ACleanAPI.Application.Requests;
 using ACleanAPI.Example.Application.Users.DTO;
 using ACleanAPI.Example.Application.Users.Mappers;
 using ACleanAPI.Example.Domain.Users.Entities;

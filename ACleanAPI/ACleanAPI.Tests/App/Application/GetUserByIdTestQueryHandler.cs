@@ -1,7 +1,6 @@
 using ACleanAPI.Application.Interfaces;
 using ACleanAPI.Application.Queries;
 using ACleanAPI.Application.QueryHandlers;
-using ACleanAPI.Application.Requests;
 using ACleanAPI.Infrastructure.Interfaces;
 using ACleanAPI.Tests.Common;
 using FluentResults;

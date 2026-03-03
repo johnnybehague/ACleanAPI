@@ -5,7 +5,6 @@ using ACleanAPI.Tests.App;
 using ACleanAPI.Tests.App.Presentation;
 using ACleanAPI.Tests.Common;
 using FluentResults;
-using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 

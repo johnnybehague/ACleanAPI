@@ -72,7 +72,6 @@ public static class ApplicationDependencyInjection
                 module.RegisterFromAssembly(queryMediatorAssembly);
             });
         });
-        services.AddTransient(typeof(IPipelineBehavior<,>), typeof(TransactionBehavior<,>));
 
         return services;
     }
