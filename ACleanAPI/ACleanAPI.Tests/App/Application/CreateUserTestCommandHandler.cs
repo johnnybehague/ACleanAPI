@@ -14,6 +14,6 @@ public class CreateUserTestCommandHandler : AcCreateEntityCommandHandlerBase<Use
     {
     }
 
-    public async Task<Result> Handle(AcCreateEntityCommand<UserTestDto> request, CancellationToken cancellationToken)
+    public async Task<Result<UserTestDto>> Handle(AcCreateEntityCommand<UserTestDto> request, CancellationToken cancellationToken)
         => await HandleCommandAsync(request, cancellationToken);
 }

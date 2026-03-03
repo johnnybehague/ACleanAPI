@@ -67,7 +67,7 @@ public class AcUpdateEntityCommandHandlerBaseTests
 
         _mapperMock.Setup(m => m.MapToEntity(dto)).Returns(entity);
         _repositoryMock.Setup(r => r.UpdateEntityAsync(id, entity, It.IsAny<CancellationToken>()))
-            .Returns(Task.CompletedTask);
+            .ReturnsAsync(new UserTestEntity());
 
         // Act
         var result = await _handler.HandleCommandAsync(request, CancellationToken.None);

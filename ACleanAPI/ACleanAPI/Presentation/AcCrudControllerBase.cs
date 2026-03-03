@@ -33,6 +33,7 @@ public abstract class AcCrudControllerBase : ControllerBase
     /// <param name="request">Request</param>
     /// <param name="cancellationToken">A <see cref="CancellationToken" /> to observe while waiting for the task to complete.</param>
     /// <returns>IEnumerable of data</returns>
+    [NonAction]
     public async Task<ActionResult<IEnumerable<TDto>>> GetAllAsync<TDto>(AcGetEntitiesQuery<TDto> request, CancellationToken cancellationToken = default)
         where TDto : AcEntityDtoBase
     {
@@ -54,6 +55,7 @@ public abstract class AcCrudControllerBase : ControllerBase
     /// <param name="request">Request</param>
     /// <param name="cancellationToken">A <see cref="CancellationToken" /> to observe while waiting for the task to complete.</param>
     /// <returns>ActionResult of data</returns>
+    [NonAction]
     public async Task<ActionResult<TDto>> GetByIdAsync<TDto>(AcGetEntityByIdQuery<TDto> request, CancellationToken cancellationToken = default)
         where TDto : AcEntityDtoBase
     {
@@ -79,6 +81,7 @@ public abstract class AcCrudControllerBase : ControllerBase
     /// <param name="request">Request</param>
     /// <param name="cancellationToken">A <see cref="CancellationToken" /> to observe while waiting for the task to complete.</param>
     /// <returns>IActionResult</returns>
+    [NonAction]
     public async Task<IActionResult> CreateAsync<TDto>(AcCreateEntityCommand<TDto> request, CancellationToken cancellationToken = default)
         where TDto : AcEntityDtoBase
     {
@@ -99,6 +102,7 @@ public abstract class AcCrudControllerBase : ControllerBase
     /// <param name="request">Request</param>
     /// <param name="cancellationToken">A <see cref="CancellationToken" /> to observe while waiting for the task to complete.</param>
     /// <returns>IActionResult</returns>
+    [NonAction]
     public async Task<IActionResult> UpdateAsync<TDto>(AcUpdateEntityCommand<TDto> request, CancellationToken cancellationToken = default)
         where TDto : AcEntityDtoBase
     {
@@ -118,6 +122,7 @@ public abstract class AcCrudControllerBase : ControllerBase
     /// <param name="request">Request</param>
     /// <param name="cancellationToken">A <see cref="CancellationToken" /> to observe while waiting for the task to complete.</param>
     /// <returns>IActionResult</returns>
+    [NonAction]
     public async Task<IActionResult> DeleteAsync(AcDeleteEntityCommand request, CancellationToken cancellationToken = default)
     {
         if (!ModelState.IsValid)

@@ -3,12 +3,14 @@ using ACleanAPI.Example.Application.Users.DTO;
 using ACleanAPI.Example.Application.Users.Queries;
 using ACleanAPI.Presentation;
 using ACleanAPI.Presentation.Interfaces;
+using Asp.Versioning;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ACleanAPI.API.Controllers;
 
-[Route("api/v1/[controller]")]
 [ApiController]
+[ApiVersion("1.0")]
+[Route("api/v{version:apiVersion}/[controller]")]
 public class UserController : AcCrudControllerBase
 {
     public UserController(IAcMediator mediator) : base(mediator) { }

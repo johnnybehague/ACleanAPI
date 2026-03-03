@@ -48,22 +48,20 @@ public class AcCreateEntityCommandHandlerBase<TDto, TEntity>
     /// <param name="request">Request to create <typeparamref name="TEntity"/></param>
     /// <param name="cancellationToken">A <see cref="CancellationToken" /> to observe while waiting for the task to complete.</param>
     /// <returns>Result indicating success or failure of the operation.</returns>
-    public async Task<Result> HandleCommandAsync(AcCreateEntityCommand<TDto> request, CancellationToken cancellationToken)
+    public async Task<Result<TDto>> HandleCommandAsync(AcCreateEntityCommand<TDto> request, CancellationToken cancellationToken)
     {
-        if (request.Dto == null)
-            return Result.Fail("Entity is required.");
-
-        var entity = _mapper.MapToEntity(request.Dto);
-
         try
         {
-            await _repository.CreateEntityAsync(entity, cancellationToken);
+            if (request.Dto == null)
+                return Result.Fail("Entity is required.");
+
+            var entity = _mapper.MapToEntity(request.Dto);
+            var result = await _repository.CreateEntityAsync(entity, cancellationToken);
+            return Result.Ok(_mapper.MapToDto(result));
         }
         catch (Exception ex)
         {
             return Result.Fail($"Error creating entity: {ex.Message}");
         }
-
-        return Result.Ok();
     }
 }

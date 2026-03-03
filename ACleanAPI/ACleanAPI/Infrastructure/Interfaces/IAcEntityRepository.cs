@@ -29,8 +29,8 @@ public interface IAcEntityRepository<TEntity>
     /// </summary>
     /// <param name="entity">Entity</param>
     /// <param name="cancellationToken"></param>
-    /// <returns>Result indicating success or failure of the operation with the <typeparamref name="TEntity"/> values.</returns>
-    Task CreateEntityAsync(TEntity entity, CancellationToken cancellationToken);
+    /// <returns>Created <typeparamref name="TEntity"/> value.</returns>
+    Task<TEntity> CreateEntityAsync(TEntity entity, CancellationToken cancellationToken);
 
     /// <summary>
     /// Asynchronously update an existing entity of a specific type.
@@ -38,8 +38,8 @@ public interface IAcEntityRepository<TEntity>
     /// <param name="entityId">Entity Id</param>
     /// <param name="entity">Entity</param>
     /// <param name="cancellationToken">A <see cref="CancellationToken" /> to observe while waiting for the task to complete.</param>
-    /// <returns>Result indicating success or failure of the operation with the <typeparamref name="TEntity"/> values.</returns>
-    Task UpdateEntityAsync(int entityId, TEntity entity, CancellationToken cancellationToken);
+    /// <returns>Updated <typeparamref name="TEntity"/> value.</returns>
+    Task<TEntity> UpdateEntityAsync(int entityId, TEntity entity, CancellationToken cancellationToken);
 
     /// <summary>
     /// Asynchronously delete an existing entity of a specific type by its unique id.
