@@ -73,11 +73,12 @@ public abstract class AcEntityRepositoryBase<TModel, TEntity> : IAcEntityReposit
     /// </summary>
     /// <param name="entity">Entity</param>
     /// <param name="cancellationToken"></param>
-    /// <returns>Result indicating success or failure of the operation with the <typeparamref name="TEntity"/> values.</returns>
-    public async Task CreateEntityAsync(TEntity entity, CancellationToken cancellationToken)
+    /// <returns>Created <typeparamref name="TEntity"/> value.</returns>
+    public async Task<TEntity> CreateEntityAsync(TEntity entity, CancellationToken cancellationToken)
     {
         var model = _mapper.MapToModel(entity);
-        await CreateModelAsync(model, cancellationToken);
+        var createdModel = await CreateModelAsync(model, cancellationToken);
+        return _mapper.MapToEntity(createdModel);
     }
 
     /// <summary>
@@ -86,11 +87,12 @@ public abstract class AcEntityRepositoryBase<TModel, TEntity> : IAcEntityReposit
     /// <param name="entityId">Entity Id</param>
     /// <param name="entity">Entity</param>
     /// <param name="cancellationToken">A <see cref="CancellationToken" /> to observe while waiting for the task to complete.</param>
-    /// <returns>Result indicating success or failure of the operation with the <typeparamref name="TEntity"/> values.</returns>
-    public async Task UpdateEntityAsync(int entityId, TEntity entity,  CancellationToken cancellationToken)
+    /// <returns>Updated <typeparamref name="TEntity"/> value.</returns>
+    public async Task<TEntity> UpdateEntityAsync(int entityId, TEntity entity,  CancellationToken cancellationToken)
     {
         var model = _mapper.MapToModel(entity);
-        await UpdateModelAsync(entityId, model, cancellationToken);
+        var updatedModel = await UpdateModelAsync(entityId, model, cancellationToken);
+        return _mapper.MapToEntity(updatedModel);
     }
 
     /// <summary>
@@ -102,15 +104,7 @@ public abstract class AcEntityRepositoryBase<TModel, TEntity> : IAcEntityReposit
     [ExcludeFromCodeCoverage]
     public async Task DeleteEntityAsync(int id, CancellationToken cancellationToken)
     {
-        var dbSet = GetDbSet();
-        if (dbSet != null)
-        {
-            var entity = await dbSet.FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
-            if (entity != null)
-            {
-                dbSet.Remove(entity);
-            }
-        }
+        await DeleteModelAsync(id, cancellationToken);
     }
 
     #endregion
@@ -126,7 +120,7 @@ public abstract class AcEntityRepositoryBase<TModel, TEntity> : IAcEntityReposit
     private async Task<IEnumerable<TModel>> GetModelsAsync(CancellationToken cancellationToken)
     {
         var dbSet = GetDbSet();
-        return dbSet != null ? await dbSet.ToListAsync(cancellationToken) : Enumerable.Empty<TModel>();
+        return await dbSet.ToListAsync(cancellationToken);
     }
 
     /// <summary>
@@ -139,7 +133,7 @@ public abstract class AcEntityRepositoryBase<TModel, TEntity> : IAcEntityReposit
     private async Task<TModel?> GetModelByIdAsync(int id, CancellationToken cancellationToken)
     {
         var dbSet = GetDbSet();
-        return dbSet != null ? await dbSet.FirstOrDefaultAsync(x => x.Id == id, cancellationToken) : null;
+        return await dbSet.FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
     }
 
     /// <summary>
@@ -147,15 +141,13 @@ public abstract class AcEntityRepositoryBase<TModel, TEntity> : IAcEntityReposit
     /// </summary>
     /// <param name="model">Model</param>
     /// <param name="cancellationToken">A <see cref="CancellationToken" /> to observe while waiting for the task to complete.</param>
-    /// <returns>Result indicating success or failure of the operation with the <typeparamref name="TModel"/> values.</returns>
+    /// <returns>Created <typeparamref name="TModel"/> value.</returns>
     [ExcludeFromCodeCoverage]
-    private async Task CreateModelAsync(TModel model, CancellationToken cancellationToken)
+    private async Task<TModel> CreateModelAsync(TModel model, CancellationToken cancellationToken)
     {
         var dbSet = GetDbSet();
-        if (dbSet != null)
-        {
-            await dbSet.AddAsync(model, cancellationToken);
-        }
+        var result = await dbSet.AddAsync(model, cancellationToken);
+        return result.Entity;
     }
 
     /// <summary>
@@ -164,18 +156,33 @@ public abstract class AcEntityRepositoryBase<TModel, TEntity> : IAcEntityReposit
     /// <param name="id">Model Id</param>
     /// <param name="model">Model</param>
     /// <param name="cancellationToken">A <see cref="CancellationToken" /> to observe while waiting for the task to complete.</param>
-    /// <returns>Result indicating success or failure of the operation with the <typeparamref name="TEntity"/> values.</returns>
+    /// <returns>Updated <typeparamref name="TEntity"/> value.</returns>
     [ExcludeFromCodeCoverage]
-    public async Task UpdateModelAsync(int id, TModel model, CancellationToken cancellationToken)
+    public async Task<TModel> UpdateModelAsync(int id, TModel model, CancellationToken cancellationToken)
     {
         var dbSet = GetDbSet();
-        if (dbSet != null)
+        var existingModel = await dbSet.FindAsync([id], cancellationToken);
+        if (existingModel != null)
         {
-            var existingModel = await dbSet.FindAsync([id], cancellationToken);
-            if (existingModel != null)
-            {
-                existingModel.UpdateFrom(model);
-            }
+            existingModel.UpdateFrom(model);
+        }
+        return existingModel ?? model;
+    }
+
+    /// <summary>
+    /// Asynchronously delete an existing model of a specific type by its unique id.
+    /// </summary>
+    /// <param name="id">Model Id</param>
+    /// <param name="cancellationToken">A <see cref="CancellationToken" /> to observe while waiting for the task to complete.</param>
+    /// <returns>Result indicating success or failure of the operation with the <typeparamref name="TEntity"/> values.</returns>
+    [ExcludeFromCodeCoverage]
+    public async Task DeleteModelAsync(int id, CancellationToken cancellationToken)
+    {
+        var dbSet = GetDbSet();
+        var entity = await dbSet.FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
+        if (entity != null)
+        {
+            dbSet.Remove(entity);
         }
     }
 
@@ -189,30 +196,19 @@ public abstract class AcEntityRepositoryBase<TModel, TEntity> : IAcEntityReposit
     /// </remarks>
     /// <returns></returns>
     [ExcludeFromCodeCoverage]
-    private DbSet<TModel>? GetDbSet()
+    private DbSet<TModel> GetDbSet()
     {
         var property = _context.GetType()
             .GetProperties()
             .First(p => p.PropertyType == typeof(DbSet<TModel>));
 
-        CheckPropertyValidity(property);
-
-        var propertyInfo = property.GetValue(_context);
-        return propertyInfo != null ? (DbSet<TModel>)propertyInfo : null;
-    }
-
-    /// <summary>
-    /// Checks the validity of the property retrieved from the database context. 
-    /// </summary>
-    /// <remarks>
-    /// If the property is null, an exception is thrown indicating that no DbSet for the specified model type was found in the context.
-    /// </remarks>
-    /// <param name="property"></param>
-    /// <exception cref="InvalidOperationException"></exception>
-    [ExcludeFromCodeCoverage]
-    private void CheckPropertyValidity(PropertyInfo property)
-    {
         if (property == null)
             throw new InvalidOperationException($"No DbSet<{typeof(TModel).Name}> found in {_context.GetType().Name}");
+
+        var propertyInfo = property.GetValue(_context);
+        if(propertyInfo == null)
+            throw new InvalidOperationException($"Failed to retrieve DbSet<{typeof(TModel).Name}> from {_context.GetType().Name}");
+
+        return (DbSet<TModel>)propertyInfo;
     }
 }

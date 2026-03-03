@@ -34,7 +34,7 @@ public class CreateUserCommandHandlerTests
 
         _userRepositoryMock
             .Setup(r => r.CreateEntityAsync(entity, It.IsAny<CancellationToken>()))
-            .Returns(Task.CompletedTask);
+            .ReturnsAsync(new User());
 
         // Act
         var result = await _handler.HandleAsync(command, CancellationToken.None);
@@ -57,7 +57,7 @@ public class CreateUserCommandHandlerTests
 
         _userRepositoryMock
             .Setup(r => r.CreateEntityAsync(entity, It.IsAny<CancellationToken>()))
-            .Returns(Task.CompletedTask);
+            .ReturnsAsync(new User());
 
         // Act
         var result = await _handler.HandleAsync(command, CancellationToken.None);

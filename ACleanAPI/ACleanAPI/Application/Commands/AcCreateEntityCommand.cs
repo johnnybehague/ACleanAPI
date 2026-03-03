@@ -9,5 +9,5 @@ namespace ACleanAPI.Application.Commands;
 /// </summary>
 /// <typeparam name="TDto">DTO</typeparam>
 /// <param name="Dto">DTO</param>
-public record AcCreateEntityCommand<TDto>(TDto? Dto) : ICommand<Result>
+public record AcCreateEntityCommand<TDto>(TDto? Dto) : ICommand<Result<TDto>>
     where TDto : AcEntityDtoBase;

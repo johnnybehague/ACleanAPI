@@ -11,13 +11,13 @@ namespace ACleanAPI.Example.Application.Users.Commands;
 
 public record CreateUserCommand(UserDto? Dto) : AcCreateEntityCommand<UserDto>(Dto);
 
-public class CreateUserCommandHandler : AcCreateEntityCommandHandlerBase<UserDto, User>, ICommandHandler<CreateUserCommand, Result>
+public class CreateUserCommandHandler : AcCreateEntityCommandHandlerBase<UserDto, User>, ICommandHandler<CreateUserCommand, Result<UserDto>>
 {
     public CreateUserCommandHandler(IUserRepository userRepository, IUserMapper userMapper)
     : base(userRepository, userMapper)
     {
     }
 
-    public async Task<Result> HandleAsync(CreateUserCommand request, CancellationToken cancellationToken = default)
+    public async Task<Result<UserDto>> HandleAsync(CreateUserCommand request, CancellationToken cancellationToken = default)
      => await HandleCommandAsync(request, cancellationToken);
 }

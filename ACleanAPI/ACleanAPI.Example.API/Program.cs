@@ -4,6 +4,7 @@ using ACleanAPI.Example.Infrastructure.Models;
 using ACleanAPI.Example.Infrastructure.Persistence;
 using ACleanAPI.Presentation;
 using Asp.Versioning;
+using Microsoft.OpenApi.Models;
 using System.Diagnostics.CodeAnalysis;
 
 namespace ACleanAPI.Example.API;
@@ -26,11 +27,26 @@ internal class Program
             options.DefaultApiVersion = new ApiVersion(1, 0);
             options.AssumeDefaultVersionWhenUnspecified = true;
             options.ReportApiVersions = true;
+        }).AddApiExplorer(options =>
+        {
+            options.GroupNameFormat = "'v'VVV";
+            options.SubstituteApiVersionInUrl = true;
         });
 
         builder.Services.AddControllers();
+
         // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-        builder.Services.AddOpenApi();
+        builder.Services.AddSwaggerGen(c =>
+        {
+            c.SwaggerDoc("v1", new OpenApiInfo
+            {
+                Version = "v1",
+                Title = "API v1",
+                Description = "API version 1"
+            });
+
+            c.CustomSchemaIds(i => i.FullName);
+        });
 
         var app = builder.Build();
 
@@ -57,8 +73,11 @@ internal class Program
         // Configure the HTTP request pipeline.
         if (app.Environment.IsDevelopment())
         {
-            app.MapOpenApi();
-
+            app.UseSwagger();
+            app.UseSwaggerUI(options =>
+            {
+                options.SwaggerEndpoint("/swagger/v1/swagger.json", "API v1");
+            });
         }
 
         app.UseHttpsRedirection();

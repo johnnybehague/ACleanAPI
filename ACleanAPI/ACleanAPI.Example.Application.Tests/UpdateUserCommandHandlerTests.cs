@@ -35,7 +35,7 @@ public class UpdateUserCommandHandlerTests
 
         _userRepositoryMock
             .Setup(r => r.UpdateEntityAsync(1, entity, It.IsAny<CancellationToken>()))
-            .Returns(Task.CompletedTask);
+            .ReturnsAsync(new User());
 
         // Act
         var result = await _handler.HandleAsync(command, CancellationToken.None);
@@ -59,7 +59,7 @@ public class UpdateUserCommandHandlerTests
 
         _userRepositoryMock
             .Setup(r => r.UpdateEntityAsync(id, entity, It.IsAny<CancellationToken>()))
-            .Returns(Task.CompletedTask);
+            .ReturnsAsync(new User());
 
         // Act
         var result = await _handler.HandleAsync(command, CancellationToken.None);
