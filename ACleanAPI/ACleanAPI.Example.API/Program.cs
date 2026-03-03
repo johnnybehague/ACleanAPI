@@ -34,8 +34,8 @@ internal class Program
         });
 
         builder.Services.AddControllers();
+
         // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-        // builder.Services.AddOpenApi();
         builder.Services.AddSwaggerGen(c =>
         {
             c.SwaggerDoc("v1", new OpenApiInfo
@@ -73,7 +73,6 @@ internal class Program
         // Configure the HTTP request pipeline.
         if (app.Environment.IsDevelopment())
         {
-            // app.MapOpenApi();
             app.UseSwagger();
             app.UseSwaggerUI(options =>
             {
